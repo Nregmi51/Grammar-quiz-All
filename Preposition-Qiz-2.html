@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preposition Quiz · NP Regmi · 111 Questions</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+    }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #0b1a2e 0%, #1a2f44 100%);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px;
+    }
+    .quiz-wrapper {
+      max-width: 980px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 48px;
+      padding: 24px 28px 32px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,215,100,0.06);
+      border: 1px solid rgba(255,215,100,0.2);
+      margin: 10px 0;
+    }
+    /* header with prepared by */
+    .header-brand {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+      gap: 8px 16px;
+      border-bottom: 2px solid #f7b73160;
+      padding-bottom: 8px;
+    }
+    .header-brand h1 {
+      font-size: 2.0rem;
+      font-weight: 700;
+      color: #fae1b0;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px #f7b73130;
+    }
+    .header-brand .prepared {
+      font-family: 'Courier New', 'Lucida Sans Typewriter', monospace;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #d4c9a8;
+      background: #1a2f3f;
+      padding: 4px 20px;
+      border-radius: 40px;
+      border-left: 4px solid #f7b731;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .header-brand .prepared i {
+      font-style: italic;
+      font-weight: 600;
+      color: #f7d48a;
+    }
+    /* fixed stats panel: score, count, timer, filters */
+    .stats-panel {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #102433;
+      padding: 10px 18px;
+      border-radius: 60px;
+      margin-bottom: 18px;
+      border-left: 4px solid #f7b731;
+      border-right: 4px solid #f7b731;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.5);
+      color: #f5f0e7;
+      font-weight: 600;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+    }
+    .stats-panel .stat-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .stats-panel .badge {
+      background: #2f4b68;
+      padding: 4px 14px;
+      border-radius: 40px;
+      color: #fadc9c;
+      font-weight: 700;
+      font-size: 1.0rem;
+      box-shadow: inset 0 2px 3px rgba(0,0,0,0.3);
+    }
+    .stats-panel .timer-box {
+      background: #1e3349;
+      padding: 4px 18px;
+      border-radius: 50px;
+      color: #ffd966;
+      font-size: 1.4rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 2px;
+      border: 1px solid #f7b73160;
+    }
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 6px 12px;
+      flex-wrap: wrap;
+      background: #1a3145;
+      padding: 4px 14px 4px 18px;
+      border-radius: 60px;
+      border: 1px solid #f7b73140;
+    }
+    .filter-group select, .filter-group .set-select {
+      background: #1f3f58;
+      color: #f5e9d0;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      outline: none;
+      cursor: pointer;
+      border: 1px solid #f7b73160;
+    }
+    .filter-group select option {
+      background: #0f2638;
+      color: #f0e2c5;
+    }
+    .filter-group label {
+      color: #cbdae6;
+      font-size: 0.9rem;
+    }
+    .question-area {
+      background: #eef3f9;
+      border-radius: 32px;
+      padding: 24px 24px 16px;
+      box-shadow: inset 0 4px 8px rgba(0,0,0,0.02), 0 12px 28px rgba(0,0,0,0.5);
+      margin-bottom: 14px;
+      transition: all 0.1s ease;
+    }
+    .q-text {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #0a1d2b;
+      margin-bottom: 24px;
+      line-height: 1.3;
+      border-left: 6px solid #f7b731;
+      padding-left: 18px;
+      background: linear-gradient(to right, #dce7f3, transparent);
+      border-radius: 0 40px 40px 0;
+    }
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+      gap: 12px 16px;
+      margin-top: 6px;
+    }
+    .option-btn {
+      background: white;
+      border: none;
+      padding: 13px 12px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: #0b263a;
+      box-shadow: 0 4px 0 #b0c4d4, 0 6px 12px rgba(0,0,0,0.1);
+      transition: all 0.08s linear;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: 2px solid transparent;
+    }
+    .option-btn:active { transform: scale(0.96); box-shadow: 0 2px 0 #8fa3b5; }
+    .option-btn.correct { background: #2ecc71; border-color: #1e9c54; color: white; box-shadow: 0 4px 0 #1a7640; }
+    .option-btn.wrong { background: #e74c3c; border-color: #b03a2e; color: white; box-shadow: 0 4px 0 #8a2c22; }
+    .option-btn:disabled { opacity: 0.9; cursor: default; filter: saturate(0.7); }
+    .feedback-popup {
+      margin: 18px 0 8px;
+      padding: 14px 18px;
+      border-radius: 50px;
+      background: #1f3348;
+      color: #f5f2e0;
+      font-weight: 600;
+      font-size: 1.2rem;
+      text-align: center;
+      border-left: 8px solid #f7b731;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .feedback-popup span { background: #2a4058; padding: 4px 18px; border-radius: 40px; }
+    .footer-ctrl {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .btn-progress {
+      background: #213b52;
+      border: none;
+      padding: 10px 26px;
+      border-radius: 50px;
+      font-weight: 700;
+      color: #f0e9d0;
+      font-size: 1rem;
+      box-shadow: 0 4px 0 #0f202f;
+      transition: 0.08s linear;
+      cursor: pointer;
+      border: 1px solid #f7b73160;
+    }
+    .btn-progress:active { transform: scale(0.94); }
+    .btn-progress:disabled { opacity: 0.5; transform: scale(0.98); cursor: not-allowed; box-shadow: 0 2px 0 #0f202f; }
+    .reset-btn { background: #4b2e2e; border-color: #b16f6f; color: #ffddbb; }
+    .badge-set { background: #f7b731; color: #0a1d2b; padding: 4px 18px; border-radius: 40px; font-weight: 700; }
+    @media (max-width: 720px) {
+      .quiz-wrapper { padding: 14px; }
+      .q-text { font-size: 1.4rem; }
+      .stats-panel { flex-direction: column; align-items: stretch; gap: 6px; }
+      .header-brand { flex-direction: column; align-items: flex-start; }
+      .filter-group { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="quiz-wrapper" id="app">
+  <!-- header: Prepared By NP Regmi -->
+  <div class="header-brand">
+    <h1>📘 Preposition Quiz</h1>
+    <div class="prepared"><i>✍️ Prepared By</i> <span style="font-weight:800; color:#fad27a;">NP Regmi</span></div>
+  </div>
+
+  <!-- fixed scoring + timer + filters -->
+  <div class="stats-panel">
+    <div class="stat-group">
+      <span class="badge">🎯 SCORE</span>
+      <span id="scoreDisplay" class="badge" style="background:#3a5f7a; min-width:50px;">0</span>
+      <span class="badge" style="background:#2f4b68;">📊</span>
+      <span id="percentDisplay" class="badge" style="background:#3a5f7a; min-width:60px;">0%</span>
+    </div>
+    <div class="stat-group">
+      <span class="badge">⏳</span>
+      <span id="timerDisplay" class="timer-box">00:00</span>
+    </div>
+    <div class="filter-group">
+      <label>📌 Set</label>
+      <select id="setSelector" class="set-select">
+        <option value="all">All</option>
+        <option value="1">Set 1</option><option value="2">Set 2</option><option value="3">Set 3</option>
+        <option value="4">Set 4</option><option value="5">Set 5</option><option value="6">Set 6</option>
+      </select>
+      <label>📝 Q</label>
+      <select id="countSelector">
+        <option value="5">5</option><option value="10">10</option><option value="15">15</option>
+        <option value="20">20</option><option value="40">40</option><option value="all" selected>All</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- question container -->
+  <div class="question-area" id="questionArea">
+    <div class="q-text" id="questionText">Loading questions...</div>
+    <div class="options-grid" id="optionsContainer"></div>
+    <div class="feedback-popup" id="feedbackPopup">✨ Click an option to answer</div>
+  </div>
+
+  <!-- navigation controls -->
+  <div class="footer-ctrl">
+    <button class="btn-progress" id="prevBtn" disabled>◀ PREV</button>
+    <button class="btn-progress reset-btn" id="resetBtn">⟲ RESET</button>
+    <button class="btn-progress" id="nextBtn" disabled>NEXT ▶</button>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ---------- 111 questions (6 sets: 5x20 + 1x11) ----------
+    const raw = [
+      // Set 1 (Exercise-4: 14 + first 6 of Exercise-5 = 20)
+      { group:1, q:"Ram is accused...........theft.", options:["at","in","of"], correct:2 },
+      { group:1, q:"My teacher always goes to school...........bus.", options:["in","by","on"], correct:1 },
+      { group:1, q:"Don't laugh...........the poor.", options:["of","at","in"], correct:1 },
+      { group:1, q:"Surya was accused...........theft.", options:["for","of","in"], correct:1 },
+      { group:1, q:"Meera met him...........the way to work.", options:["in","to","on","at"], correct:2 },
+      { group:1, q:"\"What is wrong...........you?\" she asked me.", options:["by","in","for","with"], correct:3 },
+      { group:1, q:"She is...........the sari today.", options:["at","in","by"], correct:1 },
+      { group:1, q:"Madan was married...........an American lady.", options:["to","with","for"], correct:0 },
+      { group:1, q:"My father lives in Chitwan...........my mother.", options:["to","by","with","of"], correct:2 },
+      { group:1, q:"Prakash will have finished it...........tomorrow.", options:["for","at","from","by"], correct:3 },
+      { group:1, q:"She always quarrels...her husband.", options:["by","with","over","between"], correct:1 },
+      { group:1, q:"He put a piece of chalk...........his pocket as soon as the teacher gave him.", options:["in","into","out of","from"], correct:1 },
+      { group:1, q:"My school starts...........10 in the morning.", options:["on","at","in"], correct:1 },
+      { group:1, q:"A pen is different...........a pencil.", options:["than","from","and"], correct:1 },
+      // next 6 from Exercise-5
+      { group:1, q:"\"What's wrong...........you?\" she asked me.", options:["in","for","with"], correct:2 },
+      { group:1, q:"Dinkar met him...........the way to work.", options:["in","on","at"], correct:1 },
+      { group:1, q:"Promod is...........the door now.", options:["at","in","by"], correct:0 },
+      { group:1, q:"He writes...........a pencil.", options:["with","by","for"], correct:0 },
+      { group:1, q:"Hari goes to school daily but, he doesn't go there...........Saturday.", options:["in","on","at"], correct:1 },
+      { group:1, q:"My teacher always goes to school...........bus.", options:["in","by","on"], correct:1 },
+      // Set 2 (Exercise-5 remaining 14 + 6 from Exercise-6 = 20)
+      { group:2, q:"I've lived in the village for twenty years. I am tired...........living there.", options:["by","of","in"], correct:1 },
+      { group:2, q:"I prevented him...........speaking.", options:["for","to","from"], correct:2 },
+      { group:2, q:"Wisdom is the gift...........heaven.", options:["from","of","by"], correct:1 },
+      { group:2, q:"He is free...........anxieties.", options:["with","from","of"], correct:1 },
+      { group:2, q:"She passed...........in childhood.", options:["away","on","by"], correct:0 },
+      { group:2, q:"Raj usually goes to school...........foot.", options:["in","to","on"], correct:2 },
+      { group:2, q:"She is cutting mangoes...........her knife.", options:["by","in","with"], correct:2 },
+      { group:2, q:"She went to Allahabad...........train.", options:["by","from","on"], correct:0 },
+      { group:2, q:"Aman was born...........January 1, 1995.", options:["on","at","in"], correct:0 },
+      { group:2, q:"The coat is hanging...........the wall.", options:["on","into","in"], correct:0 },
+      { group:2, q:"The girl...........a pearl necklace is my sister.", options:["in","on","at"], correct:0 },
+      { group:2, q:"He distributed sweets...........my children.", options:["between","to","for"], correct:1 },
+      { group:2, q:"He cut a tree...........an axe.", options:["by","from","with"], correct:2 },
+      { group:2, q:"Some boys of our class gave...........smoking.", options:["in","up","away"], correct:1 },
+      // next 6 from Exercise-6
+      { group:2, q:"The sunlight came into the room...........the window.", options:["from","with","through"], correct:2 },
+      { group:2, q:"A tree gave us shelter...........the rain.", options:["on","of","from"], correct:2 },
+      { group:2, q:"Public opinion was...........the Bill.", options:["from","behind","against"], correct:2 },
+      { group:2, q:"Examinations begin...........30th May.", options:["in","at","from"], correct:1 },
+      { group:2, q:"I bought this pen...........five rupees.", options:["with","for","against"], correct:1 },
+      { group:2, q:"He has been...........school for ten years.", options:["in","to","at"], correct:2 },
+      // Set 3 (Exercise-6 remaining 14 + 6 from Exercise-7 = 20)
+      { group:3, q:"Ram is indifferent...........me.", options:["with","against","to"], correct:2 },
+      { group:3, q:"Sugar is selling...........30 rupees a kilo.", options:["in","on","at"], correct:2 },
+      { group:3, q:"He's...........this committee.", options:["in","on","at"], correct:0 },
+      { group:3, q:"Ram got his appointment letter...........11th May, 2001.", options:["in","to","on"], correct:2 },
+      { group:3, q:"Hari is true...........his name.", options:["to","for","with"], correct:0 },
+      { group:3, q:"All the students must be abide...........the school rules.", options:["with","by","for"], correct:1 },
+      { group:3, q:"It is difficult to communicate...........my parents in Humla nowadays.", options:["for","of","with"], correct:2 },
+      { group:3, q:"You can stay here...........I came back.", options:["since","until","to"], correct:1 },
+      { group:3, q:"I met him...........the front door.", options:["at","on","over"], correct:0 },
+      { group:3, q:"He's staring...........me.", options:["in","on","at"], correct:2 },
+      { group:3, q:"You've to look...........this matter fast.", options:["on","through","to"], correct:1 },
+      { group:3, q:"She is a girl...........eighteen years.", options:["of","in","on"], correct:0 },
+      { group:3, q:"We saw an old man...red beard lying dead on the road.", options:["with","in","on"], correct:0 },
+      { group:3, q:"You'll find our house...........the end of the next street.", options:["by","at","in"], correct:1 },
+      // next 6 from Exercise-7
+      { group:3, q:"I bought this shirt...........Rs.400.", options:["in","at","for"], correct:2 },
+      { group:3, q:"They will arrive here...........the 5th of July.", options:["from","since","for"], correct:0 },
+      { group:3, q:"It has been raining...........last week.", options:["up","over","above"], correct:1 },
+      { group:3, q:"The bridge...........the Manohara River is very nice.", options:["by","on","at"], correct:1 },
+      { group:3, q:"Rabindra will have posted the letter...........tomorrow.", options:["on","to","into"], correct:0 },
+      { group:3, q:"I always walk...........my school.", options:["by","from","of"], correct:0 },
+      // Set 4 (Exercise-7 remaining 14 + 6 from Exercise-8 = 20)
+      { group:4, q:"Many children die...........illness.", options:["on","in","along"], correct:0 },
+      { group:4, q:"Trees are planted...........the road.", options:["since","on","by"], correct:1 },
+      { group:4, q:"............tomorrow, we will have gone.", options:["on","in","for"], correct:0 },
+      { group:4, q:"We didn't go...........holiday last year?", options:["by","with","of"], correct:0 },
+      { group:4, q:"I was shocked...........what I saw.", options:["at","on","in"], correct:0 },
+      { group:4, q:"He got married...........17.", options:["by","with","of"], correct:0 },
+      { group:4, q:"I'm fed up...........the same food.", options:["in","out","down"], correct:1 },
+      { group:4, q:"My parents break...........horses.", options:["down","into","off"], correct:0 },
+      { group:4, q:"Attendance at my class has fallen...........considerably.", options:["in","with","by"], correct:1 },
+      { group:4, q:"Harke Sahu deals...........cloths.", options:["down","into","off"], correct:1 },
+      { group:4, q:"The standard of cooking has fallen...........recently.", options:["down","into","off"], correct:0 },
+      { group:4, q:"She is married...........an American boy.", options:["on","by","to"], correct:2 },
+      { group:4, q:"He has lived there...........his fifth birthday.", options:["for","since","ago"], correct:1 },
+      { group:4, q:"We saw an old man......red beard lying dead on the road.", options:["with","in","on"], correct:0 },
+      // next 6 from Exercise-8
+      { group:4, q:"You'll find our house...........the end of the nest street.", options:["by","on","in"], correct:0 },
+      { group:4, q:"Is Anjana...........this photograph? I can't find her.", options:["in","at","on"], correct:0 },
+      { group:4, q:"The poem Barsha composed was full...........humour.", options:["with","of","by"], correct:1 },
+      { group:4, q:"Is there anything interesting...........the paper today? I have no time to look at.", options:["in","at","on"], correct:0 },
+      { group:4, q:"I'm tired...........doing the same thing everyday.", options:["with","of","by"], correct:1 },
+      { group:4, q:"A minister of the country went to him...........his chariot.", options:["in","on","at"], correct:0 },
+      // Set 5 (Exercise-8 remaining 14 + 6 from Exercise-9 = 20)
+      { group:5, q:"The hermit was taking rest lying...........his cot.", options:["in","on","at"], correct:1 },
+      { group:5, q:"A prince visited him...........his guards.", options:["for","with","by"], correct:1 },
+      { group:5, q:"The people had followed to take revenge...........him.", options:["to","for","with"], correct:0 },
+      { group:5, q:"We visited Kathmandu city...........a taxi.", options:["on","in","by"], correct:2 },
+      { group:5, q:"Why don't you listen...........me?", options:["for","to","of"], correct:1 },
+      { group:5, q:"I'm really grateful...........your kind help.", options:["of","at","for"], correct:2 },
+      { group:5, q:"She is quite fond...........Chinese dishes.", options:["on","of","to"], correct:1 },
+      { group:5, q:"I will have finished my duty...........tomorrow?", options:["on","by","at"], correct:1 },
+      { group:5, q:"People enjoy a lot...........the auspicious occasion?", options:["in","at","on"], correct:2 },
+      { group:5, q:"Our school is situated...........the south of children park.", options:["by","in","to"], correct:1 },
+      { group:5, q:"Our city looks beautiful...........Dipawali?", options:["on","in","at"], correct:0 },
+      { group:5, q:"My friend hasn't returned...........Sunday.", options:["on","from","since"], correct:2 },
+      { group:5, q:"How much did you pay...........it?", options:["for","with","on"], correct:0 },
+      { group:5, q:"Prakash will have completed it...........tomorrow.", options:["by","on","at"], correct:0 },
+      // next 6 from Exercise-9
+      { group:5, q:"Nalina is famous...........singing a song.", options:["of","to","for"], correct:2 },
+      { group:5, q:"Don't tease...........the poor.", options:["of","at","in","nothing"], correct:1 },
+      { group:5, q:"Surya was accused...........theft.", options:["for","of","in"], correct:1 },
+      { group:5, q:"Ram is accused...........theft.", options:["at","in","of"], correct:2 },
+      { group:5, q:"I always go to school...........bus.", options:["in","by","on"], correct:1 },
+      { group:5, q:"Are you...........this photograph?", options:["in","at","on"], correct:0 },
+      // Set 6 (Exercise-9 remaining 11)
+      { group:6, q:"Yes, that's me...........the left.", options:["in","at","on"], correct:2 },
+      { group:6, q:"You've got a dirty mark...........your cheek.", options:["in","at","on"], correct:2 },
+      { group:6, q:"Have a look...........the mirror.", options:["in","at","on"], correct:1 },
+      { group:6, q:"I am interested...........reading the Gita.", options:["of","in","to"], correct:1 },
+      { group:6, q:"We went to Delhi...........train.", options:["on","by","with"], correct:1 },
+      { group:6, q:"My brother always writes...........a pencil.", options:["in","with","on"], correct:1 },
+      { group:6, q:"I am new...........this place.", options:["to","for","in"], correct:0 },
+      { group:6, q:"The man gave...........his trial to win the race.", options:["of","off","up"], correct:2 },
+      { group:6, q:"The success of a student depends...........the way he prepares for the exam.", options:["in","at","on"], correct:2 },
+      { group:6, q:"They are obedient...........their teachers.", options:["at","to","for"], correct:1 },
+      { group:6, q:"She apologized...........what she had done against me.", options:["with","in","for"], correct:2 }
+    ];
+
+    // ---------- state ----------
+    let allQuestions = raw.map((q, idx) => ({ ...q, idx }));
+    let currentSet = 'all';         // 'all' or 1..6
+    let questionLimit = 'all';      // 'all', 5,10,15,20,40
+    let currentIndex = 0;           // index within filtered list
+    let score = 0;
+    let answered = [];              // boolean per question (global)
+    let selectedOption = [];        // selected index per question
+    let timerSeconds = 0;
+    let timerInterval = null;
+    let isLocked = false;
+    let timeoutId = null;
+
+    // DOM
+    const questionText = document.getElementById('questionText');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const feedbackPopup = document.getElementById('feedbackPopup');
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    const percentDisplay = document.getElementById('percentDisplay');
+    const timerDisplay = document.getElementById('timerDisplay');
+    const setSelector = document.getElementById('setSelector');
+    const countSelector = document.getElementById('countSelector');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    // init answer arrays
+    function initAnswers() {
+      answered = new Array(allQuestions.length).fill(false);
+      selectedOption = new Array(allQuestions.length).fill(null);
+    }
+    initAnswers();
+
+    // ---------- helpers ----------
+    function formatTime(sec) {
+      const m = String(Math.floor(sec / 60)).padStart(2, '0');
+      const s = String(sec % 60).padStart(2, '0');
+      return `${m}:${s}`;
+    }
+    function updateTimer() { timerDisplay.textContent = formatTime(timerSeconds); }
+    function startTimer() {
+      if (timerInterval) return;
+      timerInterval = setInterval(() => { timerSeconds++; updateTimer(); }, 1000);
+    }
+    function resetTimer() {
+      clearInterval(timerInterval); timerInterval = null;
+      timerSeconds = 0; updateTimer(); startTimer();
+    }
+
+    // get filtered list based on set and limit
+    function getFilteredQuestions() {
+      let list = allQuestions;
+      if (currentSet !== 'all') {
+        list = list.filter(q => q.group === parseInt(currentSet, 10));
+      }
+      if (questionLimit !== 'all') {
+        const limit = parseInt(questionLimit, 10);
+        list = list.slice(0, limit);
+      }
+      return list;
+    }
+
+    // get current question object from filtered list
+    function getCurrentQ() {
+      const list = getFilteredQuestions();
+      return list[currentIndex] || null;
+    }
+
+    // compute score and percent for current filtered list
+    function computeStats() {
+      const list = getFilteredQuestions();
+      let s = 0;
+      let total = list.length;
+      for (let i = 0; i < total; i++) {
+        const q = list[i];
+        if (answered[q.idx] && selectedOption[q.idx] === q.correct) s++;
+      }
+      return { score: s, total, percent: total > 0 ? Math.round((s/total)*100) : 0 };
+    }
+
+    // render
+    function renderQuestion() {
+      const q = getCurrentQ();
+      if (!q) {
+        questionText.textContent = 'No questions match filter.';
+        optionsContainer.innerHTML = '';
+        feedbackPopup.innerHTML = '⚠️ Adjust filters above.';
+        prevBtn.disabled = true; nextBtn.disabled = true;
+        return;
+      }
+      const list = getFilteredQuestions();
+      const globalIdx = q.idx;
+
+      questionText.textContent = `${globalIdx+1}. ${q.q}`;
+      optionsContainer.innerHTML = '';
+      const optLabels = ['A', 'B', 'C', 'D'];
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = `${optLabels[idx]}. ${opt}`;
+        btn.dataset.optIndex = idx;
+        const isAnswered = answered[globalIdx];
+        btn.disabled = isAnswered;
+        if (isAnswered) {
+          const selected = selectedOption[globalIdx];
+          if (idx === q.correct) btn.classList.add('correct');
+          else if (idx === selected && selected !== q.correct) btn.classList.add('wrong');
+          btn.style.cursor = 'default';
+        }
+        btn.addEventListener('click', () => handleOptionClick(idx));
+        optionsContainer.appendChild(btn);
+      });
+
+      // feedback
+      if (answered[globalIdx]) {
+        const qq = getCurrentQ();
+        const selectedIdx = selectedOption[globalIdx];
+        const isCorrect = (selectedIdx === qq.correct);
+        const correctText = qq.options[qq.correct];
+        feedbackPopup.innerHTML = isCorrect
+          ? `✅ Correct! <span>“${qq.options[selectedIdx]}”</span>`
+          : `❌ Wrong! Correct: <span>“${correctText}”</span>`;
+      } else {
+        feedbackPopup.innerHTML = `✨ Click an option to answer`;
+      }
+
+      // update score & percent
+      const stats = computeStats();
+      score = stats.score;
+      scoreDisplay.textContent = score;
+      percentDisplay.textContent = stats.percent + '%';
+
+      // nav buttons
+      prevBtn.disabled = (currentIndex === 0);
+      nextBtn.disabled = (currentIndex === list.length - 1);
+    }
+
+    // handle option click
+    function handleOptionClick(optIdx) {
+      if (isLocked) return;
+      const q = getCurrentQ();
+      if (!q) return;
+      const globalIdx = q.idx;
+      if (answered[globalIdx]) return;
+
+      const isCorrect = (optIdx === q.correct);
+      answered[globalIdx] = true;
+      selectedOption[globalIdx] = optIdx;
+
+      // update UI
+      const btns = optionsContainer.querySelectorAll('.option-btn');
+      btns.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === q.correct) btn.classList.add('correct');
+        else if (idx === optIdx && !isCorrect) btn.classList.add('wrong');
+      });
+
+      const correctAns = q.options[q.correct];
+      feedbackPopup.innerHTML = isCorrect
+        ? `✅ Correct! <span>“${q.options[optIdx]}”</span>`
+        : `❌ Wrong! Correct: <span>“${correctAns}”</span>`;
+
+      // update stats
+      const stats = computeStats();
+      score = stats.score;
+      scoreDisplay.textContent = score;
+      percentDisplay.textContent = stats.percent + '%';
+
+      isLocked = true;
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        isLocked = false;
+        const list = getFilteredQuestions();
+        if (currentIndex < list.length - 1) {
+          currentIndex++;
+          renderQuestion();
+        } else {
+          renderQuestion();
+          const stats2 = computeStats();
+          feedbackPopup.innerHTML = `🏁 Done! Score: ${stats2.score}/${stats2.total} (${stats2.percent}%)`;
+        }
+        timeoutId = null;
+      }, 2000);
+    }
+
+    // navigation
+    function goToPrev() {
+      if (currentIndex > 0) {
+        if (timeoutId) { clearTimeout(timeoutId); timeoutId = null; isLocked = false; }
+        currentIndex--;
+        renderQuestion();
+      }
+    }
+    function goToNext() {
+      const list = getFilteredQuestions();
+      if (currentIndex < list.length - 1) {
+        if (timeoutId) { clearTimeout(timeoutId); timeoutId = null; isLocked = false; }
+        currentIndex++;
+        renderQuestion();
+      }
+    }
+
+    // reset everything (filters stay, reset answers & index)
+    function resetAll() {
+      if (timeoutId) { clearTimeout(timeoutId); timeoutId = null; isLocked = false; }
+      initAnswers();
+      currentIndex = 0;
+      renderQuestion();
+      feedbackPopup.innerHTML = `🔄 Reset. Start answering!`;
+    }
+
+    // filter change: set or count
+    function onFilterChange() {
+      if (timeoutId) { clearTimeout(timeoutId); timeoutId = null; isLocked = false; }
+      currentIndex = 0;
+      renderQuestion();
+      feedbackPopup.innerHTML = `📌 Filters updated.`;
+    }
+
+    // event listeners
+    prevBtn.addEventListener('click', goToPrev);
+    nextBtn.addEventListener('click', goToNext);
+    resetBtn.addEventListener('click', resetAll);
+
+    setSelector.addEventListener('change', function(e) {
+      currentSet = e.target.value;
+      onFilterChange();
+    });
+    countSelector.addEventListener('change', function(e) {
+      questionLimit = e.target.value;
+      onFilterChange();
+    });
+
+    // initial load
+    resetTimer();
+    currentSet = setSelector.value;
+    questionLimit = countSelector.value;
+    renderQuestion();
+  })();
+</script>
+</body>
+</html>
