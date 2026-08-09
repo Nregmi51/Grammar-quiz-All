@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>🔥 Stepwise MCQ · 15 sets</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+        }
+        body {
+            background: linear-gradient(145deg, #f4efff 0%, #e4dcff 100%);
+            min-height: 100vh;
+            padding: 20px 16px 60px;
+            display: flex;
+            justify-content: center;
+        }
+        .app {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        /* ---- top nav ---- */
+        .top-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 60px 60px 30px 30px;
+            padding: 14px 20px;
+            margin-bottom: 28px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px 16px;
+        }
+        .brand {
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #1f0f5c, #6b3cc9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .brand small {
+            font-size: 0.9rem;
+            background: #daceff;
+            -webkit-text-fill-color: #1f0f5c;
+            background: #daceff;
+            padding: 2px 14px;
+            border-radius: 60px;
+            font-weight: 700;
+        }
+        .action-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+        .btn {
+            border: none;
+            padding: 8px 18px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid transparent;
+        }
+        .btn-primary {
+            background: #ffd966;
+            border-color: #f5b342;
+            color: #1f1a2b;
+        }
+        .btn-primary:hover {
+            background: #f5c542;
+            transform: scale(1.02);
+        }
+        .btn-danger {
+            background: #ff8a8a;
+            border-color: #e35f5f;
+            color: #3d1a1a;
+        }
+        .btn-danger:hover {
+            background: #ff6f6f;
+        }
+        .btn-outline {
+            background: transparent;
+            border-color: #b5a6e6;
+        }
+        .btn-outline:hover {
+            background: #f2edff;
+            border-color: #6b3cc9;
+        }
+        .btn-purple {
+            background: #6b3cc9;
+            border-color: #6b3cc9;
+            color: white;
+            box-shadow: 0 4px 14px rgba(107, 60, 201, 0.3);
+        }
+        .btn-purple:hover {
+            background: #5a2eb3;
+            transform: scale(1.02);
+        }
+        .btn-success {
+            background: #7bcb7b;
+            border-color: #4caf50;
+            color: #1d3a1d;
+        }
+        .btn-success:hover {
+            background: #66bb66;
+        }
+
+        /* ---- set selector (home) ---- */
+        .set-selector-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+            gap: 12px;
+            background: white;
+            border-radius: 48px;
+            padding: 24px 28px;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.03);
+            border: 1px solid #f0ebff;
+            margin-bottom: 20px;
+        }
+        .set-btn {
+            border: none;
+            background: #f4f0ff;
+            padding: 14px 0;
+            border-radius: 40px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #1d1a2b;
+            border: 2px solid #e2d9f5;
+            cursor: pointer;
+            transition: 0.15s;
+            text-align: center;
+        }
+        .set-btn:hover {
+            background: #e8dfff;
+            border-color: #9a83df;
+            transform: scale(1.04);
+        }
+        .set-btn.completed {
+            background: #c8f0c8;
+            border-color: #5cb85c;
+        }
+        .set-btn.active {
+            background: #6b3cc9;
+            border-color: #6b3cc9;
+            color: white;
+            box-shadow: 0 6px 16px rgba(107, 60, 201, 0.25);
+        }
+        .set-btn .badge {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            opacity: 0.7;
+        }
+
+        /* ---- question card (big & bold) ---- */
+        .question-card {
+            background: white;
+            border-radius: 48px;
+            padding: 32px 34px 38px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0ebff;
+            margin-bottom: 20px;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .card-header .set-label {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #2b1b6b;
+            background: #f0eaff;
+            padding: 4px 20px;
+            border-radius: 60px;
+        }
+        .card-header .q-counter {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #4a3a7a;
+        }
+        .mcq-question {
+            font-weight: 800;
+            font-size: 1.6rem;
+            color: #1a142b;
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            background: #faf8ff;
+            padding: 16px 24px;
+            border-radius: 40px;
+            border: 2.5px solid #e2d9f5;
+            cursor: pointer;
+            transition: 0.12s;
+            color: #1d1a2b;
+        }
+        .options label:hover {
+            background: #f5f0ff;
+            border-color: #b29ce6;
+            transform: scale(1.01);
+        }
+        .options input[type="radio"] {
+            accent-color: #6b3cc9;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .feedback-box {
+            margin-top: 20px;
+            padding: 16px 24px;
+            border-radius: 40px;
+            font-weight: 800;
+            font-size: 1.3rem;
+            text-align: center;
+            background: #f0eaff;
+            color: #2b1b6b;
+            border: 2px solid #d6cbf5;
+        }
+        .feedback-box.correct {
+            background: #c8f0c8;
+            border-color: #5cb85c;
+            color: #1a5a1a;
+        }
+        .feedback-box.wrong {
+            background: #ffd9d9;
+            border-color: #e35f5f;
+            color: #8f2a2a;
+        }
+
+        /* ---- set result ---- */
+        .result-card {
+            background: white;
+            border-radius: 48px;
+            padding: 36px 32px;
+            text-align: center;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0ebff;
+        }
+        .result-card .big-score {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #2b1b6b;
+            margin: 10px 0;
+        }
+        .result-card .sub {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #4a3a7a;
+        }
+        .result-card .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 28px;
+        }
+
+        /* ---- overall performance modal (inline) ---- */
+        .overall-modal {
+            background: white;
+            border-radius: 48px;
+            padding: 30px 28px 36px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+            border: 1px solid #e8e0ff;
+            margin-top: 20px;
+        }
+        .overall-modal h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #1f0f5c;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .overall-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .overall-item {
+            background: #f8f5ff;
+            border-radius: 30px;
+            padding: 12px 16px;
+            text-align: center;
+            border: 1px solid #e2d9f5;
+        }
+        .overall-item .set-label {
+            font-weight: 700;
+            color: #2b1b6b;
+        }
+        .overall-item .score {
+            font-weight: 900;
+            font-size: 1.3rem;
+            color: #1a142b;
+        }
+        .overall-item .score.pass {
+            color: #2a7a2a;
+        }
+        .overall-item .score.fail {
+            color: #b34a4a;
+        }
+        .overall-total {
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 900;
+            padding: 16px;
+            background: #f0eaff;
+            border-radius: 60px;
+            color: #1f0f5c;
+        }
+
+        /* responsive */
+        @media (max-width: 600px) {
+            .question-card { padding: 22px 18px; }
+            .mcq-question { font-size: 1.3rem; }
+            .options label { font-size: 1.05rem; padding: 14px 16px; }
+            .set-selector-grid { padding: 16px; gap: 8px; }
+            .set-btn { padding: 10px 0; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+    (function() {
+        // ---------- 15 sets data ----------
+        const SETS = [
+            { qs: [
+                { q: 'I saw ............ accident last night.', options: ['a', 'an', 'the'], correct: 1 },
+                { q: 'She always wakes up ............ 5 o\'clock in the morning.', options: ['at', 'on', 'in'], correct: 0 },
+                { q: 'Did she ............ her homework?', options: ['submit', 'submits', 'submitted'], correct: 2 },
+                { q: 'Hari likes reading a book ............ his brother likes watching TV.', options: ['and', 'so', 'but'], correct: 2 },
+                { q: 'Rara is the ............ freshwater lake in the Nepal.', options: ['large', 'larger', 'largest'], correct: 2 }
+            ]},
+            { qs: [
+                { q: 'Mr. Joshi is ............ honest boy.', options: ['a', 'an', 'the'], correct: 1 },
+                { q: 'My brother always goes to school ............ foot.', options: ['on', 'by', 'with'], correct: 0 },
+                { q: 'I ............ to market tomorrow.', options: ['go', 'went', 'will go'], correct: 2 },
+                { q: 'Mr. Limbu didn\'t go to school ............ he was sick.', options: ['but', 'because', 'so'], correct: 1 },
+                { q: 'Ramesh is ............ than his father.', options: ['tall', 'taller', 'tallest'], correct: 1 }
+            ]},
+            { qs: [
+                { q: 'Ruby is ............ one-eyed girl.', options: ['a', 'an', 'the'], correct: 0 },
+                { q: 'We usually buy new clothes ............ Dashain.', options: ['in', 'on', 'at'], correct: 1 },
+                { q: 'The old man ............ yesterday.', options: ['dies', 'died', 'will die'], correct: 1 },
+                { q: 'Kamana puts on her uniform ............', options: ['myself', 'herself', 'yourself'], correct: 1 },
+                { q: 'The boys making a noise in the class?', options: ['Is', 'Do', 'Are'], correct: 2 }
+            ]},
+            { qs: [
+                { q: 'Mr. Joshi is ............ tallest boy in our class.', options: ['a', 'an', 'the'], correct: 2 },
+                { q: 'She is fond ............ eating chocolates.', options: ['of', 'to', 'for'], correct: 0 },
+                { q: 'Where ............ nowadays?', options: ['you live', 'does you live', 'do you live'], correct: 2 },
+                { q: 'This is not my pen. It\'s ............', options: ['her', 'she', 'hers'], correct: 2 },
+                { q: 'They can play the flute but they ............ sing a song.', options: ['can', 'cannot', 'could not'], correct: 1 }
+            ]},
+            { qs: [
+                { q: 'Mr. Bhatta is ............ English teacher.', options: ['a', 'an', 'the'], correct: 1 },
+                { q: 'I will be back ............ half an hour.', options: ['at', 'in', 'on'], correct: 1 },
+                { q: 'She dances as ............ as Swostima Khadka.', options: ['beautifully', 'more beautifully', 'most beautifully'], correct: 0 },
+                { q: 'Ram likes reading ............ writing.', options: ['because', 'but', 'and'], correct: 2 },
+                { q: '............ I come in, sir?', options: ['May', 'Will', 'Am'], correct: 0 }
+            ]},
+            { qs: [
+                { q: 'There is a cat. ............ cat is chasing a mouse.', options: ['A', 'An', 'The'], correct: 2 },
+                { q: 'The book is ............ the table.', options: ['at', 'on', 'in'], correct: 1 },
+                { q: 'His mother made a cake ............ it was his birthday.', options: ['and', 'but', 'because'], correct: 2 },
+                { q: 'Where are my keys? I ............ find them.', options: ['can', 'cannot', 'won\'t'], correct: 1 },
+                { q: 'They are speaking ............ We can hear a big shout.', options: ['loud', 'loudly', 'slowly'], correct: 1 }
+            ]},
+            { qs: [
+                { q: 'It is going to rain. You need to carry ............ umbrella.', options: ['a', 'an', 'the'], correct: 1 },
+                { q: 'I am waiting for my friend ............ of her house.', options: ['in front', 'under', 'on'], correct: 0 },
+                { q: 'They usually ............ their lunch at 12 o\'clock.', options: ['has', 'have', 'had'], correct: 1 },
+                { q: 'These cakes are ............ . You can\'t eat them.', options: ['me', 'my', 'mine'], correct: 2 },
+                { q: 'Mt. Everest is ............ than Mt. Annapurna.', options: ['high', 'higher', 'highest'], correct: 1 }
+            ]},
+            { qs: [
+                { q: '............ old are you?', options: ['How many', 'How', 'What'], correct: 1 },
+                { q: 'She is ............ beautiful girl.', options: ['a', 'an', 'the'], correct: 0 },
+                { q: 'Mr. Rawal lives ............ Nepal.', options: ['in', 'at', 'on'], correct: 0 },
+                { q: 'All of us ............ climb Mt. Everest.', options: ['won\'t', 'cannot', 'can'], correct: 2 },
+                { q: 'Both Mary ............ John help their father.', options: ['and', 'but', 'or'], correct: 0 }
+            ]},
+            { qs: [
+                { q: 'Jack ............ go to work yesterday because he was sick.', options: ['could', 'cannot', 'couldn\'t'], correct: 2 },
+                { q: 'He arrived at school ............ hour ago.', options: ['a', 'an', 'the'], correct: 1 },
+                { q: 'She was born ............ 1st April 2025.', options: ['at', 'on', 'in'], correct: 1 },
+                { q: 'Diya ............ the meeting tomorrow.', options: ['attend', 'attended', 'will attend'], correct: 2 },
+                { q: 'Why ............ on the book?', options: ['do you write', 'are you write', 'you write'], correct: 0 }
+            ]},
+            { qs: [
+                { q: 'The police station is ............ the park.', options: ['between', 'under', 'next to'], correct: 2 },
+                { q: 'My friend ............ pasta once a week.', options: ['ate', 'eat', 'eats'], correct: 2 },
+                { q: 'He likes singing ............ she loves cooking.', options: ['and', 'or', 'but'], correct: 2 },
+                { q: 'This is my book. It\'s ............', options: ['yours', 'your', 'mine'], correct: 2 },
+                { q: 'Look at the ............ clouds. I am sure it will rain soon.', options: ['high', 'nice', 'dark'], correct: 2 }
+            ]},
+            { qs: [
+                { q: 'Riya ............ the class yesterday.', options: ['don\'t attend', 'doesn\'t attend', 'didn\'t attend'], correct: 2 },
+                { q: 'The cheetah is the ............ animal.', options: ['fast', 'faster', 'fastest'], correct: 2 },
+                { q: 'The child entered the house ............ I did not notice.', options: ['quietly', 'slowly', 'quickly'], correct: 0 },
+                { q: '............ you open the door for me? It is very difficult.', options: ['Shall', 'Will', 'May'], correct: 1 },
+                { q: 'It is risky to climb on ............ rocky hill.', options: ['a', 'an', 'the'], correct: 0 }
+            ]},
+            { qs: [
+                { q: 'Tenzing is ............ work.', options: ['at', 'on', 'in'], correct: 0 },
+                { q: 'My brother is ............ engineer.', options: ['a', 'an', 'the'], correct: 1 },
+                { q: 'Ruby is ............ than Jiya.', options: ['tall', 'taller', 'tallest'], correct: 1 },
+                { q: '............ she feeling unwell?', options: ['Does', 'Are', 'Is'], correct: 2 },
+                { q: 'Is this Ramita\'s book? Yes, it\'s ............', options: ['his', 'her', 'hers'], correct: 2 }
+            ]},
+            { qs: [
+                { q: 'She found ............ old book in the library.', options: ['a', 'an', 'the'], correct: 1 },
+                { q: 'You ............ finish your homework before going out to play.', options: ['should', 'can', 'might'], correct: 0 },
+                { q: 'Today, they ............ to the park.', options: ['go', 'will go', 'are going'], correct: 2 },
+                { q: 'Which is the correct question form?', options: ['Where she lives?', 'Where does she live?', 'Where do she live?'], correct: 1 },
+                { q: 'The cat is hiding ............ the table.', options: ['under', 'on', 'in front of'], correct: 0 }
+            ]},
+            { qs: [
+                { q: '............ are you from?', options: ['Who', 'Where', 'Whom'], correct: 1 },
+                { q: 'He never meets with accidents since he drives his car ............', options: ['carefully', 'carelessly', 'beautifully'], correct: 0 },
+                { q: 'I ............ come to the party. I am really busy.', options: ['can', 'can\'t', 'could'], correct: 1 },
+                { q: 'The sun is ............ star.', options: ['a', 'an', 'the'], correct: 0 },
+                { q: 'Nepal lies ............ India and China.', options: ['under', 'between', 'behind'], correct: 1 }
+            ]},
+            { qs: [
+                { q: 'It rains a lot ............ winter here.', options: ['at', 'on', 'in'], correct: 2 },
+                { q: 'Gaurav is ............ honest student of our school.', options: ['a', 'an', 'the'], correct: 1 },
+                { q: 'Last week, we ............ in the wedding party.', options: ['are', 'were', 'have'], correct: 1 },
+                { q: '............ fluent English in the class?', options: ['Does she speak', 'Does she speaks', 'Do she speak'], correct: 0 },
+                { q: 'Rajesh, do it ............', options: ['himself', 'yourself', 'myself'], correct: 1 }
+            ]}
+        ];
+
+        // ---------- state ----------
+        // selectedAnswers[setIndex][qIndex] = optionIndex (0..4) or null
+        const selectedAnswers = SETS.map(() => Array(5).fill(null));
+        // track which sets are completed (all 5 answered)
+        const setCompleted = SETS.map(() => false);
+
+        // UI state
+        let currentSet = 0;          // 0-based
+        let currentQ = 0;            // 0-based within set
+        let showingResult = false;   // true when set is complete and showing result
+        let showingOverall = false;  // true when showing overall performance modal
+        let feedbackTimeout = null;
+
+        // ---------- helpers ----------
+        function getSetScore(setIdx) {
+            const qs = SETS[setIdx].qs;
+            let correct = 0;
+            for (let i = 0; i < qs.length; i++) {
+                const ans = selectedAnswers[setIdx][i];
+                if (ans !== null && ans === qs[i].correct) correct++;
+            }
+            return correct;
+        }
+
+        function isSetComplete(setIdx) {
+            return selectedAnswers[setIdx].every(a => a !== null);
+        }
+
+        function getOverallStats() {
+            let totalCorrect = 0, totalPossible = 0;
+            let setStats = [];
+            for (let s = 0; s < SETS.length; s++) {
+                const qs = SETS[s].qs;
+                let correct = 0;
+                for (let i = 0; i < qs.length; i++) {
+                    totalPossible++;
+                    if (selectedAnswers[s][i] !== null && selectedAnswers[s][i] === qs[i].correct) correct++;
+                }
+                totalCorrect += correct;
+                setStats.push({ set: s, correct, total: qs.length });
+            }
+            return { correct: totalCorrect, total: totalPossible, setStats };
+        }
+
+        // ---------- render ----------
+        function render() {
+            const app = document.getElementById('app');
+            if (showingOverall) {
+                renderOverall(app);
+                return;
+            }
+
+            // If current set is complete, show result
+            if (isSetComplete(currentSet) && !showingResult) {
+                showingResult = true;
+            }
+
+            if (showingResult) {
+                renderSetResult(app);
+                return;
+            }
+
+            // Otherwise show question card
+            renderQuestion(app);
+        }
+
+        function renderQuestion(app) {
+            const set = SETS[currentSet];
+            const qData = set.qs[currentQ];
+            const selected = selectedAnswers[currentSet][currentQ];
+            const totalQ = set.qs.length;
+
+            let html = `
+                <div class="top-nav">
+                    <div class="brand">📚 MCQ <small>step by step</small></div>
+                    <div class="action-group">
+                        <button class="btn btn-outline" id="homeBtn">🏠 Home</button>
+                        <button class="btn btn-primary" id="overallBtn">📊 Overall</button>
+                        <button class="btn btn-danger" id="resetAllBtn">🔄 Reset all</button>
+                    </div>
+                </div>
+                <div class="question-card">
+                    <div class="card-header">
+                        <span class="set-label">Set ${currentSet+1}</span>
+                        <span class="q-counter">Question ${currentQ+1} / ${totalQ}</span>
+                    </div>
+                    <div class="mcq-question">${qData.q}</div>
+                    <div class="options">
+            `;
+            qData.options.forEach((opt, idx) => {
+                const checked = (selected === idx) ? 'checked' : '';
+                html += `<label>
+                    <input type="radio" name="q" value="${idx}" ${checked} data-opt="${idx}">
+                    ${opt}
+                </label>`;
+            });
+            html += `
+                    </div>
+                    <div id="feedbackArea"></div>
+                </div>
+            `;
+
+            app.innerHTML = html;
+
+            // ---- events ----
+            // radio change -> show feedback, then auto advance
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const optIdx = parseInt(this.dataset.opt);
+                    // save answer
+                    selectedAnswers[currentSet][currentQ] = optIdx;
+
+                    // show feedback
+                    const qData = SETS[currentSet].qs[currentQ];
+                    const isCorrect = (optIdx === qData.correct);
+                    const fbArea = document.getElementById('feedbackArea');
+                    if (fbArea) {
+                        fbArea.innerHTML = `<div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}">
+                            ${isCorrect ? '✅ Correct!' : '❌ Incorrect. The correct answer was: ' + qData.options[qData.correct]}
+                        </div>`;
+                    }
+
+                    // disable all radios
+                    document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
+
+                    // clear any existing timeout
+                    if (feedbackTimeout) clearTimeout(feedbackTimeout);
+
+                    // after 2 seconds, advance if not last question
+                    feedbackTimeout = setTimeout(() => {
+                        feedbackTimeout = null;
+                        // check if all questions in set are answered
+                        if (currentQ + 1 < SETS[currentSet].qs.length) {
+                            // move to next question
+                            currentQ++;
+                            showingResult = false;
+                            render();
+                        } else {
+                            // set complete
+                            showingResult = true;
+                            render();
+                        }
+                    }, 2000);
+                });
+            });
+
+            // home
+            document.getElementById('homeBtn').addEventListener('click', function() {
+                if (feedbackTimeout) clearTimeout(feedbackTimeout);
+                showingResult = false;
+                showingOverall = false;
+                currentQ = 0;
+                renderHome();
+            });
+
+            // overall
+            document.getElementById('overallBtn').addEventListener('click', function() {
+                if (feedbackTimeout) clearTimeout(feedbackTimeout);
+                showingOverall = true;
+                showingResult = false;
+                render();
+            });
+
+            // reset all
+            document.getElementById('resetAllBtn').addEventListener('click', function() {
+                if (feedbackTimeout) clearTimeout(feedbackTimeout);
+                for (let s = 0; s < SETS.length; s++) {
+                    selectedAnswers[s] = Array(5).fill(null);
+                }
+                showingResult = false;
+                showingOverall = false;
+                currentQ = 0;
+                render();
+            });
+        }
+
+        function renderSetResult(app) {
+            const score = getSetScore(currentSet);
+            const total = SETS[currentSet].qs.length;
+            const pct = Math.round((score / total) * 100);
+
+            let html = `
+                <div class="top-nav">
+                    <div class="brand">📚 MCQ <small>step by step</small></div>
+                    <div class="action-group">
+                        <button class="btn btn-outline" id="homeBtn">🏠 Home</button>
+                        <button class="btn btn-primary" id="overallBtn">📊 Overall</button>
+                        <button class="btn btn-danger" id="resetAllBtn">🔄 Reset all</button>
+                    </div>
+                </div>
+                <div class="result-card">
+                    <div class="set-label" style="font-size:1.6rem; font-weight:800; color:#2b1b6b;">Set ${currentSet+1} Complete!</div>
+                    <div class="big-score">${pct}%</div>
+                    <div class="sub">${score} / ${total} correct</div>
+                    <div style="margin: 16px 0; font-size:1rem; font-weight:600; color:#4a3a7a;">
+                        ${pct >= 70 ? '🌟 Great job!' : pct >= 40 ? '📖 Keep practicing!' : '💪 Review this set again.'}
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-purple" id="retrySetBtn">🔄 Retry Set</button>
+                        <button class="btn btn-success" id="homeFromResultBtn">🏠 Home</button>
+                    </div>
+                </div>
+            `;
+            app.innerHTML = html;
+
+            document.getElementById('homeBtn').addEventListener('click', function() {
+                showingResult = false;
+                showingOverall = false;
+                currentQ = 0;
+                renderHome();
+            });
+            document.getElementById('overallBtn').addEventListener('click', function() {
+                showingOverall = true;
+                showingResult = false;
+                render();
+            });
+            document.getElementById('resetAllBtn').addEventListener('click', function() {
+                for (let s = 0; s < SETS.length; s++) {
+                    selectedAnswers[s] = Array(5).fill(null);
+                }
+                showingResult = false;
+                showingOverall = false;
+                currentQ = 0;
+                render();
+            });
+            document.getElementById('retrySetBtn').addEventListener('click', function() {
+                selectedAnswers[currentSet] = Array(5).fill(null);
+                showingResult = false;
+                currentQ = 0;
+                render();
+            });
+            document.getElementById('homeFromResultBtn').addEventListener('click', function() {
+                showingResult = false;
+                showingOverall = false;
+                currentQ = 0;
+                renderHome();
+            });
+        }
+
+        function renderHome() {
+            const app = document.getElementById('app');
+            const overall = getOverallStats();
+
+            let html = `
+                <div class="top-nav">
+                    <div class="brand">📚 MCQ <small>15 sets</small></div>
+                    <div class="action-group">
+                        <button class="btn btn-primary" id="overallFromHomeBtn">📊 Overall</button>
+                        <button class="btn btn-danger" id="resetAllHomeBtn">🔄 Reset all</button>
+                    </div>
+                </div>
+                <div style="margin-bottom:12px; font-weight:700; font-size:1.1rem; color:#2b1b6b; text-align:center;">
+                    🎯 Overall: ${overall.correct}/${overall.total} correct (${Math.round((overall.correct/overall.total)*100)}%)
+                </div>
+                <div class="set-selector-grid">
+            `;
+            for (let i = 0; i < SETS.length; i++) {
+                const complete = isSetComplete(i);
+                const score = getSetScore(i);
+                const total = SETS[i].qs.length;
+                const pct = complete ? Math.round((score/total)*100) : null;
+                const label = complete ? `${pct}%` : '⬜';
+                const cls = complete ? 'completed' : '';
+                html += `<button class="set-btn ${cls}" data-set="${i}">
+                    ${i+1}
+                    <span class="badge">${label}</span>
+                </button>`;
+            }
+            html += `
+                </div>
+                <div style="text-align:center; color:#6b5a9a; font-weight:600; font-size:0.95rem; margin-top:4px;">
+                    ✅ green = completed &nbsp;·&nbsp; click a set to start
+                </div>
+            `;
+            app.innerHTML = html;
+
+            document.querySelectorAll('.set-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const setIdx = parseInt(this.dataset.set);
+                    currentSet = setIdx;
+                    currentQ = 0;
+                    showingResult = false;
+                    showingOverall = false;
+                    render();
+                });
+            });
+
+            document.getElementById('overallFromHomeBtn').addEventListener('click', function() {
+                showingOverall = true;
+                render();
+            });
+            document.getElementById('resetAllHomeBtn').addEventListener('click', function() {
+                for (let s = 0; s < SETS.length; s++) {
+                    selectedAnswers[s] = Array(5).fill(null);
+                }
+                renderHome();
+            });
+        }
+
+        function renderOverall(app) {
+            const stats = getOverallStats();
+            const totalSets = SETS.length;
+
+            let html = `
+                <div class="top-nav">
+                    <div class="brand">📊 Overall Performance</div>
+                    <div class="action-group">
+                        <button class="btn btn-outline" id="backFromOverallBtn">🏠 Home</button>
+                        <button class="btn btn-danger" id="resetAllOverallBtn">🔄 Reset all</button>
+                    </div>
+                </div>
+                <div class="overall-modal">
+                    <h2>📈 Set-wise & Overall</h2>
+                    <div class="overall-grid">
+            `;
+            for (let s = 0; s < totalSets; s++) {
+                const setStat = stats.setStats[s];
+                const pct = Math.round((setStat.correct / setStat.total) * 100);
+                const completed = isSetComplete(s);
+                const cls = completed ? (pct >= 60 ? 'pass' : 'fail') : '';
+                html += `<div class="overall-item">
+                    <div class="set-label">Set ${s+1}</div>
+                    <div class="score ${cls}">${completed ? pct + '%' : '⬜ not done'}</div>
+                    <div style="font-size:0.8rem; opacity:0.7;">${completed ? setStat.correct+'/'+setStat.total : '—'}</div>
+                </div>`;
+            }
+            html += `
+                    </div>
+                    <div class="overall-total">
+                        🏆 Overall: ${stats.correct} / ${stats.total} correct &nbsp;·&nbsp; ${Math.round((stats.correct/stats.total)*100)}%
+                    </div>
+                    <div style="text-align:center; margin-top:20px; font-weight:600; color:#4a3a7a;">
+                        💡 Sets with low scores may need more practice.
+                    </div>
+                </div>
+            `;
+            app.innerHTML = html;
+
+            document.getElementById('backFromOverallBtn').addEventListener('click', function() {
+                showingOverall = false;
+                renderHome();
+            });
+            document.getElementById('resetAllOverallBtn').addEventListener('click', function() {
+                for (let s = 0; s < SETS.length; s++) {
+                    selectedAnswers[s] = Array(5).fill(null);
+                }
+                showingOverall = false;
+                renderHome();
+            });
+        }
+
+        // start with home
+        renderHome();
+    })();
+</script>
+</body>
+</html>
