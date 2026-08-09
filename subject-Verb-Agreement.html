@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
+    <title>Subject–Verb Agreement · Np Regmi Sir</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+        }
+        body {
+            background: linear-gradient(145deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            padding: 24px 16px 60px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .app {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        /* ---- header ---- */
+        .main-header {
+            background: rgba(255, 215, 0, 0.15);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 60px 60px 30px 30px;
+            padding: 22px 28px;
+            margin-bottom: 28px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        .main-header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #f9d976, #f39c12, #f1c40f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(243, 156, 18, 0.2);
+        }
+        .main-header .sub {
+            color: #d4c9f0;
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-top: 4px;
+            -webkit-text-fill-color: #d4c9f0;
+        }
+        .main-header .sub span {
+            background: rgba(255, 215, 0, 0.15);
+            padding: 2px 18px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        /* ---- controls ---- */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 16px 24px;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(4px);
+            border-radius: 60px;
+            padding: 14px 28px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .controls label {
+            color: #e0d9ff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .controls select {
+            padding: 10px 20px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1rem;
+            background: #1e1a3a;
+            color: #ffd966;
+            border: 2px solid #6b5b9e;
+            outline: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .controls select:hover {
+            border-color: #f1c40f;
+            box-shadow: 0 0 20px rgba(241, 196, 15, 0.15);
+        }
+        .controls .btn {
+            border: none;
+            padding: 10px 28px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, #f9d976, #f39c12);
+            color: #1a142b;
+            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.3);
+        }
+        .btn-gold:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 28px rgba(243, 156, 18, 0.5);
+        }
+        .btn-outline-light {
+            background: transparent;
+            border: 2px solid #8a7abf;
+            color: #d4c9f0;
+        }
+        .btn-outline-light:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: #f1c40f;
+        }
+        .btn-danger-light {
+            background: rgba(255, 80, 80, 0.15);
+            border: 2px solid #ff6b6b;
+            color: #ffb3b3;
+        }
+        .btn-danger-light:hover {
+            background: rgba(255, 80, 80, 0.25);
+        }
+
+        /* ---- progress ---- */
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+            color: #d4c9f0;
+            font-weight: 700;
+            font-size: 1.1rem;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 10px 22px;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .progress-bar .score {
+            background: #f1c40f;
+            color: #1a142b;
+            padding: 4px 20px;
+            border-radius: 60px;
+            font-size: 1.2rem;
+        }
+
+        /* ---- question card (big & bold) ---- */
+        .question-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 48px;
+            padding: 34px 36px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 16px 50px rgba(0, 0, 0, 0.4);
+            margin-bottom: 20px;
+        }
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .q-header .qnum {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #f1c40f;
+            background: rgba(241, 196, 15, 0.12);
+            padding: 2px 24px;
+            border-radius: 60px;
+            border: 1px solid rgba(241, 196, 15, 0.2);
+        }
+        .q-header .qstatus {
+            font-weight: 700;
+            color: #a99ad6;
+        }
+        .mcq-question {
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin-bottom: 28px;
+            line-height: 1.4;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 16px 26px;
+            border-radius: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            transition: 0.15s;
+            color: #f0ebff;
+        }
+        .options label:hover {
+            background: rgba(255, 215, 0, 0.08);
+            border-color: rgba(241, 196, 15, 0.3);
+            transform: scale(1.01);
+        }
+        .options input[type="radio"] {
+            accent-color: #f1c40f;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .options label.correct-highlight {
+            background: rgba(46, 204, 113, 0.25);
+            border-color: #2ecc71;
+            color: #b8f0d0;
+        }
+        .options label.wrong-highlight {
+            background: rgba(231, 76, 60, 0.25);
+            border-color: #e74c3c;
+            color: #f5baba;
+        }
+        .options label.disabled-label {
+            opacity: 0.7;
+            cursor: default;
+        }
+
+        /* ---- feedback box (big & bold) ---- */
+        .feedback-box {
+            margin-top: 16px;
+            padding: 20px 28px;
+            border-radius: 40px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-align: center;
+            border: 2px solid;
+            animation: fadePop 0.3s ease;
+        }
+        .feedback-box.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border-color: #2ecc71;
+            color: #b8f0d0;
+        }
+        .feedback-box.wrong {
+            background: rgba(231, 76, 60, 0.2);
+            border-color: #e74c3c;
+            color: #f5baba;
+        }
+        .feedback-box .explanation {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            opacity: 0.9;
+            color: #d4c9f0;
+        }
+        @keyframes fadePop {
+            0% { opacity: 0; transform: scale(0.96); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* ---- result card ---- */
+        .result-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(8px);
+            border-radius: 48px;
+            padding: 40px 32px 44px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 0 16px 50px rgba(0, 0, 0, 0.4);
+        }
+        .result-card .big-score {
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #f9d976, #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 10px 0;
+        }
+        .result-card .sub {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #d4c9f0;
+        }
+        .result-card .msg {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #f1c40f;
+            margin: 16px 0 24px;
+        }
+        .result-card .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        /* ---- home grid ---- */
+        .home-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .home-stat {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 32px;
+            padding: 18px 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: 0.2s;
+        }
+        .home-stat .label {
+            font-weight: 700;
+            color: #a99ad6;
+        }
+        .home-stat .value {
+            font-weight: 900;
+            font-size: 1.8rem;
+            color: #f1c40f;
+        }
+        .home-stat .detail {
+            font-weight: 600;
+            color: #d4c9f0;
+            font-size: 0.9rem;
+        }
+
+        .home-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin: 24px 0 12px;
+        }
+
+        /* responsive */
+        @media (max-width: 650px) {
+            .main-header h1 { font-size: 1.8rem; }
+            .mcq-question { font-size: 1.4rem; }
+            .options label { font-size: 1.1rem; padding: 14px 18px; }
+            .feedback-box { font-size: 1.2rem; padding: 16px; }
+            .question-card { padding: 22px 18px; }
+            .controls { padding: 12px 16px; }
+        }
+    </style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+    (function() {
+        // ---- 40 MCQs (from the provided list) ----
+        const ALL_QUESTIONS = [
+            { q: 'The teacher, as well as the students, ______ present in the hall.', options: ['are', 'were', 'is', 'have been'], correct: 2, explanation: 'The phrase "as well as" does not create a compound subject; the verb agrees with "teacher" (singular).' },
+            { q: 'Bread and butter ______ my favourite breakfast.', options: ['are', 'is', 'were', 'have been'], correct: 1, explanation: 'When two items are considered a single unit (bread and butter), the verb is singular.' },
+            { q: 'Neither the principal nor the teachers ______ aware of the change.', options: ['was', 'is', 'are', 'has been'], correct: 2, explanation: 'With "neither...nor", the verb agrees with the subject closest to it: "teachers" (plural).' },
+            { q: 'Each of the candidates ______ required to bring original documents.', options: ['are', 'were', 'have', 'is'], correct: 3, explanation: '"Each" is always singular, so the verb must be singular.' },
+            { q: 'The news about the earthquake ______ very disturbing.', options: ['are', 'were', 'is', 'have been'], correct: 2, explanation: '"News" is an uncountable singular noun, so it takes a singular verb.' },
+            { q: 'Fifty rupees ______ a reasonable price for this book.', options: ['are', 'is', 'were', 'have been'], correct: 1, explanation: 'A sum of money is treated as a single unit, so singular verb.' },
+            { q: 'The committee ______ divided in their opinions.', options: ['is', 'are', 'was', 'has been'], correct: 1, explanation: 'Collective nouns like "committee" can be plural when members act individually; here "their opinions" indicates plural.' },
+            { q: 'More than one student ______ failed in the test.', options: ['have', 'has', 'are', 'were'], correct: 1, explanation: '"More than one" takes a singular verb.' },
+            { q: 'The police ______ investigating the case.', options: ['is', 'has', 'are', 'was'], correct: 2, explanation: '"Police" is always plural in English.' },
+            { q: 'Mathematics ______ my weakest subject.', options: ['are', 'were', 'have been', 'is'], correct: 3, explanation: 'Subject names ending in -s (Mathematics) are singular.' },
+            { q: 'Not only the captain but also the players ______ tired after the match.', options: ['was', 'is', 'are', 'has been'], correct: 2, explanation: 'Verb agrees with the subject closest to it: "players" (plural).' },
+            { q: 'The quality of these apples ______ not good.', options: ['are', 'were', 'is', 'have been'], correct: 2, explanation: 'The subject is "quality" (singular), not "apples".' },
+            { q: 'Either my brother or my sisters ______ to lock the door.', options: ['has', 'have', 'is', 'was'], correct: 1, explanation: 'Verb agrees with closest subject: "sisters" (plural).' },
+            { q: 'The number of participants ______ increasing every year.', options: ['are', 'were', 'is', 'have been'], correct: 2, explanation: '"The number" takes a singular verb.' },
+            { q: 'A number of students ______ absent today.', options: ['is', 'was', 'are', 'has been'], correct: 2, explanation: '"A number of" takes a plural verb.' },
+            { q: 'My uncle and benefactor ______ just arrived.', options: ['have', 'has', 'are', 'were'], correct: 1, explanation: 'Same person (uncle = benefactor), so singular verb.' },
+            { q: 'Every boy and every girl in the class ______ given a prize.', options: ['were', 'are', 'have been', 'was'], correct: 3, explanation: '"Every ... and every ..." takes a singular verb.' },
+            { q: 'Ten kilometers ______ a long distance to walk.', options: ['are', 'is', 'were', 'have been'], correct: 1, explanation: 'A distance is considered a single unit.' },
+            { q: 'The rich ______ not always happy.', options: ['is', 'was', 'are', 'has been'], correct: 2, explanation: 'Adjectives with "the" (the rich) are plural.' },
+            { q: 'One of the books that ______ on the table is missing.', options: ['is', 'are', 'were', 'have been'], correct: 1, explanation: 'The relative pronoun "that" refers to "books" (plural).' },
+            { q: 'He is one of those boys who ______ always late.', options: ['is', 'are', 'was', 'has been'], correct: 1, explanation: '"Who" refers to "boys" (plural).' },
+            { q: 'The scenery of the hills ______ beautiful.', options: ['are', 'were', 'is', 'have been'], correct: 2, explanation: 'The subject is "scenery" (singular).' },
+            { q: 'No news ______ good news.', options: ['are', 'were', 'is', 'have been'], correct: 2, explanation: '"News" is singular.' },
+            { q: 'The jury ______ announced its verdict.', options: ['have', 'are', 'was', 'were'], correct: 2, explanation: 'Collective noun acting as a unit (its verdict) → singular.' },
+            { q: 'The crew ______ preparing the ship for departure.', options: ['is', 'are', 'were', 'have been'], correct: 0, explanation: 'Crew acting as a unit → singular (but could be plural in some contexts; here singular is preferred).' },
+            { q: 'Many a student ______ made this mistake.', options: ['have', 'has', 'are', 'were'], correct: 1, explanation: '"Many a" takes a singular verb.' },
+            { q: 'The majority of the voters ______ in favour of the candidate.', options: ['is', 'was', 'are', 'has been'], correct: 2, explanation: '"Majority" refers to individual voters → plural.' },
+            { q: 'There ______ a pen and two books on the desk.', options: ['are', 'were', 'is', 'have been'], correct: 2, explanation: 'Verb agrees with the first subject: "pen" (singular).' },
+            { q: 'There ______ two books and a pen on the desk.', options: ['is', 'was', 'are', 'has been'], correct: 2, explanation: 'Verb agrees with first subject: "books" (plural).' },
+            { q: 'The staff ______ meeting in the conference room now.', options: ['is', 'are', 'was', 'has been'], correct: 1, explanation: '"Staff" as individuals acting separately → plural.' },
+            { q: 'What he needs ______ more time and support.', options: ['are', 'were', 'is', 'have been'], correct: 2, explanation: 'The clause "What he needs" is singular.' },
+            { q: 'Where ______ my glasses? I can’t find them.', options: ['is', 'are', 'was', 'has been'], correct: 1, explanation: '"Glasses" (plural) take plural verb.' },
+            { q: 'The pair of shoes ______ too expensive.', options: ['are', 'were', 'is', 'have been'], correct: 2, explanation: 'The subject is "pair" (singular).' },
+            { q: 'Three fourths of the work ______ completed.', options: ['are', 'were', 'is', 'have been'], correct: 2, explanation: 'Fraction of uncountable noun → singular.' },
+            { q: 'Three fourths of the students ______ present.', options: ['is', 'was', 'are', 'has been'], correct: 2, explanation: 'Fraction of plural noun → plural.' },
+            { q: 'The poet and novelist ______ going to visit our school.', options: ['are', 'were', 'is', 'have been'], correct: 2, explanation: 'Same person (poet = novelist) → singular.' },
+            { q: 'The poet and the novelist ______ going to visit our school.', options: ['is', 'was', 'are', 'has been'], correct: 2, explanation: 'Two different people → plural.' },
+            { q: 'None of the answers ______ correct.', options: ['is', 'are', 'was', 'has been'], correct: 1, explanation: '"None" can be plural when referring to plural nouns.' },
+            { q: 'All of the furniture ______ old and damaged.', options: ['are', 'were', 'is', 'have been'], correct: 2, explanation: '"Furniture" is uncountable → singular.' },
+            { q: 'Each of the six boys in the class ______ his task.', options: ['have completed', 'has completed', 'are completing', 'were completing'], correct: 1, explanation: '"Each" is singular → "has completed".' }
+        ];
+
+        // ---- state ----
+        let currentQuestions = [];        // subset of ALL_QUESTIONS based on count
+        let currentIndex = 0;
+        let userAnswers = [];            // array of selected option index or null
+        let quizCompleted = false;
+        let showingResult = false;
+        let feedbackTimeout = null;
+
+        // ---- DOM refs ----
+        const app = document.getElementById('app');
+
+        // ---- helpers ----
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function getSelectedCount() {
+            const sel = document.getElementById('questionCountSelect');
+            return sel ? parseInt(sel.value) : 10;
+        }
+
+        function buildQuestionSubset(count) {
+            let shuffled = shuffleArray([...ALL_QUESTIONS]);
+            if (count === 0) count = ALL_QUESTIONS.length; // "All"
+            return shuffled.slice(0, Math.min(count, ALL_QUESTIONS.length));
+        }
+
+        function getScore() {
+            let correct = 0;
+            for (let i = 0; i < currentQuestions.length; i++) {
+                if (userAnswers[i] !== null && userAnswers[i] === currentQuestions[i].correct) {
+                    correct++;
+                }
+            }
+            return correct;
+        }
+
+        function isComplete() {
+            return userAnswers.every(a => a !== null);
+        }
+
+        // ---- render functions ----
+        function renderHome() {
+            const total = ALL_QUESTIONS.length;
+            let html = `
+                <div class="main-header">
+                    <h1>📘 Subject–Verb Agreement</h1>
+                    <div class="sub"><span>by Np Regmi Sir</span></div>
+                </div>
+                <div class="controls">
+                    <label>🎯 How many questions?
+                        <select id="questionCountSelect">
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="0">All (${total})</option>
+                        </select>
+                    </label>
+                    <button class="btn btn-gold" id="startQuizBtn">🚀 Start Quiz</button>
+                </div>
+                <div style="color:#b5a8e0; text-align:center; font-weight:600; margin-bottom:12px;">
+                    ⚡ ${total} challenging MCQs · Detailed explanations
+                </div>
+            `;
+            app.innerHTML = html;
+
+            document.getElementById('startQuizBtn').addEventListener('click', function() {
+                const count = getSelectedCount();
+                currentQuestions = buildQuestionSubset(count);
+                userAnswers = Array(currentQuestions.length).fill(null);
+                currentIndex = 0;
+                quizCompleted = false;
+                showingResult = false;
+                if (feedbackTimeout) clearTimeout(feedbackTimeout);
+                renderQuiz();
+            });
+        }
+
+        function renderQuiz() {
+            if (currentIndex >= currentQuestions.length) {
+                // all done
+                quizCompleted = true;
+                renderResult();
+                return;
+            }
+
+            const q = currentQuestions[currentIndex];
+            const selected = userAnswers[currentIndex];
+            const total = currentQuestions.length;
+            const answered = userAnswers.filter(a => a !== null).length;
+            const score = getScore();
+
+            let html = `
+                <div class="main-header">
+                    <h1>📘 Subject–Verb Agreement</h1>
+                    <div class="sub"><span>by Np Regmi Sir</span></div>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-outline-light" id="homeFromQuizBtn">🏠 Home</button>
+                    <button class="btn btn-outline-light" id="overallFromQuizBtn">📊 Overall</button>
+                    <button class="btn btn-danger-light" id="resetFromQuizBtn">🔄 Reset</button>
+                </div>
+                <div class="progress-bar">
+                    <span>📌 Question ${currentIndex+1} of ${total}</span>
+                    <span>✅ ${score} correct · ⬜ ${answered} answered</span>
+                </div>
+                <div class="question-card">
+                    <div class="q-header">
+                        <span class="qnum">Q${currentIndex+1}</span>
+                        <span class="qstatus">${selected !== null ? (selected === q.correct ? '✅ Correct' : '❌ Incorrect') : '⚡ Select an option'}</span>
+                    </div>
+                    <div class="mcq-question">${q.q}</div>
+                    <div class="options" id="optionsContainer">
+            `;
+            q.options.forEach((opt, idx) => {
+                let cls = '';
+                let disabled = '';
+                if (selected !== null) {
+                    disabled = 'disabled';
+                    if (idx === q.correct) cls = 'correct-highlight';
+                    else if (idx === selected && idx !== q.correct) cls = 'wrong-highlight';
+                }
+                const checked = (selected === idx) ? 'checked' : '';
+                html += `<label class="${cls} ${selected !== null ? 'disabled-label' : ''}">
+                    <input type="radio" name="qoption" value="${idx}" ${checked} ${disabled}>
+                    ${opt}
+                </label>`;
+            });
+            html += `
+                    </div>
+                    <div id="feedbackArea"></div>
+                </div>
+            `;
+            app.innerHTML = html;
+
+            // ---- events ----
+            document.getElementById('homeFromQuizBtn').addEventListener('click', function() {
+                if (feedbackTimeout) clearTimeout(feedbackTimeout);
+                renderHome();
+            });
+            document.getElementById('overallFromQuizBtn').addEventListener('click', function() {
+                if (feedbackTimeout) clearTimeout(feedbackTimeout);
+                renderOverall();
+            });
+            document.getElementById('resetFromQuizBtn').addEventListener('click', function() {
+                if (feedbackTimeout) clearTimeout(feedbackTimeout);
+                userAnswers = Array(currentQuestions.length).fill(null);
+                currentIndex = 0;
+                quizCompleted = false;
+                showingResult = false;
+                renderQuiz();
+            });
+
+            // radio change
+            const radios = document.querySelectorAll('input[name="qoption"]');
+            radios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (userAnswers[currentIndex] !== null) return; // already answered
+                    const val = parseInt(this.value);
+                    userAnswers[currentIndex] = val;
+
+                    // show feedback
+                    const isCorrect = (val === q.correct);
+                    const fb = document.getElementById('feedbackArea');
+                    const explanation = q.explanation || 'Explanation not available.';
+                    fb.innerHTML = `<div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}">
+                        ${isCorrect ? '✅ Correct!' : '❌ Incorrect'}
+                        <div class="explanation">💡 ${explanation}</div>
+                    </div>`;
+
+                    // disable all radios & highlight
+                    document.querySelectorAll('.options label').forEach(lb => {
+                        lb.classList.add('disabled-label');
+                        const inp = lb.querySelector('input');
+                        if (inp) inp.disabled = true;
+                    });
+                    // highlight correct
+                    document.querySelectorAll('.options label').forEach((lb, idx) => {
+                        if (idx === q.correct) lb.classList.add('correct-highlight');
+                        else if (idx === val && val !== q.correct) lb.classList.add('wrong-highlight');
+                    });
+
+                    // update qstatus
+                    const statusEl = document.querySelector('.qstatus');
+                    if (statusEl) {
+                        statusEl.textContent = isCorrect ? '✅ Correct' : '❌ Incorrect';
+                        statusEl.style.color = isCorrect ? '#2ecc71' : '#e74c3c';
+                    }
+
+                    // auto advance after 2.2 sec
+                    if (feedbackTimeout) clearTimeout(feedbackTimeout);
+                    feedbackTimeout = setTimeout(() => {
+                        feedbackTimeout = null;
+                        currentIndex++;
+                        if (currentIndex < currentQuestions.length) {
+                            renderQuiz();
+                        } else {
+                            quizCompleted = true;
+                            renderResult();
+                        }
+                    }, 2200);
+                });
+            });
+        }
+
+        function renderResult() {
+            const total = currentQuestions.length;
+            const score = getScore();
+            const pct = Math.round((score / total) * 100);
+            let msg = '';
+            if (pct >= 90) msg = '🌟 Excellent! You\'re a grammar pro!';
+            else if (pct >= 70) msg = '👏 Great job! Keep practicing!';
+            else if (pct >= 50) msg = '📖 Good effort! Review the rules.';
+            else msg = '💪 Don\'t give up! Study subject-verb agreement again.';
+
+            let html = `
+                <div class="main-header">
+                    <h1>📘 Subject–Verb Agreement</h1>
+                    <div class="sub"><span>by Np Regmi Sir</span></div>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-outline-light" id="homeFromResultBtn">🏠 Home</button>
+                    <button class="btn btn-outline-light" id="overallFromResultBtn">📊 Overall</button>
+                    <button class="btn btn-danger-light" id="resetFromResultBtn">🔄 Reset</button>
+                </div>
+                <div class="result-card">
+                    <div class="sub">🎯 Your Score</div>
+                    <div class="big-score">${pct}%</div>
+                    <div style="font-size:1.8rem; font-weight:800; color:#f1c40f;">${score} / ${total} correct</div>
+                    <div class="msg">${msg}</div>
+                    <div class="btn-group">
+                        <button class="btn btn-gold" id="retryQuizBtn">🔄 Retry</button>
+                        <button class="btn btn-outline-light" id="reviewAnswersBtn">📋 Review Answers</button>
+                    </div>
+                </div>
+            `;
+            app.innerHTML = html;
+
+            document.getElementById('homeFromResultBtn').addEventListener('click', renderHome);
+            document.getElementById('overallFromResultBtn').addEventListener('click', renderOverall);
+            document.getElementById('resetFromResultBtn').addEventListener('click', function() {
+                userAnswers = Array(currentQuestions.length).fill(null);
+                currentIndex = 0;
+                quizCompleted = false;
+                showingResult = false;
+                renderQuiz();
+            });
+            document.getElementById('retryQuizBtn').addEventListener('click', function() {
+                userAnswers = Array(currentQuestions.length).fill(null);
+                currentIndex = 0;
+                quizCompleted = false;
+                showingResult = false;
+                renderQuiz();
+            });
+            document.getElementById('reviewAnswersBtn').addEventListener('click', function() {
+                renderReview();
+            });
+        }
+
+        function renderReview() {
+            let html = `
+                <div class="main-header">
+                    <h1>📘 Review Answers</h1>
+                    <div class="sub"><span>by Np Regmi Sir</span></div>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-outline-light" id="backFromReviewBtn">🔙 Back</button>
+                    <button class="btn btn-outline-light" id="homeFromReviewBtn">🏠 Home</button>
+                </div>
+            `;
+            for (let i = 0; i < currentQuestions.length; i++) {
+                const q = currentQuestions[i];
+                const ans = userAnswers[i];
+                const isCorrect = (ans === q.correct);
+                const icon = ans !== null ? (isCorrect ? '✅' : '❌') : '⬜';
+                const correctText = q.options[q.correct];
+                const yourText = ans !== null ? q.options[ans] : 'Not answered';
+                html += `
+                    <div style="background:rgba(255,255,255,0.05); border-radius:30px; padding:18px 24px; margin-bottom:14px; border-left:6px solid ${isCorrect ? '#2ecc71' : ans !== null ? '#e74c3c' : '#777'};">
+                        <div style="font-weight:800; color:#f1c40f; font-size:1.2rem;">Q${i+1} ${icon}</div>
+                        <div style="color:#fff; font-weight:600; font-size:1.1rem;">${q.q}</div>
+                        <div style="color:#b5a8e0; margin-top:6px;">✅ Correct: <strong style="color:#2ecc71;">${correctText}</strong></div>
+                        <div style="color:#b5a8e0;">📝 Your answer: <strong style="color:${isCorrect ? '#2ecc71' : '#e74c3c'};">${yourText}</strong></div>
+                        <div style="color:#d4c9f0; font-weight:500; margin-top:6px; background:rgba(255,255,255,0.05); padding:8px 16px; border-radius:30px;">💡 ${q.explanation || 'No explanation.'}</div>
+                    </div>
+                `;
+            }
+            html += `
+                <div style="text-align:center; margin-top:10px;">
+                    <button class="btn btn-gold" id="reviewBackBtn">🔙 Back to Result</button>
+                </div>
+            `;
+            app.innerHTML = html;
+
+            document.getElementById('backFromReviewBtn').addEventListener('click', renderResult);
+            document.getElementById('homeFromReviewBtn').addEventListener('click', renderHome);
+            document.getElementById('reviewBackBtn').addEventListener('click', renderResult);
+        }
+
+        function renderOverall() {
+            const total = ALL_QUESTIONS.length;
+            const allAnswered = ALL_QUESTIONS.map((q, idx) => {
+                // find if this question was in current set and answered
+                const foundIdx = currentQuestions.indexOf(q);
+                if (foundIdx !== -1 && userAnswers[foundIdx] !== null) {
+                    return userAnswers[foundIdx] === q.correct;
+                }
+                return null;
+            });
+            const correct = allAnswered.filter(v => v === true).length;
+            const attempted = allAnswered.filter(v => v !== null).length;
+
+            let html = `
+                <div class="main-header">
+                    <h1>📊 Overall Performance</h1>
+                    <div class="sub"><span>by Np Regmi Sir</span></div>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-outline-light" id="backFromOverallBtn">🔙 Back</button>
+                    <button class="btn btn-outline-light" id="homeFromOverallBtn">🏠 Home</button>
+                </div>
+                <div class="result-card">
+                    <div class="sub">📈 Your Overall Stats</div>
+                    <div style="font-size:2.8rem; font-weight:900; color:#f1c40f; margin:12px 0;">
+                        ${attempted} / ${total} attempted
+                    </div>
+                    <div style="font-size:2.2rem; font-weight:800; color:#d4c9f0;">
+                        ✅ ${correct} correct
+                    </div>
+                    ${attempted > 0 ? `<div style="font-size:1.8rem; font-weight:800; color:#f1c40f;">${Math.round((correct/attempted)*100)}% accuracy</div>` : ''}
+                    <div style="color:#b5a8e0; margin-top:16px; font-weight:600;">
+                        ${attempted === 0 ? 'Start a quiz to track performance!' : 'Keep practicing to improve!'}
+                    </div>
+                    <div class="btn-group" style="margin-top:24px;">
+                        <button class="btn btn-gold" id="overallRetryBtn">🔄 Retry Quiz</button>
+                    </div>
+                </div>
+            `;
+            app.innerHTML = html;
+
+            document.getElementById('backFromOverallBtn').addEventListener('click', function() {
+                if (quizCompleted) renderResult();
+                else renderQuiz();
+            });
+            document.getElementById('homeFromOverallBtn').addEventListener('click', renderHome);
+            document.getElementById('overallRetryBtn').addEventListener('click', function() {
+                userAnswers = Array(currentQuestions.length).fill(null);
+                currentIndex = 0;
+                quizCompleted = false;
+                showingResult = false;
+                renderQuiz();
+            });
+        }
+
+        // ---- start ----
+        renderHome();
+    })();
+</script>
+</body>
+</html>
