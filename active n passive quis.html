@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Voice Forge – Active to Passive Quiz</title>
+    <style>
+        /* ─── RESET & BASE ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            background: linear-gradient(145deg, #0d0b1a 0%, #1a1a3e 40%, #2d1b4e 80%, #1a0f2e 100%);
+            min-height: 100vh;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background-attachment: fixed;
+        }
+
+        /* floating orbs */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.25;
+            z-index: 0;
+            pointer-events: none;
+        }
+        body::before {
+            width: 500px;
+            height: 500px;
+            background: #ff6b9d;
+            top: -100px;
+            right: -100px;
+        }
+        body::after {
+            width: 400px;
+            height: 400px;
+            background: #6b6bff;
+            bottom: -100px;
+            left: -100px;
+        }
+
+        .container {
+            max-width: 960px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 44px;
+            padding: 22px 26px 28px;
+            border: 1px solid rgba(255, 215, 0, 0.06);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ─── HEADER ─── */
+        .main-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.08);
+            padding-bottom: 12px;
+            margin-bottom: 14px;
+            gap: 10px;
+        }
+
+        .game-title {
+            font-size: 2.1rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffd700, #ff6b9d, #00d4ff, #ffd700);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+            animation: shimmer 4s ease-in-out infinite;
+        }
+        @keyframes shimmer {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        .game-title small {
+            font-size: 0.7rem;
+            -webkit-text-fill-color: #a5b4fc;
+            background: none;
+            display: block;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .header-btns {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .header-btns button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.18s;
+            font-family: inherit;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
+        }
+        .btn-reset {
+            background: #ff6b6b;
+            color: #fff;
+        }
+        .btn-reset:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(255, 107, 107, 0.35);
+        }
+        .btn-help {
+            background: #a29bfe;
+            color: #0d0b1a;
+        }
+        .btn-help:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(162, 155, 254, 0.35);
+        }
+
+        /* ─── FIXED SCORE AREA (Sticky) ─── */
+        .fixed-score {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(11, 9, 30, 0.94);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: 32px;
+            padding: 12px 20px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255, 215, 0, 0.05);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .score-stats {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .score-stats .stat {
+            font-weight: 700;
+            color: #a5b4fc;
+            font-size: 0.8rem;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 4px 14px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .score-stats .stat span {
+            color: #ffd700;
+            font-size: 1rem;
+            font-weight: 900;
+        }
+        .score-stats .stat.correct-stat span {
+            color: #2ecc71;
+        }
+        .score-stats .stat.wrong-stat span {
+            color: #ff6b6b;
+        }
+        .score-stats .stat .emoji {
+            font-size: 1rem;
+        }
+
+        .timer-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .timer-display {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #ffd700;
+            font-variant-numeric: tabular-nums;
+            min-width: 60px;
+            text-align: center;
+            padding: 0 10px;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 30px;
+            border: 2px solid rgba(255, 215, 0, 0.06);
+            font-feature-settings: "tnum";
+        }
+        .timer-display.warning {
+            color: #ff6b6b;
+            border-color: rgba(255, 107, 107, 0.2);
+            animation: blink 0.6s ease infinite alternate;
+        }
+        @keyframes blink {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.3;
+            }
+        }
+        .timer-label {
+            font-weight: 700;
+            color: #6a7a9a;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .timer-btn {
+            padding: 5px 16px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.06);
+            color: #a5b4fc;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .timer-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+        }
+        .timer-btn.active-timer {
+            background: rgba(255, 107, 107, 0.12);
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        /* ─── QUESTION AREA ─── */
+        .question-area {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 32px;
+            padding: 22px 26px 26px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            min-height: 320px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .q-number {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #6a7a9a;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .q-number .badge {
+            background: rgba(255, 215, 0, 0.08);
+            padding: 2px 12px;
+            border-radius: 30px;
+            color: #ffd700;
+            font-size: 0.65rem;
+            letter-spacing: 0.3px;
+        }
+
+        .q-text {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 18px;
+            line-height: 1.6;
+            padding: 12px 18px;
+            background: rgba(255, 215, 0, 0.02);
+            border-radius: 16px;
+            border-left: 4px solid #ffd700;
+        }
+        .q-text .highlight {
+            color: #ffd700;
+        }
+        .q-text .voice-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            background: rgba(162, 155, 254, 0.12);
+            color: #a29bfe;
+            padding: 2px 12px;
+            border-radius: 30px;
+            margin-left: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 640px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .q-text {
+                font-size: 1.05rem;
+                padding: 10px 14px;
+            }
+            .game-title {
+                font-size: 1.5rem;
+            }
+            .fixed-score {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 6px;
+                padding: 10px 14px;
+            }
+            .score-stats {
+                gap: 8px;
+                justify-content: center;
+            }
+            .timer-area {
+                justify-content: space-between;
+            }
+            .container {
+                padding: 14px 12px;
+                border-radius: 30px;
+            }
+            .feedback-popup .fb-title {
+                font-size: 1.4rem;
+            }
+            .feedback-popup .fb-icon {
+                font-size: 3rem;
+            }
+        }
+
+        .option-btn {
+            padding: 14px 18px 14px 48px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #e2e8f0;
+            position: relative;
+            transition: 0.12s;
+            font-family: inherit;
+            text-align: left;
+            user-select: none;
+            line-height: 1.4;
+        }
+        .option-btn:hover:not(.disabled-opt) {
+            background: rgba(255, 215, 0, 0.04);
+            border-color: rgba(255, 215, 0, 0.12);
+            transform: scale(1.01);
+        }
+        .option-btn .letter {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: 900;
+            color: #ffd700;
+            font-size: 0.85rem;
+            width: 22px;
+            text-align: center;
+        }
+        .option-btn.correct-opt {
+            background: rgba(46, 204, 113, 0.12);
+            border-color: #2ecc71;
+            color: #2ecc71;
+        }
+        .option-btn.correct-opt .letter {
+            color: #2ecc71;
+        }
+        .option-btn.wrong-opt {
+            background: rgba(255, 107, 107, 0.12);
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+            animation: shake 0.4s ease;
+        }
+        .option-btn.wrong-opt .letter {
+            color: #ff6b6b;
+        }
+        .option-btn.disabled-opt {
+            cursor: default;
+            opacity: 0.5;
+        }
+        .option-btn.disabled-opt:hover {
+            transform: none;
+        }
+
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            20% {
+                transform: translateX(-8px);
+            }
+            40% {
+                transform: translateX(8px);
+            }
+            60% {
+                transform: translateX(-5px);
+            }
+            80% {
+                transform: translateX(5px);
+            }
+        }
+
+        /* ─── FEEDBACK POPUP (overlay on options) ─── */
+        .feedback-popup {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 32px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            padding: 30px 20px;
+            animation: popIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            text-align: center;
+        }
+        .feedback-popup.active {
+            display: flex;
+        }
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .feedback-popup .fb-icon {
+            font-size: 3.8rem;
+            margin-bottom: 4px;
+            animation: bounceIcon 0.5s ease;
+        }
+        @keyframes bounceIcon {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .feedback-popup .fb-title {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 2px;
+        }
+        .feedback-popup .fb-title.correct {
+            color: #2ecc71;
+        }
+        .feedback-popup .fb-title.wrong {
+            color: #ff6b6b;
+        }
+
+        .feedback-popup .fb-sub {
+            color: #a5b4fc;
+            font-size: 1rem;
+            font-weight: 600;
+            max-width: 90%;
+        }
+        .feedback-popup .fb-answer {
+            color: #ffd700;
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-top: 6px;
+            max-width: 90%;
+            background: rgba(255, 215, 0, 0.06);
+            padding: 6px 18px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 215, 0, 0.06);
+        }
+        .feedback-popup .fb-timer-info {
+            margin-top: 10px;
+            font-size: 0.75rem;
+            color: #6a7a9a;
+            font-weight: 600;
+        }
+
+        .feedback-popup .fb-next-hint {
+            margin-top: 12px;
+            font-size: 0.75rem;
+            color: #4a5a7a;
+            font-weight: 600;
+            animation: pulseText 1.2s ease-in-out infinite;
+        }
+        @keyframes pulseText {
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* ─── RESULT AREA ─── */
+        .result-area {
+            text-align: center;
+            padding: 30px 20px 20px;
+        }
+        .result-area .big-emoji {
+            font-size: 4.5rem;
+            animation: bounceIcon 0.8s ease;
+        }
+        .result-area .result-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #ffd700;
+            margin: 8px 0 4px;
+        }
+        .result-area .result-sub {
+            color: #a5b4fc;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .result-area .result-score {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 8px 0 16px;
+        }
+        .result-area .result-score span {
+            color: #ffd700;
+        }
+        .result-area .result-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 12px 0 20px;
+            flex-wrap: wrap;
+        }
+        .result-area .result-stats div {
+            font-weight: 700;
+            color: #a5b4fc;
+            font-size: 0.95rem;
+        }
+        .result-area .result-stats div span {
+            color: #ffffff;
+            font-size: 1.2rem;
+        }
+        .result-area .result-stats .r-correct span {
+            color: #2ecc71;
+        }
+        .result-area .result-stats .r-wrong span {
+            color: #ff6b6b;
+        }
+
+        .result-area .result-btn {
+            padding: 14px 44px;
+            border: none;
+            border-radius: 60px;
+            background: linear-gradient(135deg, #ffd700, #f5a623);
+            color: #0d0b1a;
+            font-weight: 900;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: inherit;
+            box-shadow: 0 4px 25px rgba(255, 215, 0, 0.2);
+        }
+        .result-area .result-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 35px rgba(255, 215, 0, 0.3);
+        }
+
+        /* ─── HELP MODAL ─── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: #17152e;
+            border-radius: 40px;
+            max-width: 640px;
+            width: 100%;
+            padding: 35px 40px;
+            border: 1px solid rgba(255, 215, 0, 0.06);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-box h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #ffd700;
+            margin-bottom: 8px;
+        }
+        .modal-box .subtitle {
+            color: #90e0ef;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+        .modal-box h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #a5b4fc;
+            margin: 18px 0 6px;
+        }
+        .modal-box p,
+        .modal-box li {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+        .modal-box ul {
+            padding-left: 20px;
+        }
+        .modal-box li {
+            margin-bottom: 4px;
+        }
+        .modal-box .close-btn {
+            margin-top: 20px;
+            padding: 12px 36px;
+            border: none;
+            border-radius: 60px;
+            background: linear-gradient(135deg, #ffd700, #f5a623);
+            color: #0d0b1a;
+            font-weight: 900;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: inherit;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.1);
+        }
+        .modal-box .close-btn:hover {
+            transform: scale(1.04);
+            box-shadow: 0 6px 30px rgba(255, 215, 0, 0.2);
+        }
+        .modal-box .modal-emoji-grid {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 6px 0 4px;
+        }
+        .modal-box .modal-emoji-grid span {
+            font-size: 1.8rem;
+        }
+
+        @media (max-width: 600px) {
+            .modal-box {
+                padding: 24px 18px;
+            }
+            .modal-box h2 {
+                font-size: 1.6rem;
+            }
+            .result-area .result-title {
+                font-size: 1.6rem;
+            }
+            .feedback-popup .fb-title {
+                font-size: 1.5rem;
+            }
+            .feedback-popup .fb-icon {
+                font-size: 3rem;
+            }
+        }
+
+        /* ─── SCROLLBAR ─── */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 215, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- HEADER -->
+        <div class="main-header">
+            <div class="game-title">
+                ⚡ Voice Forge
+                <small>Active ↔ Passive · 50 MCQs</small>
+            </div>
+            <div class="header-btns">
+                <button class="btn-help" onclick="openHelp()">📖 How to Play</button>
+                <button class="btn-reset" onclick="resetQuiz()">🔄 Reset</button>
+            </div>
+        </div>
+
+        <!-- FIXED SCORE AREA (Sticky) -->
+        <div class="fixed-score" id="scoreArea">
+            <div class="score-stats">
+                <div class="stat">📝 <span id="qNumDisplay">1</span>/<span id="qTotalDisplay">50</span></div>
+                <div class="stat correct-stat">✅ <span id="correctCount">0</span></div>
+                <div class="stat wrong-stat">❌ <span id="wrongCount">0</span></div>
+                <div class="stat">🎯 <span id="scorePercent">0%</span></div>
+            </div>
+            <div class="timer-area">
+                <span class="timer-label">⏱️</span>
+                <span class="timer-display" id="timerDisplay">00:00</span>
+                <button class="timer-btn" id="timerToggleBtn" onclick="toggleTimer()">⏸️ Pause</button>
+            </div>
+        </div>
+
+        <!-- QUESTION AREA -->
+        <div class="question-area" id="questionArea">
+            <div id="quizContent">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- HELP MODAL -->
+    <div class="modal-overlay" id="helpModal">
+        <div class="modal-box">
+            <h2>⚡ Voice Forge</h2>
+            <div class="subtitle">Active ↔ Passive Voice · 50 Questions</div>
+            <div class="modal-emoji-grid">
+                <span>🎯</span><span>⏱️</span><span>🏆</span><span>💪</span>
+            </div>
+            <h3>🎯 Objective</h3>
+            <p>Transform sentences between Active and Passive voice. Each correct answer earns <strong style="color:#ffd700;">+1 point</strong>!</p>
+            <h3>⏱️ Timer</h3>
+            <ul>
+                <li>Timer counts <strong>up</strong> — no pressure, just track your speed!</li>
+                <li>Click <strong>"Pause"</strong> to stop the timer anytime.</li>
+            </ul>
+            <h3>📋 How to Play</h3>
+            <ul>
+                <li><strong>1.</strong> Read the sentence and identify the voice transformation needed.</li>
+                <li><strong>2.</strong> Click the correct option (A, B, C, or D).</li>
+                <li><strong>3.</strong> Instant feedback pops up — 🟢 green for correct, 🔴 red for wrong.</li>
+                <li><strong>4.</strong> Next question loads <strong>automatically</strong> after 1.8s — no extra clicks!</li>
+                <li><strong>5.</strong> Track your score in the fixed bar at the top — always visible!</li>
+            </ul>
+            <h3>🏆 Winning</h3>
+            <p>Aim for <strong style="color:#ffd700;">100%</strong>! Every correct answer brings you closer to mastery. You've got this! 💪</p>
+            <button class="close-btn" onclick="closeHelp()">✅ Got it! Let's Play</button>
+        </div>
+    </div>
+
+    <script>
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  DATA — 50 Active/Passive MCQs
+        //  Pattern: A, B, A, D, C, D, A, B, A, D  (repeated 5×)
+        //  Indices: A=0, B=1, C=2, D=3
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        const questions = [{
+            stem: 'Active: <strong>Ram eats an apple.</strong> Passive: _____',
+            options: ['An apple is eaten by Ram.', 'An apple was eaten by Ram.', 'An apple has been eaten by Ram.',
+                'An apple is eating by Ram.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Active: <strong>He wrote a letter.</strong> Passive: _____',
+            options: ['A letter is written by him.', 'A letter was written by him.',
+                'A letter had been written by him.', 'A letter was write by him.'
+            ],
+            correct: 1
+        }, {
+            stem: 'Active: <strong>They are watching a movie.</strong> Passive: _____',
+            options: ['A movie is being watched by them.', 'A movie was being watched by them.',
+                'A movie is watched by them.', 'A movie has been watched by them.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Active: <strong>John has completed the project.</strong> Passive: _____',
+            options: ['The project is completed by John.', 'The project was completed by John.',
+                'The project had been completed by John.', 'The project has been completed by John.'
+            ],
+            correct: 3
+        }, {
+            stem: 'Active: <strong>She will write a letter.</strong> Passive: _____',
+            options: ['A letter will write by her.', 'A letter would be written by her.',
+                'A letter will be written by her.', 'A letter will been written by her.'
+            ],
+            correct: 2
+        }, {
+            stem: 'Active: <strong>You should take this medicine.</strong> Passive: _____',
+            options: ['This medicine should taken by you.', 'This medicine shall be taken by you.',
+                'This medicine should be took by you.', 'This medicine should be taken by you.'
+            ],
+            correct: 3
+        }, {
+            stem: 'Active: <strong>Close the door.</strong> Passive: _____',
+            options: ['Let the door be closed.', 'The door is closed.', 'Let be the door closed.',
+                'The door should close.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Active: <strong>Someone stole my bag.</strong> Passive: _____',
+            options: ['My bag was stolen by someone.', 'My bag was stolen.', 'My bag is stolen.',
+                'My bag has been stolen.'
+            ],
+            correct: 1
+        }, {
+            stem: 'Active: <strong>Did they kill a tiger?</strong> Passive: _____',
+            options: ['Was a tiger killed?', 'Is a tiger killed?', 'Did a tiger killed?',
+                'Was a tiger being killed?'
+            ],
+            correct: 0
+        }, {
+            stem: 'Active: <strong>Who wrote this book?</strong> Passive: _____',
+            options: ['Who was written this book?', 'This book was written by who?',
+                'By whom this book was written?', 'By whom was this book written?'
+            ],
+            correct: 3
+        }, {
+            stem: 'Passive: <strong>The cake was eaten by the child.</strong> Active: _____',
+            options: ['The child ate the cake.', 'The child eats the cake.', 'The child has eaten the cake.',
+                'The child is eating the cake.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Passive: <strong>The parcel will be delivered by him.</strong> Active: _____',
+            options: ['He delivers the parcel.', 'He will deliver the parcel.', 'He would deliver the parcel.',
+                'He will be delivering the parcel.'
+            ],
+            correct: 1
+        }, {
+            stem: 'Active: <strong>The teacher teaches the students.</strong> Passive: _____',
+            options: ['The students are taught by the teacher.', 'The students were taught by the teacher.',
+                'The students are being taught by the teacher.', 'The students have been taught by the teacher.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Active: <strong>She was writing a book.</strong> Passive: _____',
+            options: ['A book is being written by her.', 'A book was written by her.',
+                'A book has been written by her.', 'A book was being written by her.'
+            ],
+            correct: 3
+        }, {
+            stem: 'Active: <strong>They have made a decision.</strong> Passive: _____',
+            options: ['A decision is made by them.', 'A decision was made by them.',
+                'A decision has been made by them.', 'A decision had been made by them.'
+            ],
+            correct: 2
+        }, {
+            stem: 'Passive: <strong>The door was closed.</strong> Active: _____',
+            options: ['The door closed someone.', 'Someone was closing the door.', 'Anyone closed the door.',
+                'Someone closed the door.'
+            ],
+            correct: 3
+        }, {
+            stem: 'Active: <strong>The mother is feeding the baby.</strong> Passive: _____',
+            options: ['The baby is being fed by the mother.', 'The baby is fed by the mother.',
+                'The baby was being fed by the mother.', 'The baby has been fed by the mother.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Active: <strong>I will do the homework.</strong> Passive: _____',
+            options: ['The homework will done by me.', 'The homework will be done by me.',
+                'The homework will do by me.', 'The homework would be done by me.'
+            ],
+            correct: 1
+        }, {
+            stem: 'Active: <strong>She did not tell me the truth.</strong> Passive: _____',
+            options: ['I was not told the truth.', 'I am not told the truth.', 'The truth was not told by her.',
+                'I had not been told the truth.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Active: <strong>They are decorating the room.</strong> Passive: _____',
+            options: ['The room is decorated by them.', 'The room was being decorated by them.',
+                'The room has been decorated by them.', 'The room is being decorated.'
+            ],
+            correct: 3
+        }, {
+            stem: 'Active: <strong>Someone had broken the window.</strong> Passive: _____',
+            options: ['The window had been broken.', 'The window was broken.', 'The window has been broken.',
+                'The window is broken.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Passive: <strong>By whom was the letter written?</strong> Active: _____',
+            options: ['Whom wrote the letter?', 'Who wrote the letter?', 'Who has written the letter?',
+                'Who was writing the letter?'
+            ],
+            correct: 1
+        }, {
+            stem: 'Active: <strong>They are playing football.</strong> Passive: _____',
+            options: ['Football is being played.', 'Football is played.', 'Football was being played.',
+                'Football are being played.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Active: <strong>The artist sang the song.</strong> Passive: _____',
+            options: ['The song is sung by the artist.', 'The song was singing by the artist.',
+                'The song has been sung by the artist.', 'The song was sung by the artist.'
+            ],
+            correct: 3
+        }, {
+            stem: 'Active: <strong>They clean the floor every day.</strong> Passive: _____',
+            options: ['The floor is being cleaned every day.', 'The floor was cleaned every day.',
+                'The floor is cleaned every day.', 'The floor has been cleaned every day.'
+            ],
+            correct: 2
+        }, {
+            stem: 'Active: <strong>Someone is repairing my phone.</strong> Passive: _____',
+            options: ['My phone is repaired.', 'My phone was being repaired.', 'My phone has been repaired.',
+                'My phone is being repaired.'
+            ],
+            correct: 3
+        }, {
+            stem: 'Active: <strong>They have watched the movie.</strong> Passive: _____',
+            options: ['The movie has been watched.', 'The movie was watched.', 'The movie is being watched.',
+                'The movie has watched.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Active: <strong>Do they play football?</strong> Passive: _____',
+            options: ['Is football being played by them?', 'Is football played by them?',
+                'Was football played by them?', 'Does football played by them?'
+            ],
+            correct: 1
+        }, {
+            stem: 'Active: <strong>I had finished my work.</strong> Passive: _____',
+            options: ['My work had been finished by me.', 'My work has been finished by me.',
+                'My work was finished by me.', 'My work is finished by me.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Active: <strong>They built a bridge.</strong> Passive: _____',
+            options: ['A bridge is built by them.', 'A bridge was being built by them.',
+                'A bridge has been built by them.', 'A bridge was built by them.'
+            ],
+            correct: 3
+        }, {
+            stem: 'Active: <strong>Has she completed the report?</strong> Passive: _____',
+            options: ['Has the report been completed by her?', 'Is the report completed by her?',
+                'Was the report completed by her?', 'Had the report been completed by her?'
+            ],
+            correct: 0
+        }, {
+            stem: 'Active: <strong>People speak Spanish in Mexico.</strong> Passive: _____',
+            options: ['Spanish is being spoken in Mexico.', 'Spanish is spoken in Mexico.',
+                'Spanish was spoken in Mexico.', 'Spanish has been spoken in Mexico.'
+            ],
+            correct: 1
+        }, {
+            stem: 'Active: <strong>Jerry can carry it.</strong> Passive: _____',
+            options: ['It can be carried by Jerry.', 'It could be carried by Jerry.', 'It can carried by Jerry.',
+                'It will be carried by Jerry.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Active: <strong>Open the gate.</strong> Passive: _____',
+            options: ['Gate is opened.', 'Let gate be open.', 'Gate should be opened.',
+                'Let the gate be opened.'
+            ],
+            correct: 3
+        }, {
+            stem: 'Active: <strong>Someone has served the guests dinner.</strong> Passive: _____',
+            options: ['Dinner was served to the guests.', 'The guests have served dinner.',
+                'The guests have been served dinner.', 'The guests are being served dinner.'
+            ],
+            correct: 2
+        }, {
+            stem: 'Active: <strong>Someone will fix the laptop soon.</strong> Passive: _____',
+            options: ['The laptop is fixed soon.', 'The laptop will fixed soon.',
+                'The laptop would be fixed soon.', 'The laptop will be fixed soon.'
+            ],
+            correct: 3
+        }, {
+            stem: 'Active: <strong>Everybody should follow the rules.</strong> Passive: _____',
+            options: ['The rules should be followed.', 'The rules should follow by everybody.',
+                'The rules were followed.', 'The rules should be follow.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Active: <strong>She has to complete the work.</strong> Passive: _____',
+            options: ['The work is to be completed by her.', 'The work has to be completed by her.',
+                'The work had to be completed by her.', 'The work has to complete by her.'
+            ],
+            correct: 1
+        }, {
+            stem: 'Active: <strong>The teacher made us clean the room.</strong> Passive: _____',
+            options: ['We were made to clean the room by the teacher.', 'The room was made clean by the teacher.',
+                'We are made to clean the room.', 'We were made clean the room.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Active: <strong>We must respect our parents.</strong> Passive: _____',
+            options: ['Our parents must respect by us.', 'Our parents should be respected.',
+                'Our parents were respected.', 'Our parents must be respected.'
+            ],
+            correct: 3
+        }, {
+            stem: 'Passive: <strong>Wild animals are being killed by poachers.</strong> Active: _____',
+            options: ['Poachers are killing wild animals.', 'Poachers kill wild animals.',
+                'Poachers have killed wild animals.', 'Poachers were killing wild animals.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Passive: <strong>A tiger was killed.</strong> Active: _____',
+            options: ['Someone kills a tiger.', 'Someone killed a tiger.', 'They have killed a tiger.',
+                'Anyone killed a tiger.'
+            ],
+            correct: 1
+        }, {
+            stem: 'Active: <strong>Help your friend.</strong> Passive: _____',
+            options: ['Let your friend be helped.', 'Your friend should be helped.',
+                'Let be helped your friend.', 'Your friend is helped.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Active: <strong>People grow apples in Dolpa.</strong> Passive: _____',
+            options: ['Apples are being grown in Dolpa.', 'Apples were grown in Dolpa.',
+                'Apples have been grown in Dolpa.', 'Apples are grown in Dolpa.'
+            ],
+            correct: 3
+        }, {
+            stem: 'Active: <strong>They will have discovered the cure.</strong> Passive: _____',
+            options: ['The cure will be discovered by them.', 'The cure would have been discovered.',
+                'The cure will have been discovered by them.', 'The cure will discovered by them.'
+            ],
+            correct: 2
+        }, {
+            stem: 'Passive: <strong>Is the woman being helped by them?</strong> Active: _____',
+            options: ['Do they help the woman?', 'Are they help the woman?', 'Have they helped the woman?',
+                'Are they helping the woman?'
+            ],
+            correct: 3
+        }, {
+            stem: 'Active: <strong>Did they finalize the date?</strong> Passive: _____',
+            options: ['Was the date finalized by them?', 'Is the date finalized by them?',
+                'Did the date finalized?', 'Was the date final by them?'
+            ],
+            correct: 0
+        }, {
+            stem: 'Active: <strong>Why are you writing this poem?</strong> Passive: _____',
+            options: ['Why is this poem written by you?', 'Why is this poem being written by you?',
+                'Why was this poem being written by you?', 'Why are this poem being written?'
+            ],
+            correct: 1
+        }, {
+            stem: 'Active: <strong>She may help him.</strong> Passive: _____',
+            options: ['He may be helped by her.', 'He might be helped by her.', 'He may helped by her.',
+                'He can be helped by her.'
+            ],
+            correct: 0
+        }, {
+            stem: 'Passive: <strong>The child is being fed.</strong> Active: _____',
+            options: ['Mother feeds the child.', 'Mother fed the child.', 'Mother has fed the child.',
+                'Mother is feeding the child.'
+            ],
+            correct: 3
+        }];
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  GAME STATE
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        let currentIndex = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let isAnswered = false;
+        let autoAdvanceTimer = null;
+        let totalQuestions = questions.length;
+
+        // Timer (count-up)
+        let seconds = 0;
+        let timerInterval = null;
+        let timerPaused = true; // start paused
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  DOM REFS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        const quizContent = document.getElementById('quizContent');
+        const qNumDisplay = document.getElementById('qNumDisplay');
+        const qTotalDisplay = document.getElementById('qTotalDisplay');
+        const correctCountEl = document.getElementById('correctCount');
+        const wrongCountEl = document.getElementById('wrongCount');
+        const scorePercentEl = document.getElementById('scorePercent');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const timerToggleBtn = document.getElementById('timerToggleBtn');
+
+        qTotalDisplay.textContent = totalQuestions;
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  TIMER FUNCTIONS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function formatTime(s) {
+            const m = String(Math.floor(s / 60)).padStart(2, '0');
+            const sec = String(s % 60).padStart(2, '0');
+            return m + ':' + sec;
+        }
+
+        function startTimer() {
+            if (timerInterval) return;
+            timerPaused = false;
+            timerToggleBtn.textContent = '⏸️ Pause';
+            timerToggleBtn.classList.remove('active-timer');
+            timerInterval = setInterval(() => {
+                seconds++;
+                timerDisplay.textContent = formatTime(seconds);
+                // warning if > 60s
+                if (seconds > 60) {
+                    timerDisplay.classList.add('warning');
+                } else {
+                    timerDisplay.classList.remove('warning');
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                timerPaused = true;
+                timerToggleBtn.textContent = '▶️ Resume';
+                timerToggleBtn.classList.add('active-timer');
+            }
+        }
+
+        function toggleTimer() {
+            if (timerPaused) {
+                startTimer();
+            } else {
+                pauseTimer();
+            }
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            seconds = 0;
+            timerDisplay.textContent = '00:00';
+            timerDisplay.classList.remove('warning');
+            timerPaused = true;
+            timerToggleBtn.textContent = '▶️ Resume';
+            timerToggleBtn.classList.remove('active-timer');
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  RENDER
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function renderQuestion() {
+            if (currentIndex >= totalQuestions) {
+                showResult();
+                return;
+            }
+
+            const q = questions[currentIndex];
+            const labels = ['A', 'B', 'C', 'D'];
+
+            let html = `
+                <div class="q-number">
+                    Question <span>${currentIndex + 1}</span> / ${totalQuestions}
+                    <span class="badge">⚡ ${currentIndex < 10 ? 'Beginner' : currentIndex < 25 ? 'Intermediate' : 'Advanced'}</span>
+                </div>
+                <div class="q-text">
+                    ${q.stem}
+                </div>
+                <div class="options-grid">
+            `;
+
+            q.options.forEach((opt, idx) => {
+                html += `
+                    <button class="option-btn" data-index="${idx}" onclick="selectOption(${idx})">
+                        <span class="letter">${labels[idx]}</span>
+                        ${opt}
+                    </button>
+                `;
+            });
+
+            html += `</div>`;
+
+            // Remove any existing feedback overlay
+            const existingPopup = document.querySelector('.feedback-popup');
+            if (existingPopup) existingPopup.remove();
+
+            quizContent.innerHTML = html;
+            isAnswered = false;
+            updateScoreDisplay();
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  SELECT OPTION
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function selectOption(selectedIndex) {
+            if (isAnswered) return;
+            if (currentIndex >= totalQuestions) return;
+
+            // Start timer on first click
+            if (seconds === 0 && timerPaused) {
+                startTimer();
+            }
+
+            const q = questions[currentIndex];
+            const isCorrect = (selectedIndex === q.correct);
+            const labels = ['A', 'B', 'C', 'D'];
+
+            // Update counts
+            if (isCorrect) {
+                correctCount++;
+            } else {
+                wrongCount++;
+            }
+            isAnswered = true;
+
+            // Disable all option buttons
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(btn => btn.classList.add('disabled-opt'));
+
+            // Highlight correct & wrong
+            allBtns.forEach((btn, idx) => {
+                if (idx === q.correct) {
+                    btn.classList.add('correct-opt');
+                }
+                if (idx === selectedIndex && !isCorrect) {
+                    btn.classList.add('wrong-opt');
+                }
+            });
+
+            updateScoreDisplay();
+
+            // Build feedback popup
+            const popup = document.createElement('div');
+            popup.className = 'feedback-popup active';
+
+            const icon = isCorrect ? '🎉' : '😅';
+            const title = isCorrect ? 'Correct!' : 'Oops!';
+            const titleClass = isCorrect ? 'correct' : 'wrong';
+            const correctAns = q.options[q.correct];
+            const subMsg = isCorrect ?
+                'Awesome! You nailed it! 💪' :
+                `The correct answer was <strong style="color:#ffd700;">${labels[q.correct]}</strong>`;
+
+            popup.innerHTML = `
+                <div class="fb-icon">${icon}</div>
+                <div class="fb-title ${titleClass}">${title}</div>
+                <div class="fb-sub">${subMsg}</div>
+                <div class="fb-answer">✅ ${correctAns}</div>
+                <div class="fb-timer-info">⏱️ ${formatTime(seconds)} elapsed</div>
+                <div class="fb-next-hint">⏳ Next question loading…</div>
+            `;
+
+            // Insert popup into question area
+            const area = document.getElementById('questionArea');
+            area.appendChild(popup);
+
+            // Auto-advance after 1.8s
+            if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
+            autoAdvanceTimer = setTimeout(() => {
+                // Remove popup
+                const p = document.querySelector('.feedback-popup');
+                if (p) p.remove();
+
+                // Move to next
+                currentIndex++;
+                if (currentIndex >= totalQuestions) {
+                    pauseTimer();
+                    showResult();
+                } else {
+                    renderQuestion();
+                }
+            }, 1800);
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  UPDATE SCORE DISPLAY
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function updateScoreDisplay() {
+            qNumDisplay.textContent = Math.min(currentIndex + 1, totalQuestions);
+            correctCountEl.textContent = correctCount;
+            wrongCountEl.textContent = wrongCount;
+            const total = correctCount + wrongCount;
+            const pct = total === 0 ? 0 : Math.round((correctCount / total) * 100);
+            scorePercentEl.textContent = total === 0 ? '0%' : pct + '%';
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  RESULT
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function showResult() {
+            pauseTimer();
+            const total = correctCount + wrongCount;
+            const pct = total === 0 ? 0 : Math.round((correctCount / total) * 100);
+            let emoji, msg;
+            if (pct === 100) { emoji = '🏆';
+                msg = 'Perfect Score! You\'re a Voice Master!'; } else if (pct >= 80) { emoji = '🌟';
+                msg = 'Excellent! You really know your stuff!'; } else if (pct >= 60) { emoji = '💪';
+                msg = 'Good job! Keep practicing to improve!'; } else if (pct >= 40) { emoji = '📚';
+                msg = 'Nice try! Review the rules and try again.'; } else { emoji = '🤔';
+                msg = 'Don\'t give up! Practice makes perfect.'; }
+
+            const timeStr = formatTime(seconds);
+
+            quizContent.innerHTML = `
+                <div class="result-area">
+                    <div class="big-emoji">${emoji}</div>
+                    <div class="result-title">${msg}</div>
+                    <div class="result-sub">You completed all ${totalQuestions} questions!</div>
+                    <div class="result-score">🎯 Score: <span>${pct}%</span></div>
+                    <div class="result-stats">
+                        <div class="r-correct">✅ Correct: <span>${correctCount}</span></div>
+                        <div class="r-wrong">❌ Wrong: <span>${wrongCount}</span></div>
+                        <div>⏱️ Time: <span>${timeStr}</span></div>
+                    </div>
+                    <button class="result-btn" onclick="resetQuiz()">🔄 Play Again</button>
+                </div>
+            `;
+            updateScoreDisplay();
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  RESET
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function resetQuiz() {
+            // Remove any feedback popup
+            const p = document.querySelector('.feedback-popup');
+            if (p) p.remove();
+            if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
+
+            currentIndex = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            isAnswered = false;
+
+            resetTimer();
+            renderQuestion();
+            updateScoreDisplay();
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  HELP MODAL
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function openHelp() {
+            document.getElementById('helpModal').classList.add('active');
+            pauseTimer();
+        }
+
+        function closeHelp() {
+            document.getElementById('helpModal').classList.remove('active');
+            if (!timerPaused) {
+                startTimer();
+            }
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  INIT
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        renderQuestion();
+        updateScoreDisplay();
+
+        // Keyboard shortcut: close modal with Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (document.getElementById('helpModal').classList.contains('active')) {
+                    closeHelp();
+                }
+            }
+        });
+
+        // Click outside modal to close
+        document.getElementById('helpModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeHelp();
+            }
+        });
+
+        console.log('⚡ Voice Forge loaded! Good luck, champion! 🚀');
+    </script>
+
+</body>
+</html>
