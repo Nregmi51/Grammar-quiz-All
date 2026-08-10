@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEE English · Q9 & Q10 Practice</title>
+  <!-- Font & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f9f3e9 0%, #fff4e6 100%);
+      font-family: 'Inter', sans-serif;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 1300px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #1e2b4f, #2b3f6e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .subhead {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #3a4c7a;
+      border-left: 6px solid #f7b731;
+      padding-left: 1rem;
+      margin-bottom: 2rem;
+      background: rgba(247, 183, 49, 0.08);
+      border-radius: 0 12px 12px 0;
+      padding: 0.8rem 1.5rem;
+      display: inline-block;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .section-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(4px);
+      border-radius: 2.5rem;
+      padding: 1.8rem 1.8rem 2rem;
+      box-shadow: 0 20px 40px rgba(0, 10, 30, 0.12), 0 8px 20px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 3px solid #f7b731;
+      padding-bottom: 0.7rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-header i {
+      font-size: 2rem;
+      color: #1e2b4f;
+      background: #f7b731;
+      padding: 0.5rem;
+      border-radius: 18px;
+      width: 3.2rem;
+      text-align: center;
+      color: #1e2b4f;
+    }
+
+    .card-header h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #1a2744;
+    }
+
+    .card-header .badge {
+      margin-left: auto;
+      background: #1e2b4f;
+      color: white;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+    }
+
+    .set-block {
+      background: white;
+      border-radius: 1.8rem;
+      padding: 1.5rem 1.5rem 1.2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.03);
+      border: 1px solid #f0e8de;
+    }
+
+    .set-title {
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: #2b3f6e;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .set-title i {
+      color: #f7b731;
+      font-size: 1rem;
+    }
+
+    .question-item {
+      padding: 0.4rem 0 0.4rem 1rem;
+      border-left: 3px solid #e2dcd2;
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #1f2e4a;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.2rem 0.5rem;
+    }
+
+    .question-item .q {
+      font-weight: 700;
+      color: #1e2b4f;
+    }
+
+    .question-item .instruction {
+      font-weight: 600;
+      color: #6f5e4a;
+      background: #f1ede7;
+      padding: 0.1rem 0.7rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .btn-reveal {
+      background: #1e2b4f;
+      border: none;
+      color: white;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-left: 0.3rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-reveal:hover {
+      background: #f7b731;
+      color: #1a2744;
+      transform: scale(1.02);
+    }
+
+    .btn-reveal i {
+      font-size: 0.7rem;
+    }
+
+    .answer-box {
+      background: #f3f7fc;
+      border-radius: 40px;
+      padding: 0.1rem 1rem 0.1rem 1.2rem;
+      margin-top: 0.2rem;
+      font-weight: 700;
+      color: #1d3b5c;
+      border-left: 4px solid #f7b731;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.3rem 0.6rem;
+      font-size: 0.95rem;
+    }
+
+    .answer-box .label {
+      font-weight: 600;
+      color: #6f5e4a;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .hidden-answer {
+      display: none;
+    }
+
+    .fill-blank-item {
+      padding: 0.3rem 0 0.3rem 0.8rem;
+      margin-bottom: 0.1rem;
+      font-weight: 600;
+      color: #1f2e4a;
+      border-bottom: 1px dashed #ddd6cb;
+    }
+
+    .fill-blank-item .blanks {
+      background: #f7f3ed;
+      padding: 0.1rem 0.6rem;
+      border-radius: 20px;
+      font-weight: 700;
+      color: #b14d3a;
+    }
+
+    .footer-note {
+      margin-top: 2.5rem;
+      text-align: center;
+      font-weight: 700;
+      color: #3a4c7a;
+      background: rgba(255,255,240,0.5);
+      padding: 1rem 2rem;
+      border-radius: 60px;
+      backdrop-filter: blur(2px);
+      border: 1px solid #e4d9cb;
+      font-size: 0.95rem;
+    }
+
+    .footer-note i {
+      color: #f7b731;
+    }
+
+    .inline-code {
+      background: #eae3da;
+      padding: 0.2rem 0.6rem;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.75rem;
+      color: #1e2b4f;
+    }
+
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap;">
+    <div>
+      <h1><i class="fas fa-pen-fancy" style="background: linear-gradient(135deg,#f7b731,#f5a623); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i> SEE English · Q9 & Q10</h1>
+      <div class="subhead"><i class="fas fa-bolt" style="color:#f7b731;"></i> 5 practice sets · grammar reproduction + fill-in-the-blanks</div>
+    </div>
+    <div style="background: #1e2b4f; padding: 0.4rem 1.8rem; border-radius: 60px; color: white; font-weight: 700; font-size: 0.9rem; box-shadow: 0 8px 12px rgba(0,0,0,0.05);">
+      <i class="fas fa-check-circle" style="color: #f7b731;"></i> 2080–81 style
+    </div>
+  </div>
+
+  <div class="section-grid">
+
+    <!-- ============ Q9 COLUMN ============ -->
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-rotate-right"></i>
+        <h2>Q.9 Reproduction</h2>
+        <span class="badge">6×1 = 6</span>
+      </div>
+
+      <!-- Set 1 -->
+      <div class="set-block">
+        <div class="set-title"><i class="fas fa-layer-group"></i> Set 1</div>
+        <div class="question-item"><span class="q">a.</span> She seldom visits the library, ________? <span class="instruction">tag</span> <button class="btn-reveal" data-target="ans-q9-1a"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-1a" class="answer-box hidden-answer"><span class="label">✓</span> does she?</div></div>
+        <div class="question-item"><span class="q">b.</span> By tomorrow, they ________ (complete) the bridge. <span class="instruction">verb</span> <button class="btn-reveal" data-target="ans-q9-1b"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-1b" class="answer-box hidden-answer"><span class="label">✓</span> will have completed</div></div>
+        <div class="question-item"><span class="q">c.</span> The teacher said to me, “Why are you absent today?” <span class="instruction">indirect</span> <button class="btn-reveal" data-target="ans-q9-1c"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-1c" class="answer-box hidden-answer"><span class="label">✓</span> The teacher asked me why I was absent that day.</div></div>
+        <div class="question-item"><span class="q">d.</span> The workers repaired the road. <span class="instruction">passive</span> <button class="btn-reveal" data-target="ans-q9-1d"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-1d" class="answer-box hidden-answer"><span class="label">✓</span> The road was repaired by the workers.</div></div>
+        <div class="question-item"><span class="q">e.</span> Mina likes spicy food. <span class="instruction">negative</span> <button class="btn-reveal" data-target="ans-q9-1e"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-1e" class="answer-box hidden-answer"><span class="label">✓</span> Mina does not like spicy food.</div></div>
+        <div class="question-item"><span class="q">f.</span> Raju will meet his uncle at the airport. <span class="instruction">'Where' Q</span> <button class="btn-reveal" data-target="ans-q9-1f"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-1f" class="answer-box hidden-answer"><span class="label">✓</span> Where will Raju meet his uncle?</div></div>
+      </div>
+
+      <!-- Set 2 -->
+      <div class="set-block">
+        <div class="set-title"><i class="fas fa-layer-group"></i> Set 2</div>
+        <div class="question-item"><span class="q">a.</span> Let us go for a walk, ________? <span class="instruction">tag</span> <button class="btn-reveal" data-target="ans-q9-2a"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-2a" class="answer-box hidden-answer"><span class="label">✓</span> shall we?</div></div>
+        <div class="question-item"><span class="q">b.</span> Look! The children ________ (play) in the garden. <span class="instruction">tense</span> <button class="btn-reveal" data-target="ans-q9-2b"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-2b" class="answer-box hidden-answer"><span class="label">✓</span> are playing</div></div>
+        <div class="question-item"><span class="q">c.</span> “Please help me with this box,” the old man said to the boy. <span class="instruction">indirect</span> <button class="btn-reveal" data-target="ans-q9-2c"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-2c" class="answer-box hidden-answer"><span class="label">✓</span> The old man requested the boy to help him with that box.</div></div>
+        <div class="question-item"><span class="q">d.</span> Did the police catch the thief? <span class="instruction">passive</span> <button class="btn-reveal" data-target="ans-q9-2d"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-2d" class="answer-box hidden-answer"><span class="label">✓</span> Was the thief caught by the police?</div></div>
+        <div class="question-item"><span class="q">e.</span> Everyone enjoyed the programme. <span class="instruction">negative</span> <button class="btn-reveal" data-target="ans-q9-2e"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-2e" class="answer-box hidden-answer"><span class="label">✓</span> Nobody disliked the programme.</div></div>
+        <div class="question-item"><span class="q">f.</span> She has lived in Nepal for ten years. <span class="instruction">'How long' Q</span> <button class="btn-reveal" data-target="ans-q9-2f"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-2f" class="answer-box hidden-answer"><span class="label">✓</span> How long has she lived in Nepal?</div></div>
+      </div>
+
+      <!-- Set 3 -->
+      <div class="set-block">
+        <div class="set-title"><i class="fas fa-layer-group"></i> Set 3</div>
+        <div class="question-item"><span class="q">a.</span> Nobody called you, ________? <span class="instruction">tag</span> <button class="btn-reveal" data-target="ans-q9-3a"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-3a" class="answer-box hidden-answer"><span class="label">✓</span> did they?</div></div>
+        <div class="question-item"><span class="q">b.</span> If I were rich, I ________ (help) poor children. <span class="instruction">verb</span> <button class="btn-reveal" data-target="ans-q9-3b"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-3b" class="answer-box hidden-answer"><span class="label">✓</span> would help</div></div>
+        <div class="question-item"><span class="q">c.</span> Sita said, “I have finished my assignment.” <span class="instruction">indirect</span> <button class="btn-reveal" data-target="ans-q9-3c"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-3c" class="answer-box hidden-answer"><span class="label">✓</span> Sita said that she had finished her assignment.</div></div>
+        <div class="question-item"><span class="q">d.</span> They are planting trees around the school. <span class="instruction">passive</span> <button class="btn-reveal" data-target="ans-q9-3d"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-3d" class="answer-box hidden-answer"><span class="label">✓</span> Trees are being planted around the school by them.</div></div>
+        <div class="question-item"><span class="q">e.</span> He always tells the truth. <span class="instruction">negative</span> <button class="btn-reveal" data-target="ans-q9-3e"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-3e" class="answer-box hidden-answer"><span class="label">✓</span> He never tells a lie.</div></div>
+        <div class="question-item"><span class="q">f.</span> The students went to Pokhara by bus. <span class="instruction">'How' Q</span> <button class="btn-reveal" data-target="ans-q9-3f"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-3f" class="answer-box hidden-answer"><span class="label">✓</span> How did the students go to Pokhara?</div></div>
+      </div>
+
+      <!-- Set 4 -->
+      <div class="set-block">
+        <div class="set-title"><i class="fas fa-layer-group"></i> Set 4</div>
+        <div class="question-item"><span class="q">a.</span> You hardly know him, ________? <span class="instruction">tag</span> <button class="btn-reveal" data-target="ans-q9-4a"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-4a" class="answer-box hidden-answer"><span class="label">✓</span> do you?</div></div>
+        <div class="question-item"><span class="q">b.</span> When I reached the station, the train ________ (leave). <span class="instruction">tense</span> <button class="btn-reveal" data-target="ans-q9-4b"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-4b" class="answer-box hidden-answer"><span class="label">✓</span> had left</div></div>
+        <div class="question-item"><span class="q">c.</span> The principal said to the students, “Do not make noise.” <span class="instruction">indirect</span> <button class="btn-reveal" data-target="ans-q9-4c"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-4c" class="answer-box hidden-answer"><span class="label">✓</span> The principal ordered the students not to make noise.</div></div>
+        <div class="question-item"><span class="q">d.</span> Someone has stolen my bicycle. <span class="instruction">passive</span> <button class="btn-reveal" data-target="ans-q9-4d"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-4d" class="answer-box hidden-answer"><span class="label">✓</span> My bicycle has been stolen.</div></div>
+        <div class="question-item"><span class="q">e.</span> She can solve the problem. <span class="instruction">negative</span> <button class="btn-reveal" data-target="ans-q9-4e"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-4e" class="answer-box hidden-answer"><span class="label">✓</span> She cannot solve the problem.</div></div>
+        <div class="question-item"><span class="q">f.</span> They are organizing a cultural programme. <span class="instruction">'What' Q</span> <button class="btn-reveal" data-target="ans-q9-4f"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-4f" class="answer-box hidden-answer"><span class="label">✓</span> What are they organizing?</div></div>
+      </div>
+
+      <!-- Set 5 -->
+      <div class="set-block">
+        <div class="set-title"><i class="fas fa-layer-group"></i> Set 5</div>
+        <div class="question-item"><span class="q">a.</span> I am late, ________? <span class="instruction">tag</span> <button class="btn-reveal" data-target="ans-q9-5a"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-5a" class="answer-box hidden-answer"><span class="label">✓</span> aren’t I?</div></div>
+        <div class="question-item"><span class="q">b.</span> By next month, he ________ (work) here for five years. <span class="instruction">verb</span> <button class="btn-reveal" data-target="ans-q9-5b"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-5b" class="answer-box hidden-answer"><span class="label">✓</span> will have been working</div></div>
+        <div class="question-item"><span class="q">c.</span> Hari said to me, “Will you attend the meeting?” <span class="instruction">indirect</span> <button class="btn-reveal" data-target="ans-q9-5c"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-5c" class="answer-box hidden-answer"><span class="label">✓</span> Hari asked me whether I would attend the meeting.</div></div>
+        <div class="question-item"><span class="q">d.</span> The students should obey the school rules. <span class="instruction">passive</span> <button class="btn-reveal" data-target="ans-q9-5d"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-5d" class="answer-box hidden-answer"><span class="label">✓</span> The school rules should be obeyed by the students.</div></div>
+        <div class="question-item"><span class="q">e.</span> Everybody likes the new teacher. <span class="instruction">negative</span> <button class="btn-reveal" data-target="ans-q9-5e"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-5e" class="answer-box hidden-answer"><span class="label">✓</span> Nobody dislikes the new teacher.</div></div>
+        <div class="question-item"><span class="q">f.</span> The woman bought a beautiful shawl from Kathmandu. <span class="instruction">'What' Q</span> <button class="btn-reveal" data-target="ans-q9-5f"><i class="fas fa-eye"></i> reveal</button><div id="ans-q9-5f" class="answer-box hidden-answer"><span class="label">✓</span> What did the woman buy from Kathmandu?</div></div>
+      </div>
+    </div>
+
+    <!-- ============ Q10 COLUMN ============ -->
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-puzzle-piece"></i>
+        <h2>Q.10 Fill in the blanks</h2>
+        <span class="badge">10×0.5=5</span>
+      </div>
+
+      <!-- Set 1 -->
+      <div class="set-block">
+        <div class="set-title"><i class="fas fa-layer-group"></i> Set 1</div>
+        <div class="fill-blank-item">a. <span class="blanks">(a/an/the/no article)</span> local museum. <button class="btn-reveal" data-target="ans-q10-1a"><i class="fas fa-eye"></i></button><div id="ans-q10-1a" class="answer-box hidden-answer"><span class="label">✓</span> a</div></div>
+        <div class="fill-blank-item">b. It <span class="blanks">(is/was/were/has)</span> situated near the city centre. <button class="btn-reveal" data-target="ans-q10-1b"><i class="fas fa-eye"></i></button><div id="ans-q10-1b" class="answer-box hidden-answer"><span class="label">✓</span> was</div></div>
+        <div class="fill-blank-item">c. We arrived <span class="blanks">(at/in/on/from)</span> nine o’clock. <button class="btn-reveal" data-target="ans-q10-1c"><i class="fas fa-eye"></i></button><div id="ans-q10-1c" class="answer-box hidden-answer"><span class="label">✓</span> at</div></div>
+        <div class="fill-blank-item">d. The guide <span class="blanks">(welcome/welcomed/welcomes/welcoming)</span> us warmly, <button class="btn-reveal" data-target="ans-q10-1d"><i class="fas fa-eye"></i></button><div id="ans-q10-1d" class="answer-box hidden-answer"><span class="label">✓</span> welcomed</div></div>
+        <div class="fill-blank-item">e. ________ <span class="blanks">(didn’t he/don’t he/doesn’t he/wasn’t he)</span>? <button class="btn-reveal" data-target="ans-q10-1e"><i class="fas fa-eye"></i></button><div id="ans-q10-1e" class="answer-box hidden-answer"><span class="label">✓</span> didn’t he</div></div>
+        <div class="fill-blank-item">f. He explained that the museum <span class="blanks">(contains/contained/contain/containing)</span> many historical objects. <button class="btn-reveal" data-target="ans-q10-1f"><i class="fas fa-eye"></i></button><div id="ans-q10-1f" class="answer-box hidden-answer"><span class="label">✓</span> contained</div></div>
+        <div class="fill-blank-item">g. Although the building was old, it <span class="blanks">(is/was/were/has)</span> well maintained. <button class="btn-reveal" data-target="ans-q10-1g"><i class="fas fa-eye"></i></button><div id="ans-q10-1g" class="answer-box hidden-answer"><span class="label">✓</span> was</div></div>
+        <div class="fill-blank-item">h. The guide asked us <span class="blanks">(what did we see/what we saw/what we had seen/what do we see)</span>. <button class="btn-reveal" data-target="ans-q10-1h"><i class="fas fa-eye"></i></button><div id="ans-q10-1h" class="answer-box hidden-answer"><span class="label">✓</span> what we had seen</div></div>
+        <div class="fill-blank-item">i. If you visit the museum, you <span class="blanks">(will learn/would learn/learned/would have learned)</span> many interesting facts. <button class="btn-reveal" data-target="ans-q10-1i"><i class="fas fa-eye"></i></button><div id="ans-q10-1i" class="answer-box hidden-answer"><span class="label">✓</span> will learn</div></div>
+        <div class="fill-blank-item">j. The visit made us <span class="blanks">(understand/to understand/understood/understanding)</span> the value of history. <button class="btn-reveal" data-target="ans-q10-1j"><i class="fas fa-eye"></i></button><div id="ans-q10-1j" class="answer-box hidden-answer"><span class="label">✓</span> understand</div></div>
+      </div>
+
+      <!-- Set 2 -->
+      <div class="set-block">
+        <div class="set-title"><i class="fas fa-layer-group"></i> Set 2</div>
+        <div class="fill-blank-item">a. <span class="blanks">(a/an/the/no article)</span> farmer found a wounded bird. <button class="btn-reveal" data-target="ans-q10-2a"><i class="fas fa-eye"></i></button><div id="ans-q10-2a" class="answer-box hidden-answer"><span class="label">✓</span> a</div></div>
+        <div class="fill-blank-item">b. The bird <span class="blanks">(was lying/is lying/has lain/lie)</span> under a tree. <button class="btn-reveal" data-target="ans-q10-2b"><i class="fas fa-eye"></i></button><div id="ans-q10-2b" class="answer-box hidden-answer"><span class="label">✓</span> was lying</div></div>
+        <div class="fill-blank-item">c. The farmer took it <span class="blanks">(to/in/at/on)</span> his room. <button class="btn-reveal" data-target="ans-q10-2c"><i class="fas fa-eye"></i></button><div id="ans-q10-2c" class="answer-box hidden-answer"><span class="label">✓</span> to</div></div>
+        <div class="fill-blank-item">d. He looked after it carefully, <span class="blanks">(didn’t he/don’t he/wasn’t he/doesn’t he)</span>? <button class="btn-reveal" data-target="ans-q10-2d"><i class="fas fa-eye"></i></button><div id="ans-q10-2d" class="answer-box hidden-answer"><span class="label">✓</span> didn’t he</div></div>
+        <div class="fill-blank-item">e. After a few days, the bird <span class="blanks">(recover/recovered/has recovered/recovering)</span>. <button class="btn-reveal" data-target="ans-q10-2e"><i class="fas fa-eye"></i></button><div id="ans-q10-2e" class="answer-box hidden-answer"><span class="label">✓</span> recovered</div></div>
+        <div class="fill-blank-item">f. The farmer asked his son <span class="blanks">(where should he release it/where he should release it/where did he release it/where he releases it)</span>. <button class="btn-reveal" data-target="ans-q10-2f"><i class="fas fa-eye"></i></button><div id="ans-q10-2f" class="answer-box hidden-answer"><span class="label">✓</span> where he should release it</div></div>
+        <div class="fill-blank-item">g. Although the bird was weak, it <span class="blanks">(could/can/will/must)</span> fly. <button class="btn-reveal" data-target="ans-q10-2g"><i class="fas fa-eye"></i></button><div id="ans-q10-2g" class="answer-box hidden-answer"><span class="label">✓</span> could</div></div>
+        <div class="fill-blank-item">h. The farmer opened the cage so that it <span class="blanks">(can/could/will/shall)</span> go outside. <button class="btn-reveal" data-target="ans-q10-2h"><i class="fas fa-eye"></i></button><div id="ans-q10-2h" class="answer-box hidden-answer"><span class="label">✓</span> could</div></div>
+        <div class="fill-blank-item">i. If the farmer had not helped it, the bird <span class="blanks">(would die/would have died/will die/died)</span>. <button class="btn-reveal" data-target="ans-q10-2i"><i class="fas fa-eye"></i></button><div id="ans-q10-2i" class="answer-box hidden-answer"><span class="label">✓</span> would have died</div></div>
+        <div class="fill-blank-item">j. His kindness made everyone <span class="blanks">(admire/to admire/admired/admiring)</span> him. <button class="btn-reveal" data-target="ans-q10-2j"><i class="fas fa-eye"></i></button><div id="ans-q10-2j" class="answer-box hidden-answer"><span class="label">✓</span> admire</div></div>
+      </div>
+
+      <!-- Set 3 -->
+      <div class="set-block">
+        <div class="set-title"><i class="fas fa-layer-group"></i> Set 3</div>
+        <div class="fill-blank-item">a. <span class="blanks">(a/an/the/no article)</span> severe storm in the village. <button class="btn-reveal" data-target="ans-q10-3a"><i class="fas fa-eye"></i></button><div id="ans-q10-3a" class="answer-box hidden-answer"><span class="label">✓</span> a</div></div>
+        <div class="fill-blank-item">b. Strong winds <span class="blanks">(destroyed/destroy/have destroy/destroying)</span> several houses. <button class="btn-reveal" data-target="ans-q10-3b"><i class="fas fa-eye"></i></button><div id="ans-q10-3b" class="answer-box hidden-answer"><span class="label">✓</span> destroyed</div></div>
+        <div class="fill-blank-item">c. Many trees fell <span class="blanks">(on/in/at/from)</span> the roads. <button class="btn-reveal" data-target="ans-q10-3c"><i class="fas fa-eye"></i></button><div id="ans-q10-3c" class="answer-box hidden-answer"><span class="label">✓</span> on</div></div>
+        <div class="fill-blank-item">d. The villagers were frightened, <span class="blanks">(weren’t they/didn’t they/were they/are they)</span>? <button class="btn-reveal" data-target="ans-q10-3d"><i class="fas fa-eye"></i></button><div id="ans-q10-3d" class="answer-box hidden-answer"><span class="label">✓</span> weren’t they</div></div>
+        <div class="fill-blank-item">e. The local authority <span class="blanks">(has sent/sent/send/sending)</span> rescue workers immediately. <button class="btn-reveal" data-target="ans-q10-3e"><i class="fas fa-eye"></i></button><div id="ans-q10-3e" class="answer-box hidden-answer"><span class="label">✓</span> sent</div></div>
+        <div class="fill-blank-item">f. The officer asked the villagers <span class="blanks">(how they were affected/how were they affected/how they are affected/how did they affect)</span>. <button class="btn-reveal" data-target="ans-q10-3f"><i class="fas fa-eye"></i></button><div id="ans-q10-3f" class="answer-box hidden-answer"><span class="label">✓</span> how they were affected</div></div>
+        <div class="fill-blank-item">g. Although the weather was dangerous, the rescue workers <span class="blanks">(continued/continue/continuing/had continue)</span> their work. <button class="btn-reveal" data-target="ans-q10-3g"><i class="fas fa-eye"></i></button><div id="ans-q10-3g" class="answer-box hidden-answer"><span class="label">✓</span> continued</div></div>
+        <div class="fill-blank-item">h. Temporary shelters <span class="blanks">(were built/built/are building/has built)</span> for the homeless. <button class="btn-reveal" data-target="ans-q10-3h"><i class="fas fa-eye"></i></button><div id="ans-q10-3h" class="answer-box hidden-answer"><span class="label">✓</span> were built</div></div>
+        <div class="fill-blank-item">i. If everyone cooperates, the victims <span class="blanks">(will receive/would receive/would have received/received)</span> proper support. <button class="btn-reveal" data-target="ans-q10-3i"><i class="fas fa-eye"></i></button><div id="ans-q10-3i" class="answer-box hidden-answer"><span class="label">✓</span> will receive</div></div>
+        <div class="fill-blank-item">j. The disaster taught the villagers <span class="blanks">(to prepare/prepare/prepared/preparing)</span> for emergencies. <button class="btn-reveal" data-target="ans-q10-3j"><i class="fas fa-eye"></i></button><div id="ans-q10-3j" class="answer-box hidden-answer"><span class="label">✓</span> to prepare</div></div>
+      </div>
+
+      <!-- Set 4 -->
+      <div class="set-block">
+        <div class="set-title"><i class="fas fa-layer-group"></i> Set 4</div>
+        <div class="fill-blank-item">a. My sister is <span class="blanks">(a/an/the/no article)</span> nurse in a government hospital. <button class="btn-reveal" data-target="ans-q10-4a"><i class="fas fa-eye"></i></button><div id="ans-q10-4a" class="answer-box hidden-answer"><span class="label">✓</span> a</div></div>
+        <div class="fill-blank-item">b. She <span class="blanks">(works/work/worked/working)</span> there for six years. <button class="btn-reveal" data-target="ans-q10-4b"><i class="fas fa-eye"></i></button><div id="ans-q10-4b" class="answer-box hidden-answer"><span class="label">✓</span> has worked</div></div>
+        <div class="fill-blank-item">c. She usually goes <span class="blanks">(to/at/in/on)</span> the hospital early. <button class="btn-reveal" data-target="ans-q10-4c"><i class="fas fa-eye"></i></button><div id="ans-q10-4c" class="answer-box hidden-answer"><span class="label">✓</span> to</div></div>
+        <div class="fill-blank-item">d. Yesterday, she <span class="blanks">(was treating/treated/has treated/treats)</span> an injured child, <button class="btn-reveal" data-target="ans-q10-4d"><i class="fas fa-eye"></i></button><div id="ans-q10-4d" class="answer-box hidden-answer"><span class="label">✓</span> was treating</div></div>
+        <div class="fill-blank-item">e. ________ <span class="blanks">(wasn’t she/didn’t she/doesn’t she/isn’t she)</span>? <button class="btn-reveal" data-target="ans-q10-4e"><i class="fas fa-eye"></i></button><div id="ans-q10-4e" class="answer-box hidden-answer"><span class="label">✓</span> wasn’t she</div></div>
+        <div class="fill-blank-item">f. The child’s mother asked her <span class="blanks">(what she should do/what should she do/what did she do/what she does)</span>. <button class="btn-reveal" data-target="ans-q10-4f"><i class="fas fa-eye"></i></button><div id="ans-q10-4f" class="answer-box hidden-answer"><span class="label">✓</span> what she should do</div></div>
+        <div class="fill-blank-item">g. The medicine <span class="blanks">(was given/gave/is giving/has give)</span> to the child. <button class="btn-reveal" data-target="ans-q10-4g"><i class="fas fa-eye"></i></button><div id="ans-q10-4g" class="answer-box hidden-answer"><span class="label">✓</span> was given</div></div>
+        <div class="fill-blank-item">h. Although the hospital was crowded, my sister <span class="blanks">(served/serves/serving/has serve)</span> all the patients politely. <button class="btn-reveal" data-target="ans-q10-4h"><i class="fas fa-eye"></i></button><div id="ans-q10-4h" class="answer-box hidden-answer"><span class="label">✓</span> served</div></div>
+        <div class="fill-blank-item">i. If she had been careless, the child <span class="blanks">(might have suffered/may suffer/will suffer/suffered)</span>. <button class="btn-reveal" data-target="ans-q10-4i"><i class="fas fa-eye"></i></button><div id="ans-q10-4i" class="answer-box hidden-answer"><span class="label">✓</span> might have suffered</div></div>
+        <div class="fill-blank-item">j. Her service made the parents <span class="blanks">(feel/to feel/felt/feeling)</span> grateful. <button class="btn-reveal" data-target="ans-q10-4j"><i class="fas fa-eye"></i></button><div id="ans-q10-4j" class="answer-box hidden-answer"><span class="label">✓</span> feel</div></div>
+      </div>
+
+      <!-- Set 5 -->
+      <div class="set-block">
+        <div class="set-title"><i class="fas fa-layer-group"></i> Set 5</div>
+        <div class="fill-blank-item">a. Last year, our school started <span class="blanks">(a/an/the/no article)</span> reading club. <button class="btn-reveal" data-target="ans-q10-5a"><i class="fas fa-eye"></i></button><div id="ans-q10-5a" class="answer-box hidden-answer"><span class="label">✓</span> a</div></div>
+        <div class="fill-blank-item">b. The club <span class="blanks">(was formed/is form/formed/forming)</span> to encourage students. <button class="btn-reveal" data-target="ans-q10-5b"><i class="fas fa-eye"></i></button><div id="ans-q10-5b" class="answer-box hidden-answer"><span class="label">✓</span> was formed</div></div>
+        <div class="fill-blank-item">c. It meets <span class="blanks">(on/in/at/from)</span> every Friday. <button class="btn-reveal" data-target="ans-q10-5c"><i class="fas fa-eye"></i></button><div id="ans-q10-5c" class="answer-box hidden-answer"><span class="label">✓</span> on</div></div>
+        <div class="fill-blank-item">d. The members read stories and discuss them, <span class="blanks">(don’t they/aren’t they/won’t they/didn’t they)</span>? <button class="btn-reveal" data-target="ans-q10-5d"><i class="fas fa-eye"></i></button><div id="ans-q10-5d" class="answer-box hidden-answer"><span class="label">✓</span> don’t they</div></div>
+        <div class="fill-blank-item">e. The club leader asked the members <span class="blanks">(which book they liked/which book did they like/which book they like/which did they like book)</span>. <button class="btn-reveal" data-target="ans-q10-5e"><i class="fas fa-eye"></i></button><div id="ans-q10-5e" class="answer-box hidden-answer"><span class="label">✓</span> which book they liked</div></div>
+        <div class="fill-blank-item">f. Although some students were not interested at first, they gradually <span class="blanks">(developed/develop/developing/have develop)</span> good reading habits. <button class="btn-reveal" data-target="ans-q10-5f"><i class="fas fa-eye"></i></button><div id="ans-q10-5f" class="answer-box hidden-answer"><span class="label">✓</span> developed</div></div>
+        <div class="fill-blank-item">g. Many useful books <span class="blanks">(have been added/added/are adding/has add)</span> to the school library. <button class="btn-reveal" data-target="ans-q10-5g"><i class="fas fa-eye"></i></button><div id="ans-q10-5g" class="answer-box hidden-answer"><span class="label">✓</span> have been added</div></div>
+        <div class="fill-blank-item">h. If the club continues its activities, students <span class="blanks">(will improve/would improve/improved/would have improved)</span> their language skills. <button class="btn-reveal" data-target="ans-q10-5h"><i class="fas fa-eye"></i></button><div id="ans-q10-5h" class="answer-box hidden-answer"><span class="label">✓</span> will improve</div></div>
+        <div class="fill-blank-item">i. The teacher encouraged them <span class="blanks">(to read/read/reading/are reading)</span> regularly. <button class="btn-reveal" data-target="ans-q10-5i"><i class="fas fa-eye"></i></button><div id="ans-q10-5i" class="answer-box hidden-answer"><span class="label">✓</span> to read</div></div>
+        <div class="fill-blank-item">j. Reading books helps students <span class="blanks">(to gain/gain/gained/gaining)</span> knowledge. <button class="btn-reveal" data-target="ans-q10-5j"><i class="fas fa-eye"></i></button><div id="ans-q10-5j" class="answer-box hidden-answer"><span class="label">✓</span> to gain</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <i class="fas fa-lightbulb"></i> Click <span class="inline-code">reveal</span> to check answers · based on SEE 2080–81 pattern
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.btn-reveal');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const targetId = this.getAttribute('data-target');
+        const answerDiv = document.getElementById(targetId);
+        if (answerDiv) {
+          // toggle visibility
+          if (answerDiv.classList.contains('hidden-answer')) {
+            answerDiv.classList.remove('hidden-answer');
+            this.innerHTML = '<i class="fas fa-eye-slash"></i> hide';
+          } else {
+            answerDiv.classList.add('hidden-answer');
+            this.innerHTML = '<i class="fas fa-eye"></i> reveal';
+          }
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
