@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>Preposition Quiz · NP Regmi</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+    body {
+      background: linear-gradient(145deg, #f7f0fc 0%, #e9def0 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+    .app-container {
+      max-width: 800px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 48px 48px 32px 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.1);
+      padding: 1.8rem 1.5rem;
+      transition: all 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+    h1, h2, h3 {
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .page {
+      display: block;
+    }
+    .page.hidden {
+      display: none;
+    }
+    /* buttons */
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.6rem;
+      border: none;
+      border-radius: 60px;
+      background: #5e3c7c;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 6px 0 #3f2a55;
+      transition: all 0.08s ease;
+      cursor: pointer;
+      text-align: center;
+      border: 1px solid #8b6aa8;
+      margin: 0.2rem;
+      touch-action: manipulation;
+    }
+    .btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #3f2a55;
+    }
+    .btn-primary { background: #2b5f8a; box-shadow: 0 6px 0 #1b3f5e; border-color: #5386b5; }
+    .btn-success { background: #2a7a62; box-shadow: 0 6px 0 #1a5544; border-color: #4fa38b; }
+    .btn-warning { background: #b86b2c; box-shadow: 0 6px 0 #8a4f1f; border-color: #d99a5e; }
+    .btn-outline { background: transparent; color: #2d1b3a; box-shadow: none; border: 2px solid #5e3c7c; }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.7rem;
+      margin: 1.2rem 0;
+    }
+    /* home */
+    .home-header {
+      text-align: center;
+      padding: 0.5rem 0;
+    }
+    .home-header h1 {
+      font-size: 2.2rem;
+      background: linear-gradient(135deg, #3d2a52, #7a4b8c);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+    .badge {
+      background: #2a1f33;
+      color: #e6d7f0;
+      padding: 0.3rem 1rem;
+      border-radius: 60px;
+      font-size: 0.9rem;
+      display: inline-block;
+    }
+    .creator-info {
+      margin-top: 2.5rem;
+      border-top: 2px dashed #9a7bb0;
+      padding-top: 1.5rem;
+      font-size: 0.95rem;
+      color: #2d1f38;
+      background: #f2ebf7;
+      border-radius: 30px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .performance-snapshot {
+      background: #dacbe6;
+      border-radius: 60px;
+      padding: 0.8rem 1.2rem;
+      margin: 1rem 0;
+      font-weight: 600;
+      color: #1d1425;
+      border: 1px solid #b396cc;
+    }
+    .register-area {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: center;
+      align-items: center;
+      background: #e3d5ef;
+      border-radius: 80px;
+      padding: 0.6rem 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+    .register-area input {
+      border: none;
+      border-radius: 60px;
+      padding: 0.7rem 1.2rem;
+      flex: 1 1 150px;
+      background: white;
+      font-weight: 500;
+      outline: 1px solid #9e7eb6;
+    }
+    .register-area input:focus { outline: 2px solid #5e3c7c; }
+    /* question card */
+    .question-card {
+      background: #fcf9ff;
+      border-radius: 40px;
+      padding: 1.8rem 1.2rem;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .question-text {
+      font-size: 1.6rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: #1f112b;
+      margin-bottom: 1.8rem;
+    }
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin: 1.2rem 0;
+    }
+    .option-btn {
+      background: #f0e8f8;
+      border: 2px solid #d0bedf;
+      border-radius: 60px;
+      padding: 0.9rem 1.2rem;
+      font-weight: 600;
+      font-size: 1.2rem;
+      text-align: left;
+      transition: all 0.1s;
+      color: #1e102a;
+      box-shadow: 0 2px 0 #b8a2cc;
+      touch-action: manipulation;
+      width: 100%;
+      cursor: pointer;
+    }
+    .option-btn:active { transform: scale(0.97); }
+    .option-btn.correct { background: #82c9b0; border-color: #1f6b53; }
+    .option-btn.wrong { background: #e6a8a8; border-color: #a84343; }
+    .feedback-badge {
+      margin-top: 1rem;
+      font-size: 1.4rem;
+      font-weight: 700;
+      padding: 0.6rem;
+      text-align: center;
+      border-radius: 60px;
+      background: #e1d2ee;
+    }
+    /* performance */
+    .perf-summary {
+      background: #f4ecfb;
+      border-radius: 40px;
+      padding: 2rem 1rem;
+    }
+    .perf-stat {
+      background: white;
+      border-radius: 40px;
+      padding: 1.2rem;
+      margin: 0.7rem 0;
+      font-size: 1.3rem;
+      font-weight: 600;
+      box-shadow: 0 4px 0 #c8b4db;
+    }
+    .reset-area {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+      margin: 1.8rem 0 0.5rem;
+    }
+    /* mobile friendly */
+    @media (max-width: 480px) {
+      .app-container { padding: 1rem 0.8rem; }
+      .question-text { font-size: 1.4rem; }
+      .option-btn { font-size: 1rem; padding: 0.8rem 1rem; }
+      .btn { font-size: 0.9rem; padding: 0.6rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="app-container" id="app">
+  <!-- ========== HOME PAGE ========== -->
+  <div id="page-home" class="page">
+    <div class="home-header">
+      <h1>📘 Preposition Pro</h1>
+      <div class="badge">NP Regmi · 5 sets</div>
+    </div>
+    <!-- registration & greeting -->
+    <div class="register-area">
+      <input type="text" id="playerNameInput" placeholder="Your name (optional)" maxlength="30">
+      <button class="btn btn-primary" id="registerBtn">👤 register</button>
+      <span style="font-weight:500; color:#2d1b3a;" id="greetingDisplay">👋 ambiguous player</span>
+    </div>
+    <!-- performance snapshot -->
+    <div class="performance-snapshot" id="homePerfSnapshot">
+      ⭐ no sets played yet
+    </div>
+    <!-- set buttons -->
+    <div class="btn-group">
+      <button class="btn btn-success set-trigger" data-set="1">Set 1 · Time</button>
+      <button class="btn btn-success set-trigger" data-set="2">Set 2 · Place</button>
+      <button class="btn btn-success set-trigger" data-set="3">Set 3 · Motion</button>
+      <button class="btn btn-success set-trigger" data-set="4">Set 4 · Phrasal</button>
+      <button class="btn btn-success set-trigger" data-set="5">Set 5 · Mixed</button>
+    </div>
+    <div class="creator-info">
+      <strong>NP Regmi</strong> · 📧 nregmi511@gmail.com<br>
+      Badhaiyatal-7, Tilkana Bardiya
+    </div>
+  </div>
+
+  <!-- ========== QUESTION CARD PAGE ========== -->
+  <div id="page-question" class="page hidden">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+      <span class="badge" id="setLabel">Set 1</span>
+      <span class="badge" id="progressLabel">1 / 10</span>
+    </div>
+    <div class="question-card">
+      <div class="question-text" id="questionText">Loading question…</div>
+      <div class="options-grid" id="optionsContainer"></div>
+      <div class="feedback-badge" id="feedbackDisplay">💡 Click an option</div>
+    </div>
+    <div style="display: flex; justify-content: center; margin-top: 1.2rem;">
+      <button class="btn btn-warning" id="quitToHomeBtn">🏠 Home</button>
+    </div>
+  </div>
+
+  <!-- ========== PERFORMANCE PAGE ========== -->
+  <div id="page-performance" class="page hidden">
+    <div class="perf-summary">
+      <h2 style="margin-bottom: 0.5rem;">📊 Performance</h2>
+      <div id="perfSetTitle" class="perf-stat" style="background: #dcc9ed;">Set 1 · Prepositions of Time</div>
+      <div class="perf-stat" id="perfScore">✅ 0 / 0</div>
+      <div class="perf-stat" id="perfPercent">0%</div>
+      <div class="perf-stat" id="perfRemark" style="font-size:1rem;">Keep going!</div>
+      <div class="reset-area">
+        <button class="btn btn-primary" id="perfRetryBtn">🔄 Retry</button>
+        <button class="btn btn-outline" id="perfHomeBtn">🏠 Home</button>
+        <button class="btn btn-warning" id="perfResetBtn">🆕 Reset all</button>
+      </div>
+      <div style="margin-top: 1rem; font-size:0.9rem; opacity:0.8;" id="perfFooter">overall performance at bottom</div>
+    </div>
+    <!-- overall performance (bottom) -->
+    <div style="margin-top: 1.8rem; background: #d0bedf; border-radius: 30px; padding: 1.2rem;">
+      <h3 style="font-size:1.2rem;">📌 Overall performance</h3>
+      <div id="overallStats" style="font-weight:600; padding:0.5rem 0;">No data yet.</div>
+    </div>
+  </div>
+</div>
+<script>
+  (function() {
+    // ---------- DATA ----------
+    const sets = {
+      1: {
+        title: "Set 1 · Prepositions of Time",
+        questions: [
+          { q: "The meeting will start exactly ______ 9 o'clock.", options: ["at", "in", "on", "by"], answer: 0 },
+          { q: "My brother was born ______ October.", options: ["at", "in", "on", "since"], answer: 1 },
+          { q: "We have a holiday ______ Friday.", options: ["on", "in", "at", "for"], answer: 0 },
+          { q: "She has been working in this office ______ 2015.", options: ["for", "in", "by", "since"], answer: 3 },
+          { q: "They have been playing football ______ two hours.", options: ["since", "at", "for", "in"], answer: 2 },
+          { q: "Flowers bloom in Nepal ______ spring.", options: ["on", "at", "by", "in"], answer: 3 },
+          { q: "Please meet me ______ noon to discuss the project.", options: ["at", "in", "on", "during"], answer: 0 },
+          { q: "You must submit your assignment ______ next Sunday.", options: ["at", "by", "in", "since"], answer: 1 },
+          { q: "I fell asleep ______ the movie because it was boring.", options: ["during", "while", "on", "at"], answer: 0 },
+          { q: "I will be away ______ tomorrow morning.", options: ["in", "on", "for", "until"], answer: 3 }
+        ]
+      },
+      2: {
+        title: "Set 2 · Prepositions of Place",
+        questions: [
+          { q: "Someone is standing ______ the door.", options: ["at", "in", "on", "over"], answer: 0 },
+          { q: "He lives ______ a small village in the hills.", options: ["at", "in", "on", "across"], answer: 1 },
+          { q: "The book is kept ______ the table.", options: ["on", "in", "at", "into"], answer: 0 },
+          { q: "The cat is sleeping ______ the bed.", options: ["over", "on", "in", "under"], answer: 1 },
+          { q: "Rita is sitting ______ Ram and Gita.", options: ["among", "along", "between", "at"], answer: 2 },
+          { q: "He was the tallest boy ______ all the students.", options: ["between", "beside", "in", "among"], answer: 3 },
+          { q: "Pollution ______ Kathmandu is increasing every day.", options: ["in", "at", "on", "onto"], answer: 0 },
+          { q: "There is a clock hanging ______ the wall.", options: ["in", "on", "at", "through"], answer: 1 },
+          { q: "I saw a long queue ______ the bus stop.", options: ["at", "in", "on", "behind"], answer: 0 },
+          { q: "Marie was born ______ Poland in 1867.", options: ["at", "on", "by", "in"], answer: 3 }
+        ]
+      },
+      3: {
+        title: "Set 3 · Direction and Motion",
+        questions: [
+          { q: "The frustrated student ran ______ the classroom.", options: ["into", "onto", "through", "across"], answer: 0 },
+          { q: "The teacher is putting the duster ______ the table.", options: ["in", "onto", "at", "under"], answer: 1 },
+          { q: "Every morning, I go ______ school by bus.", options: ["to", "towards", "into", "at"], answer: 0 },
+          { q: "We had to walk ______ the thick forest to reach the village.", options: ["across", "along", "on", "through"], answer: 3 },
+          { q: "The thief was running ______ the police station by mistake.", options: ["to", "into", "towards", "past"], answer: 2 },
+          { q: "He traveled ______ Kathmandu to Pokhara last week.", options: ["at", "to", "by", "from"], answer: 3 },
+          { q: "The girl is walking ______ the road carefully.", options: ["along", "through", "between", "into"], answer: 0 },
+          { q: "The boy is walking ______ the road to reach the other side.", options: ["along", "across", "through", "at"], answer: 1 },
+          { q: "He jumped ______ the moving bus.", options: ["off", "out of", "into", "towards"], answer: 0 },
+          { q: "Please pour some water ______ the glass.", options: ["in", "on", "onto", "into"], answer: 3 }
+        ]
+      },
+      4: {
+        title: "Set 4 · Special Phrasal Prepositions",
+        questions: [
+          { q: "My sister is very fond ______ classical music.", options: ["of", "in", "with", "for"], answer: 0 },
+          { q: "Are you interested ______ learning English grammar?", options: ["of", "in", "at", "with"], answer: 1 },
+          { q: "The team consists ______ eleven players.", options: ["of", "with", "in", "by"], answer: 0 },
+          { q: "In the office, Mr. Sharma is senior ______ me.", options: ["than", "from", "with", "to"], answer: 3 },
+          { q: "The child is afraid ______ the dark.", options: ["with", "from", "of", "in"], answer: 2 },
+          { q: "I am extremely sorry ______ being late today.", options: ["with", "to", "of", "for"], answer: 3 },
+          { q: "______ the teacher, the exam was quite easy.", options: ["According to", "Because of", "In spite of", "Instead of"], answer: 0 },
+          { q: "Our economy has to rely ______ agriculture.", options: ["in", "on", "with", "by"], answer: 1 },
+          { q: "Please listen ______ what the principal is saying.", options: ["to", "with", "at", "for"], answer: 0 },
+          { q: "This beautiful house belongs ______ my uncle.", options: ["with", "of", "in", "to"], answer: 3 }
+        ]
+      },
+      5: {
+        title: "Set 5 · Mixed Cases & Zero Preposition",
+        questions: [
+          { q: "We usually drink tea ______ the morning.", options: ["in", "on", "at", "by"], answer: 0 },
+          { q: "He is coming to meet us ______ Friday afternoon.", options: ["in", "on", "at", "during"], answer: 1 },
+          { q: "It is getting late; I should go ______ now.", options: ["home", "to home", "at home", "in home"], answer: 0 },
+          { q: "The sun is hottest ______ noon.", options: ["in", "on", "by", "at"], answer: 3 },
+          { q: "How do you go to work? I go ______ bus.", options: ["in", "on", "by", "with"], answer: 2 },
+          { q: "She has lived in this village ______ she was seventeen.", options: ["for", "in", "during", "since"], answer: 3 },
+          { q: "Please drive ______ the left side of the road.", options: ["on", "in", "at", "by"], answer: 0 },
+          { q: "Who is the old man ______ the picture?", options: ["at", "in", "on", "over"], answer: 1 },
+          { q: "The sky is ______ our heads.", options: ["over", "on", "under", "in"], answer: 0 },
+          { q: "Children usually get many gifts ______ Christmas.", options: ["in", "on", "by", "at"], answer: 3 }
+        ]
+      }
+    };
+
+    // ---------- STATE ----------
+    let currentSet = 1;
+    let currentQIndex = 0;
+    let score = 0;
+    let answered = false;
+    let timer = null;
+    let playerName = '';
+
+    // performance history: { set: { correct, total } }
+    const perfHistory = {};
+
+    // DOM refs
+    const homePage = document.getElementById('page-home');
+    const questionPage = document.getElementById('page-question');
+    const perfPage = document.getElementById('page-performance');
+
+    const setLabel = document.getElementById('setLabel');
+    const progressLabel = document.getElementById('progressLabel');
+    const questionText = document.getElementById('questionText');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const feedbackDisplay = document.getElementById('feedbackDisplay');
+    const quitToHomeBtn = document.getElementById('quitToHomeBtn');
+
+    const homePerfSnapshot = document.getElementById('homePerfSnapshot');
+    const greetingDisplay = document.getElementById('greetingDisplay');
+    const playerNameInput = document.getElementById('playerNameInput');
+    const registerBtn = document.getElementById('registerBtn');
+
+    const perfSetTitle = document.getElementById('perfSetTitle');
+    const perfScore = document.getElementById('perfScore');
+    const perfPercent = document.getElementById('perfPercent');
+    const perfRemark = document.getElementById('perfRemark');
+    const perfRetryBtn = document.getElementById('perfRetryBtn');
+    const perfHomeBtn = document.getElementById('perfHomeBtn');
+    const perfResetBtn = document.getElementById('perfResetBtn');
+    const overallStats = document.getElementById('overallStats');
+
+    // Helper: show page
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+      document.getElementById(pageId).classList.remove('hidden');
+    }
+
+    // update home snapshot
+    function updateHomeSnapshot() {
+      const entries = Object.entries(perfHistory);
+      if (entries.length === 0) {
+        homePerfSnapshot.textContent = '⭐ no sets played yet';
+        return;
+      }
+      let totalCorrect = 0, totalQ = 0;
+      entries.forEach(([_, data]) => { totalCorrect += data.correct; totalQ += data.total; });
+      const pct = totalQ ? Math.round((totalCorrect/totalQ)*100) : 0;
+      homePerfSnapshot.textContent = `🏆 ${totalCorrect}/${totalQ} correct · ${pct}% overall`;
+    }
+
+    // overall performance (bottom)
+    function updateOverallStats() {
+      const entries = Object.entries(perfHistory);
+      if (entries.length === 0) {
+        overallStats.innerHTML = 'No data yet.';
+        return;
+      }
+      let totalCorrect = 0, totalQ = 0;
+      let html = '';
+      entries.forEach(([setId, data]) => {
+        const title = sets[setId]?.title || `Set ${setId}`;
+        const pct = data.total ? Math.round((data.correct/data.total)*100) : 0;
+        html += `<div style="background:#f3ebfa; margin:0.3rem 0; padding:0.3rem 0.8rem; border-radius:60px;">${title}: ${data.correct}/${data.total} (${pct}%)</div>`;
+        totalCorrect += data.correct; totalQ += data.total;
+      });
+      const overallPct = totalQ ? Math.round((totalCorrect/totalQ)*100) : 0;
+      html += `<div style="font-weight:700; margin-top:0.5rem;">📊 Overall: ${totalCorrect}/${totalQ} · ${overallPct}%</div>`;
+      overallStats.innerHTML = html;
+    }
+
+    // render question
+    function renderQuestion() {
+      const setData = sets[currentSet];
+      if (!setData) return;
+      const qs = setData.questions;
+      if (currentQIndex >= qs.length) {
+        // finished set → show performance
+        showPerformancePage();
+        return;
+      }
+      const q = qs[currentQIndex];
+      setLabel.textContent = setData.title;
+      progressLabel.textContent = `${currentQIndex+1} / ${qs.length}`;
+      questionText.textContent = q.q;
+      optionsContainer.innerHTML = '';
+      feedbackDisplay.textContent = '💡 Click an option';
+      feedbackDisplay.style.background = '#e1d2ee';
+      answered = false;
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = `${String.fromCharCode(65+idx)}. ${opt}`;
+        btn.dataset.idx = idx;
+        btn.addEventListener('click', optionClickHandler);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function optionClickHandler(e) {
+      if (answered) return;
+      const btn = e.currentTarget;
+      const selectedIdx = parseInt(btn.dataset.idx);
+      const setData = sets[currentSet];
+      const q = setData.questions[currentQIndex];
+      const correct = q.answer === selectedIdx;
+
+      // mark feedback
+      const allOpts = document.querySelectorAll('.option-btn');
+      allOpts.forEach((b, i) => {
+        b.disabled = true;
+        if (i === q.answer) b.classList.add('correct');
+        else if (i === selectedIdx && !correct) b.classList.add('wrong');
+      });
+      if (correct) score++;
+      answered = true;
+      feedbackDisplay.textContent = correct ? '✅ Correct!' : `❌ Oops! correct: ${q.options[q.answer]}`;
+      feedbackDisplay.style.background = correct ? '#b8e0d0' : '#f5cfcf';
+
+      // auto next after 1.5s
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        currentQIndex++;
+        renderQuestion();
+      }, 1500);
+    }
+
+    // show performance page
+    function showPerformancePage() {
+      if (timer) clearTimeout(timer);
+      const setData = sets[currentSet];
+      const total = setData.questions.length;
+      const pct = Math.round((score/total)*100);
+      // save history
+      if (!perfHistory[currentSet]) perfHistory[currentSet] = { correct: 0, total: 0 };
+      perfHistory[currentSet].correct = score;
+      perfHistory[currentSet].total = total;
+
+      // update perf page
+      perfSetTitle.textContent = setData.title;
+      perfScore.textContent = `✅ ${score} / ${total}`;
+      perfPercent.textContent = `${pct}%`;
+      let remark = pct >= 80 ? '🌟 Excellent!' : pct >= 50 ? '👍 Good effort' : '📖 Keep practicing!';
+      perfRemark.textContent = remark;
+      showPage('page-performance');
+      updateHomeSnapshot();
+      updateOverallStats();
+    }
+
+    // ---------- NAVIGATION ----------
+    function goHome() {
+      if (timer) clearTimeout(timer);
+      showPage('page-home');
+      updateHomeSnapshot();
+      updateOverallStats();
+    }
+
+    function startSet(setId) {
+      if (timer) clearTimeout(timer);
+      currentSet = setId;
+      currentQIndex = 0;
+      score = 0;
+      answered = false;
+      showPage('page-question');
+      renderQuestion();
+    }
+
+    // ---------- EVENT BINDINGS ----------
+    document.querySelectorAll('.set-trigger').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const set = parseInt(e.target.dataset.set);
+        startSet(set);
+      });
+    });
+
+    quitToHomeBtn.addEventListener('click', goHome);
+
+    perfHomeBtn.addEventListener('click', goHome);
+    perfRetryBtn.addEventListener('click', () => {
+      if (timer) clearTimeout(timer);
+      startSet(currentSet);
+    });
+    perfResetBtn.addEventListener('click', () => {
+      if (timer) clearTimeout(timer);
+      // reset history
+      for (let key in perfHistory) delete perfHistory[key];
+      updateHomeSnapshot();
+      updateOverallStats();
+      goHome();
+    });
+
+    // registration
+    registerBtn.addEventListener('click', () => {
+      const name = playerNameInput.value.trim();
+      if (name) {
+        playerName = name;
+        greetingDisplay.textContent = `👋 ${name}`;
+      } else {
+        playerName = '';
+        greetingDisplay.textContent = '👋 ambiguous player';
+      }
+    });
+    playerNameInput.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') registerBtn.click();
+    });
+
+    // init
+    showPage('page-home');
+    updateHomeSnapshot();
+    updateOverallStats();
+    greetingDisplay.textContent = '👋 ambiguous player';
+  })();
+</script>
+</body>
+</html>
