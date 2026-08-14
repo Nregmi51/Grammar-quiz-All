@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>Preposition Quiz · 100 MCQs</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+    body {
+      background: linear-gradient(145deg, #f4edfa 0%, #dfd2ec 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+    .app-container {
+      max-width: 820px;
+      width: 100%;
+      background: rgba(255, 250, 255, 0.7);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-radius: 48px 48px 32px 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 8px 16px rgba(0, 0, 0, 0.08);
+      padding: 1.8rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      transition: all 0.2s;
+    }
+    h1, h2, h3 {
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .page { display: block; }
+    .page.hidden { display: none; }
+
+    /* buttons */
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.6rem;
+      border: none;
+      border-radius: 60px;
+      background: #5e3c7c;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 5px 0 #3f2a55;
+      transition: all 0.08s ease;
+      cursor: pointer;
+      text-align: center;
+      border: 1px solid #8b6aa8;
+      margin: 0.2rem;
+      touch-action: manipulation;
+    }
+    .btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #3f2a55; }
+    .btn-primary { background: #2b5f8a; box-shadow: 0 5px 0 #1b3f5e; border-color: #5386b5; }
+    .btn-success { background: #2a7a62; box-shadow: 0 5px 0 #1a5544; border-color: #4fa38b; }
+    .btn-warning { background: #b86b2c; box-shadow: 0 5px 0 #8a4f1f; border-color: #d99a5e; }
+    .btn-outline { background: transparent; color: #2d1b3a; box-shadow: none; border: 2px solid #5e3c7c; }
+    .btn-outline:active { transform: translateY(2px); }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.7rem;
+      margin: 1.2rem 0;
+    }
+    .home-header {
+      text-align: center;
+      padding: 0.3rem 0;
+    }
+    .home-header h1 {
+      font-size: 2.2rem;
+      background: linear-gradient(135deg, #3d2a52, #7a4b8c);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+    .badge {
+      background: #2a1f33;
+      color: #e6d7f0;
+      padding: 0.2rem 1.2rem;
+      border-radius: 60px;
+      font-size: 0.85rem;
+      display: inline-block;
+    }
+    .creator-info {
+      margin-top: 2rem;
+      border-top: 2px dashed #9a7bb0;
+      padding-top: 1.2rem;
+      font-size: 0.9rem;
+      color: #2d1f38;
+      background: #f2ebf7;
+      border-radius: 30px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .perf-snapshot {
+      background: #dacbe6;
+      border-radius: 60px;
+      padding: 0.6rem 1.2rem;
+      margin: 1rem 0;
+      font-weight: 600;
+      color: #1d1425;
+      border: 1px solid #b396cc;
+    }
+    .register-area {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      align-items: center;
+      background: #e3d5ef;
+      border-radius: 80px;
+      padding: 0.5rem 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .register-area input {
+      border: none;
+      border-radius: 60px;
+      padding: 0.6rem 1.2rem;
+      flex: 1 1 150px;
+      background: white;
+      font-weight: 500;
+      outline: 1px solid #9e7eb6;
+    }
+    .register-area input:focus { outline: 2px solid #5e3c7c; }
+
+    /* question card */
+    .question-card {
+      background: #fcf9ff;
+      border-radius: 40px;
+      padding: 1.5rem 1.2rem;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .question-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: #1f112b;
+      margin-bottom: 1.5rem;
+    }
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin: 1rem 0;
+    }
+    .option-btn {
+      background: #f0e8f8;
+      border: 2px solid #d0bedf;
+      border-radius: 60px;
+      padding: 0.8rem 1.2rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-align: left;
+      transition: all 0.1s;
+      color: #1e102a;
+      box-shadow: 0 2px 0 #b8a2cc;
+      touch-action: manipulation;
+      width: 100%;
+      cursor: pointer;
+    }
+    .option-btn:active { transform: scale(0.97); }
+    .option-btn.correct { background: #82c9b0; border-color: #1f6b53; }
+    .option-btn.wrong { background: #e6a8a8; border-color: #a84343; }
+    .feedback-badge {
+      margin-top: 1rem;
+      font-size: 1.3rem;
+      font-weight: 700;
+      padding: 0.5rem;
+      text-align: center;
+      border-radius: 60px;
+      background: #e1d2ee;
+    }
+    /* performance */
+    .perf-summary {
+      background: #f4ecfb;
+      border-radius: 40px;
+      padding: 1.8rem 1rem;
+    }
+    .perf-stat {
+      background: white;
+      border-radius: 40px;
+      padding: 1rem;
+      margin: 0.6rem 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+      box-shadow: 0 4px 0 #c8b4db;
+    }
+    .reset-area {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .set-selector {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      margin: 0.5rem 0 0.8rem;
+    }
+    .set-selector .btn {
+      min-width: 70px;
+      flex: 0 1 auto;
+    }
+    .mode-selector {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      margin: 0.8rem 0;
+    }
+    @media (max-width: 480px) {
+      .app-container { padding: 1rem 0.8rem; }
+      .question-text { font-size: 1.2rem; }
+      .option-btn { font-size: 1rem; padding: 0.7rem 1rem; }
+      .btn { font-size: 0.85rem; padding: 0.6rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="app-container" id="app">
+  <!-- HOME PAGE -->
+  <div id="page-home" class="page">
+    <div class="home-header">
+      <h1>📘 Preposition Pro</h1>
+      <div class="badge">100 MCQs · 10 sets</div>
+    </div>
+    <div class="register-area">
+      <input type="text" id="playerNameInput" placeholder="Your name (optional)" maxlength="30">
+      <button class="btn btn-primary" id="registerBtn">👤 register</button>
+      <span style="font-weight:500; color:#2d1b3a;" id="greetingDisplay">👋 ambiguous player</span>
+    </div>
+    <div class="perf-snapshot" id="homePerfSnapshot">⭐ no sets played yet</div>
+    <div style="font-weight:600; margin:0.3rem 0;">Choose a set:</div>
+    <div class="set-selector" id="setSelectorHome">
+      <!-- generated by JS -->
+    </div>
+    <div style="margin-top:0.5rem; font-size:0.9rem; opacity:0.8;">Tap a set → choose 5 or 10 questions</div>
+    <div class="creator-info">
+      <strong>NP Regmi</strong> · 📧 nregmi511@gmail.com<br>
+      Badhaiyatal-7, Tilkana Bardiya
+    </div>
+  </div>
+
+  <!-- QUESTION PAGE -->
+  <div id="page-question" class="page hidden">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+      <span class="badge" id="setLabel">Set 1</span>
+      <span class="badge" id="progressLabel">1 / 10</span>
+    </div>
+    <div class="question-card">
+      <div class="question-text" id="questionText">Loading…</div>
+      <div class="options-grid" id="optionsContainer"></div>
+      <div class="feedback-badge" id="feedbackDisplay">💡 Click an option</div>
+    </div>
+    <div style="display: flex; justify-content: center; margin-top: 1rem; gap: 0.6rem; flex-wrap:wrap;">
+      <button class="btn btn-warning" id="quitToHomeBtn">🏠 Home</button>
+    </div>
+  </div>
+
+  <!-- PERFORMANCE PAGE -->
+  <div id="page-performance" class="page hidden">
+    <div class="perf-summary">
+      <h2 style="margin-bottom: 0.3rem;">📊 Set Performance</h2>
+      <div id="perfSetTitle" class="perf-stat" style="background: #dcc9ed;">Set 1</div>
+      <div class="perf-stat" id="perfScore">✅ 0 / 0</div>
+      <div class="perf-stat" id="perfPercent">0%</div>
+      <div class="perf-stat" id="perfRemark" style="font-size:1rem;">Keep going!</div>
+      <div class="reset-area">
+        <button class="btn btn-primary" id="perfRetryBtn">🔄 Retry</button>
+        <button class="btn btn-outline" id="perfHomeBtn">🏠 Home</button>
+        <button class="btn btn-warning" id="perfResetBtn">🆕 Reset all</button>
+      </div>
+      <div style="margin-top:0.5rem; font-size:0.85rem; opacity:0.7;">overall performance below</div>
+    </div>
+    <!-- overall -->
+    <div style="margin-top: 1.8rem; background: #d0bedf; border-radius: 30px; padding: 1.2rem;">
+      <h3 style="font-size:1.2rem;">📌 Overall performance</h3>
+      <div id="overallStats" style="font-weight:600; padding:0.3rem 0;">No data yet.</div>
+    </div>
+  </div>
+</div>
+<script>
+  (function() {
+    // ---------- DATA (10 sets, 10 questions each) ----------
+    const setsData = {
+      1: { title: "Set 1 · Time & Place (Easy)", questions: [
+        { q: "Which preposition is used with a specific year, such as \"I was born ____ 1992\"?", options: ["in", "on", "at", "from"], answer: 0 },
+        { q: "To talk about a specific day of the week, we say, \"We have a meeting ____ Monday.\"", options: ["at", "in", "by", "on"], answer: 3 },
+        { q: "Which preposition is used for precise clock times, like \"The train leaves ____ 8 a.m.\"?", options: ["in", "on", "at", "for"], answer: 2 },
+        { q: "For long periods like months, which preposition is correct: \"My birthday is ____ January\"?", options: ["at", "in", "on", "since"], answer: 1 },
+        { q: "When referring to a flat surface, we say, \"The plates are ____ the table.\"", options: ["in", "at", "by", "on"], answer: 3 },
+        { q: "For a specific point or designated location, we say, \"He's waiting ____ the entrance.\"", options: ["in", "on", "at", "from"], answer: 2 },
+        { q: "When someone is inside an enclosed space, they are \"____ the kitchen.\"", options: ["on", "at", "in", "to"], answer: 2 },
+        { q: "According to British English usage, we usually say, \"I'll see you ____ the weekend.\"", options: ["at", "in", "for", "since"], answer: 0 },
+        { q: "Which preposition is used for periods of the day, such as \"____ the morning\"?", options: ["at", "in", "on", "by"], answer: 1 },
+        { q: "Despite other periods of the day using \"in,\" for the end of the day we use \"____ night.\"", options: ["in", "on", "at", "for"], answer: 2 }
+      ]},
+      2: { title: "Set 2 · Phrases & Locations (Easy)", questions: [
+        { q: "\"I was born ____ Italy.\" Which fits this major geographical location?", options: ["in", "at", "on", "to"], answer: 0 },
+        { q: "\"I met him ____ the library.\" Which describes this specific meeting point?", options: ["in", "on", "from", "at"], answer: 3 },
+        { q: "What is the correct preposition for this fixed time phrase: \"I study ____ night\"?", options: ["in", "on", "at", "during"], answer: 2 },
+        { q: "\"There are fifty students ____ the class.\" Which shows they are inside?", options: ["on", "in", "at", "through"], answer: 1 },
+        { q: "\"She was born ____ October 4th.\" Which is used for specific dates?", options: ["at", "in", "by", "on"], answer: 3 },
+        { q: "\"I live ____ Montreal.\" Which preposition is used for cities?", options: ["at", "on", "in", "to"], answer: 2 },
+        { q: "\"The class starts ____ 1 p.m.\" Which is for exact time?", options: ["in", "on", "at", "since"], answer: 2 },
+        { q: "\"The bird flew ____ the field\" implies moving from one side to the other.", options: ["across", "through", "along", "toward"], answer: 0 },
+        { q: "\"Lucy is arriving ____ February the 13th.\" Which is correct for the date?", options: ["at", "on", "in", "for"], answer: 1 },
+        { q: "\"I'll see you ____ June.\" Which is correct for a month?", options: ["at", "on", "in", "by"], answer: 2 }
+      ]},
+      3: { title: "Set 3 · Spatial & Time Basics", questions: [
+        { q: "In the phrase \"____ the last two years,\" the preposition used is ____.", options: ["in", "on", "at", "into"], answer: 0 },
+        { q: "\"Go ____ school.\" Which preposition shows the destination?", options: ["in", "at", "onto", "to"], answer: 3 },
+        { q: "\"The cat is ____ the table\" (meaning it is underneath it).", options: ["of", "at", "under", "on"], answer: 2 },
+        { q: "\"I have lived here ____ two years\" (measuring a duration of time).", options: ["since", "for", "by", "in"], answer: 1 },
+        { q: "\"I have been living here ____ 2020\" (referring to a specific starting point).", options: ["for", "during", "until", "since"], answer: 3 },
+        { q: "A safe surrounded by the structure of a wall is said to be \"____ the wall.\"", options: ["on", "at", "in", "through"], answer: 2 },
+        { q: "\"Why are you looking ____ me?\" Which follows the verb \"look\" here?", options: ["to", "in", "at", "toward"], answer: 2 },
+        { q: "\"Walk ____ the room\" implies moving from the outside to the inside.", options: ["into", "onto", "to", "at"], answer: 0 },
+        { q: "\"I live ____ Nepal.\" Which preposition is correct for a country?", options: ["at", "in", "on", "to"], answer: 1 },
+        { q: "\"The book is ____ the desk.\" Which is for a flat surface?", options: ["in", "at", "on", "under"], answer: 2 }
+      ]},
+      4: { title: "Set 4 · Movement & Duration", questions: [
+        { q: "\"The dog ran ____ the house\" (he was out, and after the action he was in).", options: ["into", "onto", "across", "through"], answer: 0 },
+        { q: "\"The cat leapt ____ the roof\" (movement to a flat surface).", options: ["into", "in", "through", "onto"], answer: 3 },
+        { q: "\"We walked ____ the street\" (moving from one side to the other).", options: ["through", "along", "across", "into"], answer: 2 },
+        { q: "\"They drove ____ the tunnel\" (moving within something with boundaries).", options: ["along", "through", "across", "towards"], answer: 1 },
+        { q: "\"The river flows ____ the forest\" (moving inside borders or edges).", options: ["along", "down", "across", "through"], answer: 3 },
+        { q: "\"We walked ____ the river\" (movement in a line following the length).", options: ["over", "above", "along", "between"], answer: 2 },
+        { q: "\"She jumped ____ bed\" (the movement verb takes you from \"out\" to \"in\").", options: ["on", "at", "into", "over"], answer: 2 },
+        { q: "\"She's heading ____ the airport.\" Which shows the destination?", options: ["to", "in", "at", "for"], answer: 0 },
+        { q: "\"There are trees ____ the road\" (following the line of the road).", options: ["across", "along", "through", "into"], answer: 1 },
+        { q: "\"The bird flew ____ the field\" (from one side to the other).", options: ["over", "past", "across", "among"], answer: 2 }
+      ]},
+      5: { title: "Set 5 · Common Fixed Prepositions", questions: [
+        { q: "\"I am interested ____ comic books.\" Which is fixed to \"interested\"?", options: ["in", "on", "at", "of"], answer: 0 },
+        { q: "\"She is afraid ____ spiders.\" Which preposition follows \"afraid\"?", options: ["with", "for", "at", "of"], answer: 3 },
+        { q: "\"She is good ____ coding.\" Which is correct for skills?", options: ["in", "for", "at", "with"], answer: 2 },
+        { q: "\"Your opinion is different ____ mine.\" What is the standard preposition here?", options: ["than", "from", "with", "to"], answer: 1 },
+        { q: "\"He is proud ____ his achievements.\"", options: ["in", "with", "for", "of"], answer: 3 },
+        { q: "\"She is fond ____ painting.\"", options: ["in", "with", "of", "for"], answer: 2 },
+        { q: "\"Success depends ____ hard work.\"", options: ["from", "with", "on", "to"], answer: 2 },
+        { q: "\"She is married ____ a lawyer.\"", options: ["to", "with", "for", "by"], answer: 0 },
+        { q: "\"Can you wait ____ me to finish my lunch?\"", options: ["at", "for", "to", "on"], answer: 1 },
+        { q: "\"She listens ____ the radio a lot.\"", options: ["at", "in", "to", "with"], answer: 2 }
+      ]},
+      6: { title: "Set 6 · Fixed Phrases & Confusing Pairs", questions: [
+        { q: "\"Agree ____\" is used for agreement with a person.", options: ["with", "to", "for", "in"], answer: 0 },
+        { q: "\"Agree ____\" is used for agreement to a plan, proposal, or idea.", options: ["with", "for", "in", "to"], answer: 3 },
+        { q: "The preposition ____ means \"nearby\" or \"at the side of.\"", options: ["besides", "beyond", "beside", "between"], answer: 2 },
+        { q: "The word ____ functions as a preposition meaning \"in addition to.\"", options: ["beside", "besides", "behind", "below"], answer: 1 },
+        { q: "\"We must abide ____ the rules.\"", options: ["to", "with", "for", "by"], answer: 3 },
+        { q: "\"I was absent ____ school today.\"", options: ["in", "at", "from", "to"], answer: 2 },
+        { q: "\"She was accustomed ____ drinking a lot of alcohol.\"", options: ["with", "at", "to", "in"], answer: 2 },
+        { q: "\"This book belongs ____ the library.\"", options: ["to", "in", "from", "at"], answer: 0 },
+        { q: "\"I benefited greatly ____ the course.\"", options: ["with", "from", "to", "for"], answer: 1 },
+        { q: "\"Beware ____ the dog!\"", options: ["from", "with", "of", "for"], answer: 2 }
+      ]},
+      7: { title: "Set 7 · Advanced Nuances", questions: [
+        { q: "\"He is well-versed ____ classical literature.\"", options: ["in", "on", "with", "at"], answer: 0 },
+        { q: "\"Many candidates are vying ____ the position.\"", options: ["by", "at", "with", "for"], answer: 3 },
+        { q: "\"The power is vested ____ the committee.\"", options: ["with", "by", "in", "to"], answer: 2 },
+        { q: "\"The soldiers were outnumbered ____ the enemy.\"", options: ["from", "by", "with", "of"], answer: 1 },
+        { q: "\"The event was cancelled ____ account ____ the storm.\"", options: ["with", "for", "by", "on"], answer: 3 },
+        { q: "\"The café is opposite ____ the bank.\"", options: ["at", "from", "to", "with"], answer: 2 },
+        { q: "\"The lamp is ____ the desk\" (vertically higher).", options: ["atop", "across", "over", "along"], answer: 2 },
+        { q: "\"The school is named ____ a famous poet.\"", options: ["after", "for", "from", "by"], answer: 0 },
+        { q: "\"He is nervous ____ the test.\"", options: ["of", "about", "with", "for"], answer: 1 },
+        { q: "\"Progress was hindered ____ bad weather.\"", options: ["with", "through", "by", "from"], answer: 2 }
+      ]},
+      8: { title: "Set 8 · Prepositional Classes & Logic", questions: [
+        { q: "\"I wear a wrist watch ____ my wrist.\"", options: ["on", "in", "at", "with"], answer: 0 },
+        { q: "\"The shop is ____ the street\" (at the other side).", options: ["along", "through", "between", "across"], answer: 3 },
+        { q: "\"The orange button is ____ these two white buttons.\"", options: ["among", "against", "between", "into"], answer: 2 },
+        { q: "\"She found her keys ____ a pile of clothes.\"", options: ["between", "among", "within", "under"], answer: 1 },
+        { q: "\"The submarine went ____ sea level.\"", options: ["under", "above", "beneath", "below"], answer: 3 },
+        { q: "\"She held an umbrella ____ her head\" (covering her).", options: ["above", "beyond", "over", "across"], answer: 2 },
+        { q: "\"My nose is ____ my mouth\" (higher but not touching).", options: ["over", "upon", "above", "around"], answer: 2 },
+        { q: "\"She Prides ____ the committee.\"", options: ["over", "on", "at", "from"], answer: 1 },
+        { q: "\"The team is composed ____ experts.\"", options: ["with", "of", "by", "from"], answer: 1 },
+        { q: "\"We must abide ____ the rules.\"", options: ["to", "for", "by", "with"], answer: 2 }
+      ]},
+      9: { title: "Set 9 · Abstract & Functional", questions: [
+        { q: "\"I'm in the mood ____ pizza.\"", options: ["for", "of", "on", "with"], answer: 0 },
+        { q: "\"To be at odds ____ someone.\"", options: ["for", "to", "against", "with"], answer: 3 },
+        { q: "\"She is always ____ the go.\"", options: ["at", "in", "on", "by"], answer: 2 },
+        { q: "\"The project must be finished ____ Friday\" (deadline).", options: ["until", "by", "on", "at"], answer: 1 },
+        { q: "\"She promised to be home ____ 9 pm\" (at the latest).", options: ["at", "until", "since", "by"], answer: 3 },
+        { q: "\"I'm looking forward ____ seeing you.\"", options: ["for", "at", "to", "toward"], answer: 2 },
+        { q: "\"He left ____ saying goodbye.\"", options: ["by", "for", "without", "after"], answer: 2 },
+        { q: "\"His approach was different ____ ours.\"", options: ["from", "beyond", "with", "of"], answer: 0 },
+        { q: "\"The illness was confined ____ one area.\"", options: ["in", "to", "at", "within"], answer: 1 },
+        { q: "\"The players were jostling ____ the ball.\"", options: ["on", "with", "for", "in"], answer: 2 }
+      ]},
+      10: { title: "Set 10 · Subtle Usage & Nuances", questions: [
+        { q: "\"The fabric is different ____ the one you mentioned.\"", options: ["from", "since", "on", "to"], answer: 0 },
+        { q: "\"The budget was allotted ____ various departments.\"", options: ["with", "for", "by", "to"], answer: 3 },
+        { q: "\"Raw materials were converted ____ finished products.\"", options: ["to", "for", "into", "with"], answer: 2 },
+        { q: "\"The company decided to dispense ____ outdated technology.\"", options: ["of", "with", "by", "from"], answer: 1 },
+        { q: "\"Can you wait ____ me to finish?\"", options: ["to", "on", "by", "for"], answer: 3 },
+        { q: "\"The film is based ____ the novel.\"", options: ["at", "from", "on", "by"], answer: 2 },
+        { q: "\"I don't approve ____ hunting animals.\"", options: ["with", "on", "of", "by"], answer: 2 },
+        { q: "\"He apologized ____ being late.\"", options: ["for", "about", "with", "of"], answer: 0 },
+        { q: "\"She saved someone ____ drowning.\"", options: ["of", "from", "with", "by"], answer: 1 },
+        { q: "\"The city is notable ____ its architecture.\"", options: ["of", "about", "for", "with"], answer: 2 }
+      ]}
+    };
+
+    // ---------- STATE ----------
+    let currentSetId = 1;
+    let currentQuestions = [];         // sliced questions
+    let currentQIndex = 0;
+    let score = 0;
+    let answered = false;
+    let timer = null;
+    let playerName = '';
+
+    // performance history: { setId: { correct, total } }
+    const perfHistory = {};
+
+    // DOM refs
+    const homePage = document.getElementById('page-home');
+    const questionPage = document.getElementById('page-question');
+    const perfPage = document.getElementById('page-performance');
+
+    const setLabel = document.getElementById('setLabel');
+    const progressLabel = document.getElementById('progressLabel');
+    const questionText = document.getElementById('questionText');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const feedbackDisplay = document.getElementById('feedbackDisplay');
+    const quitToHomeBtn = document.getElementById('quitToHomeBtn');
+
+    const homePerfSnapshot = document.getElementById('homePerfSnapshot');
+    const greetingDisplay = document.getElementById('greetingDisplay');
+    const playerNameInput = document.getElementById('playerNameInput');
+    const registerBtn = document.getElementById('registerBtn');
+    const setSelectorHome = document.getElementById('setSelectorHome');
+
+    const perfSetTitle = document.getElementById('perfSetTitle');
+    const perfScore = document.getElementById('perfScore');
+    const perfPercent = document.getElementById('perfPercent');
+    const perfRemark = document.getElementById('perfRemark');
+    const perfRetryBtn = document.getElementById('perfRetryBtn');
+    const perfHomeBtn = document.getElementById('perfHomeBtn');
+    const perfResetBtn = document.getElementById('perfResetBtn');
+    const overallStats = document.getElementById('overallStats');
+
+    // helpers
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+      document.getElementById(pageId).classList.remove('hidden');
+    }
+
+    function updateHomeSnapshot() {
+      const entries = Object.entries(perfHistory);
+      if (entries.length === 0) { homePerfSnapshot.textContent = '⭐ no sets played yet'; return; }
+      let totalCorrect = 0, totalQ = 0;
+      entries.forEach(([_, data]) => { totalCorrect += data.correct; totalQ += data.total; });
+      const pct = totalQ ? Math.round((totalCorrect/totalQ)*100) : 0;
+      homePerfSnapshot.textContent = `🏆 ${totalCorrect}/${totalQ} correct · ${pct}% overall`;
+    }
+
+    function updateOverallStats() {
+      const entries = Object.entries(perfHistory);
+      if (entries.length === 0) { overallStats.innerHTML = 'No data yet.'; return; }
+      let totalCorrect = 0, totalQ = 0;
+      let html = '';
+      entries.forEach(([setId, data]) => {
+        const title = setsData[setId]?.title || `Set ${setId}`;
+        const pct = data.total ? Math.round((data.correct/data.total)*100) : 0;
+        html += `<div style="background:#f3ebfa; margin:0.3rem 0; padding:0.3rem 0.8rem; border-radius:60px;">${title}: ${data.correct}/${data.total} (${pct}%)</div>`;
+        totalCorrect += data.correct; totalQ += data.total;
+      });
+      const overallPct = totalQ ? Math.round((totalCorrect/totalQ)*100) : 0;
+      html += `<div style="font-weight:700; margin-top:0.5rem;">📊 Overall: ${totalCorrect}/${totalQ} · ${overallPct}%</div>`;
+      overallStats.innerHTML = html;
+    }
+
+    // render question
+    function renderQuestion() {
+      if (!currentQuestions || currentQIndex >= currentQuestions.length) {
+        showPerformancePage();
+        return;
+      }
+      const q = currentQuestions[currentQIndex];
+      const setTitle = setsData[currentSetId].title;
+      setLabel.textContent = setTitle;
+      progressLabel.textContent = `${currentQIndex+1} / ${currentQuestions.length}`;
+      questionText.textContent = q.q;
+      optionsContainer.innerHTML = '';
+      feedbackDisplay.textContent = '💡 Click an option';
+      feedbackDisplay.style.background = '#e1d2ee';
+      answered = false;
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = `${String.fromCharCode(65+idx)}. ${opt}`;
+        btn.dataset.idx = idx;
+        btn.addEventListener('click', optionClickHandler);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function optionClickHandler(e) {
+      if (answered) return;
+      const btn = e.currentTarget;
+      const selectedIdx = parseInt(btn.dataset.idx);
+      const q = currentQuestions[currentQIndex];
+      const correct = q.answer === selectedIdx;
+
+      const allOpts = document.querySelectorAll('.option-btn');
+      allOpts.forEach((b, i) => {
+        b.disabled = true;
+        if (i === q.answer) b.classList.add('correct');
+        else if (i === selectedIdx && !correct) b.classList.add('wrong');
+      });
+      if (correct) score++;
+      answered = true;
+      feedbackDisplay.textContent = correct ? '✅ Correct!' : `❌ Oops! correct: ${q.options[q.answer]}`;
+      feedbackDisplay.style.background = correct ? '#b8e0d0' : '#f5cfcf';
+
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        currentQIndex++;
+        renderQuestion();
+      }, 1500);
+    }
+
+    // show performance
+    function showPerformancePage() {
+      if (timer) clearTimeout(timer);
+      const total = currentQuestions.length;
+      const pct = total ? Math.round((score/total)*100) : 0;
+      if (!perfHistory[currentSetId]) perfHistory[currentSetId] = { correct: 0, total: 0 };
+      perfHistory[currentSetId].correct = score;
+      perfHistory[currentSetId].total = total;
+
+      perfSetTitle.textContent = setsData[currentSetId].title;
+      perfScore.textContent = `✅ ${score} / ${total}`;
+      perfPercent.textContent = `${pct}%`;
+      let remark = pct >= 80 ? '🌟 Excellent!' : pct >= 50 ? '👍 Good effort' : '📖 Keep practicing!';
+      perfRemark.textContent = remark;
+      showPage('page-performance');
+      updateHomeSnapshot();
+      updateOverallStats();
+    }
+
+    function goHome() {
+      if (timer) clearTimeout(timer);
+      showPage('page-home');
+      updateHomeSnapshot();
+      updateOverallStats();
+    }
+
+    // start a set with given number of questions
+    function startSet(setId, count) {
+      if (timer) clearTimeout(timer);
+      currentSetId = setId;
+      const allQs = setsData[setId].questions;
+      // take first 'count' questions
+      currentQuestions = allQs.slice(0, count);
+      currentQIndex = 0;
+      score = 0;
+      answered = false;
+      showPage('page-question');
+      renderQuestion();
+    }
+
+    // build set selector buttons
+    function buildSetSelector() {
+      setSelectorHome.innerHTML = '';
+      for (let i = 1; i <= 10; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-success';
+        btn.textContent = `Set ${i}`;
+        btn.dataset.set = i;
+        btn.addEventListener('click', (e) => {
+          const setId = parseInt(e.target.dataset.set);
+          // show mode selector: 5 or 10 questions
+          const choice = confirm(`Play Set ${setId} with 5 questions? (Cancel for 10 questions)`);
+          const count = choice ? 5 : 10;
+          startSet(setId, count);
+        });
+        setSelectorHome.appendChild(btn);
+      }
+    }
+
+    // ---------- EVENT BINDINGS ----------
+    quitToHomeBtn.addEventListener('click', goHome);
+    perfHomeBtn.addEventListener('click', goHome);
+    perfRetryBtn.addEventListener('click', () => {
+      if (timer) clearTimeout(timer);
+      // retry with same count
+      const count = currentQuestions.length;
+      startSet(currentSetId, count);
+    });
+    perfResetBtn.addEventListener('click', () => {
+      if (timer) clearTimeout(timer);
+      for (let key in perfHistory) delete perfHistory[key];
+      updateHomeSnapshot();
+      updateOverallStats();
+      goHome();
+    });
+
+    registerBtn.addEventListener('click', () => {
+      const name = playerNameInput.value.trim();
+      if (name) { playerName = name; greetingDisplay.textContent = `👋 ${name}`; }
+      else { playerName = ''; greetingDisplay.textContent = '👋 ambiguous player'; }
+    });
+    playerNameInput.addEventListener('keyup', (e) => { if (e.key === 'Enter') registerBtn.click(); });
+
+    // init
+    buildSetSelector();
+    showPage('page-home');
+    updateHomeSnapshot();
+    updateOverallStats();
+    greetingDisplay.textContent = '👋 ambiguous player';
+  })();
+</script>
+</body>
+</html>
