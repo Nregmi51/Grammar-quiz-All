@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AD_Round_Active_Voice Quiz-3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .house-red { background-color: #dc2626; }
+        .house-blue { background-color: #2563eb; }
+        .house-green { background-color: #16a34a; }
+        .house-yellow { background-color: #eab308; }
+        .house-selected { transform: scale(1.05); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .question-completed { 
+            background-color: #22c55e !important; 
+            color: white !important; 
+            cursor: not-allowed !important;
+            opacity: 0.8;
+        }
+        .question-completed:hover {
+            background-color: #22c55e !important;
+            transform: none !important;
+        }
+        .timer-warning { color: #dc2626; font-weight: bold; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Home Page -->
+        <div id="homePage" class="fade-in">
+            <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">AD_Round_Active_Voice Quiz-3</h1>
+            
+            <!-- House Selection -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-center text-gray-700">Select Your House</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    <button class="house-btn house-red text-white py-4 px-6 rounded-lg font-semibold text-lg hover:opacity-90 transition-all duration-200" data-house="Red">Red House</button>
+                    <button class="house-btn house-blue text-white py-4 px-6 rounded-lg font-semibold text-lg hover:opacity-90 transition-all duration-200" data-house="Blue">Blue House</button>
+                    <button class="house-btn house-green text-white py-4 px-6 rounded-lg font-semibold text-lg hover:opacity-90 transition-all duration-200" data-house="Green">Green House</button>
+                    <button class="house-btn house-yellow text-white py-4 px-6 rounded-lg font-semibold text-lg hover:opacity-90 transition-all duration-200" data-house="Yellow">Yellow House</button>
+                </div>
+            </div>
+
+            <!-- Round Selection -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-center text-gray-700">Select Round</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    <button class="round-btn bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-all duration-200" data-round="Round 1">Round 1</button>
+                    <button class="round-btn bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-all duration-200" data-round="Round 2">Round 2</button>
+                    <button class="round-btn bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-all duration-200" data-round="Round 3">Round 3</button>
+                    <button class="round-btn bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-all duration-200" data-round="Round 4">Round 4</button>
+                    <button class="round-btn bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-all duration-200" data-round="Round 5">Round 5</button>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mb-8">
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button id="tieBtn" class="bg-orange-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-orange-600 transition-all duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled>Tie Breaker</button>
+                    <button id="scoreBoardBtn" class="bg-purple-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-purple-600 transition-all duration-200">Score Board</button>
+                </div>
+            </div>
+
+            <!-- Question Buttons -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-center text-gray-700">Select Question</h2>
+                <div class="grid grid-cols-4 md:grid-cols-8 gap-4 max-w-4xl mx-auto">
+                    <button class="question-btn bg-gray-300 text-gray-600 py-4 px-6 rounded-lg font-semibold text-lg hover:bg-gray-400 transition-all duration-200 disabled:cursor-not-allowed" data-question="1" disabled>1</button>
+                    <button class="question-btn bg-gray-300 text-gray-600 py-4 px-6 rounded-lg font-semibold text-lg hover:bg-gray-400 transition-all duration-200 disabled:cursor-not-allowed" data-question="2" disabled>2</button>
+                    <button class="question-btn bg-gray-300 text-gray-600 py-4 px-6 rounded-lg font-semibold text-lg hover:bg-gray-400 transition-all duration-200 disabled:cursor-not-allowed" data-question="3" disabled>3</button>
+                    <button class="question-btn bg-gray-300 text-gray-600 py-4 px-6 rounded-lg font-semibold text-lg hover:bg-gray-400 transition-all duration-200 disabled:cursor-not-allowed" data-question="4" disabled>4</button>
+                    <button class="question-btn bg-gray-300 text-gray-600 py-4 px-6 rounded-lg font-semibold text-lg hover:bg-gray-400 transition-all duration-200 disabled:cursor-not-allowed" data-question="5" disabled>5</button>
+                    <button class="question-btn bg-gray-300 text-gray-600 py-4 px-6 rounded-lg font-semibold text-lg hover:bg-gray-400 transition-all duration-200 disabled:cursor-not-allowed" data-question="6" disabled>6</button>
+                    <button class="question-btn bg-gray-300 text-gray-600 py-4 px-6 rounded-lg font-semibold text-lg hover:bg-gray-400 transition-all duration-200 disabled:cursor-not-allowed" data-question="7" disabled>7</button>
+                    <button class="question-btn bg-gray-300 text-gray-600 py-4 px-6 rounded-lg font-semibold text-lg hover:bg-gray-400 transition-all duration-200 disabled:cursor-not-allowed" data-question="8" disabled>8</button>
+                </div>
+            </div>
+
+            <!-- Status Display -->
+            <div class="text-center">
+                <p id="statusDisplay" class="text-lg text-gray-600">Please select a house and round to begin</p>
+            </div>
+        </div>
+
+        <!-- Question Card Page -->
+        <div id="questionPage" class="hidden fade-in">
+            <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8 relative">
+                <div class="flex justify-between items-center mb-6">
+                    <button id="backToHome" class="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition-all duration-200">← Back</button>
+                    <div class="text-center">
+                        <p id="questionInfo" class="text-lg font-semibold text-gray-700"></p>
+                        <p id="timer" class="text-2xl font-bold text-red-600 mt-2">30</p>
+                    </div>
+                    <div></div>
+                </div>
+                
+                <div id="questionContent" class="mb-8">
+                    <h3 id="questionText" class="text-3xl font-bold text-blue-900 mb-6" style="font-size: 1.9rem; color: #1a237e;"></h3>
+                    <div id="optionsContainer" class="space-y-4">
+                        <!-- Options will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <!-- Feedback is now centered with absolute positioning -->
+                <div id="feedback" class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 text-center p-6 rounded-lg mb-4 text-white text-3xl font-bold transition-all duration-300 transform scale-105 shadow-2xl w-3/4">
+                    <!-- Feedback will be shown here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Score Board Page -->
+        <div id="scorePage" class="hidden fade-in">
+            <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <button id="backToHomeFromScore" class="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition-all duration-200">← Back</button>
+                    <h2 class="text-3xl font-bold text-gray-800">Score Board</h2>
+                    <div></div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto border-collapse">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="border px-4 py-3 text-left font-semibold">Rank</th>
+                                <th class="border px-4 py-3 text-left font-semibold">House</th>
+                                <th class="border px-4 py-3 text-center font-semibold">Correct Answers</th>
+                                <th class="border px-4 py-3 text-center font-semibold">Total Questions</th>
+                                <th class="border px-4 py-3 text-center font-semibold">Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scoreTableBody">
+                            <!-- Scores will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = {
+            'Round 1': [
+                {"question": "What is the active form of \"Soccer is played by them on Tuesdays.\"", "options": ["They played soccer on Tuesdays.", "They are playing soccer on Tuesday.", "They play soccer on Tuesdays.", "They have played soccer on Tuesdays."], "answer": "They play soccer on Tuesdays."},
+                {"question": "What is the active form of \"A movie was seen by me last night.\"", "options": ["I see a movie last night.", "I am seeing a movie last night.", "I had seen a movie last night.", "I saw a movie last night."], "answer": "I saw a movie last night."},
+                {"question": "What is the active form of \"Dinner was eaten by us at seven.\"", "options": ["We eat dinner at seven.", "We are eating dinner at seven.", "We ate dinner at seven.", "We have eaten dinner at seven."], "answer": "We ate dinner at seven."},
+                {"question": "What is the active form of \"A new car was bought by her.\"", "options": ["She buys a new car.", "She is buying a new car.", "She bought a new car.", "She had bought a new car."], "answer": "She bought a new car."},
+                {"question": "What is the active form of \"Paris was visited by them last summer.\"", "options": ["They visit Paris last summer.", "They are visiting Paris last summer.", "They visited Paris last summer.", "They have visited Paris last summer."], "answer": "They visited Paris last summer."},
+                {"question": "What is the active form of \"A letter is being written by me now.\"", "options": ["I write a letter now.", "I wrote a letter now.", "I am writing a letter now.", "I have written a letter now."], "answer": "I am writing a letter now."},
+                {"question": "What is the active form of \"Dinner is being cooked by her.\"", "options": ["She cooks dinner.", "She cooked dinner.", "She is cooking dinner.", "She has cooked dinner."], "answer": "She is cooking dinner."},
+                {"question": "What is the active form of \"A movie is being watched by them.\"", "options": ["They watch a movie.", "They watched a movie.", "They are watching a movie.", "They have watched a movie."], "answer": "They are watching a movie."}
+            ],
+            'Round 2': [
+                {"question": "What is the active form of \"The project will be started by them tomorrow.\"", "options": ["They start the project tomorrow.", "They are starting the project tomorrow.", "They will start the project tomorrow.", "They started the project tomorrow."], "answer": "They will start the project tomorrow."},
+                {"question": "What is the active form of \"The book will be finished by him by Sunday.\"", "options": ["He finishes the book by Sunday.", "He is finishing the book by Sunday.", "He will finish the book by Sunday.", "He finished the book by Sunday."], "answer": "He will finish the book by Sunday."},
+                {"question": "What is the active form of \"A new design is being worked on by us.\"", "options": ["We work on a new design.", "We worked on a new design.", "We are working on a new design.", "We have worked on a new design."], "answer": "We are working on a new design."},
+                {"question": "What is the active form of \"A portrait was being painted by her.\"", "options": ["She paints a portrait.", "She painted a portrait.", "She was painting a portrait.", "She had painted a portrait."], "answer": "She was painting a portrait."},
+                {"question": "What is the active form of \"The plan was being discussed by us.\"", "options": ["We discuss the plan.", "We discussed the plan.", "We were discussing the plan.", "We had discussed the plan."], "answer": "We were discussing the plan."},
+                {"question": "What is the active form of \"A new book is chosen by her every week.\"", "options": ["She chose a new book every week.", "She is choosing a new book every week.", "She chooses a new book every week.", "She has chosen a new book every week."], "answer": "She chooses a new book every week."},
+                {"question": "What is the active form of \"Our homework is done by us.\"", "options": ["We did our homework.", "We are doing our homework.", "We do our homework.", "We have done our homework."], "answer": "We do our homework."},
+                {"question": "What is the active form of \"Beautiful pictures are drawn by them.\"", "options": ["They drew beautiful pictures.", "They are drawing beautiful pictures.", "They draw beautiful pictures.", "They have drawn beautiful pictures."], "answer": "They draw beautiful pictures."}
+            ],
+            'Round 3': [
+                {"question": "What is the active form of \"Coffee is drunk by me in the morning.\"", "options": ["I drank coffee in the morning.", "I am drinking coffee in the morning.", "I drink coffee in the morning.", "I have drunk coffee in the morning."], "answer": "I drink coffee in the morning."},
+                {"question": "What is the active form of \"A red car is driven by her.\"", "options": ["She drove a red car.", "She is driving a red car.", "She drives a red car.", "She has driven a red car."], "answer": "She drives a red car."},
+                {"question": "What is the active form of \"Healthy food is eaten by him.\"", "options": ["He ate healthy food.", "He is eating healthy food.", "He eats healthy food.", "He has eaten healthy food."], "answer": "He eats healthy food."},
+                {"question": "What is the active form of \"Good grades are gotten by them.\"", "options": ["They got good grades.", "They are getting good grades.", "They get good grades.", "They have gotten good grades."], "answer": "They get good grades."},
+                {"question": "What is the active form of \"My old clothes are given away by me.\"", "options": ["I gave away my old clothes.", "I am giving away my old clothes.", "I give away my old clothes.", "I have given away my old clothes."], "answer": "I give away my old clothes."},
+                {"question": "What is the active form of \"Handmade jewelry is sold by her.\"", "options": ["She sold handmade jewelry.", "She is selling handmade jewelry.", "She sells handmade jewelry.", "She has sold handmade jewelry."], "answer": "She sells handmade jewelry."},
+                {"question": "What is the active form of \"Three languages are spoken by him.\"", "options": ["He spoke three languages.", "He is speaking three languages.", "He speaks three languages.", "He has spoken three languages."], "answer": "He speaks three languages."},
+                {"question": "What is the active form of \"A cartoon was drawn by them.\"", "options": ["They draw a cartoon.", "They are drawing a cartoon.", "They drew a cartoon.", "They have drawn a cartoon."], "answer": "They drew a cartoon."}
+            ],
+            'Round 4': [
+                {"question": "What is the active form of \"A glass of water was drunk by me.\"", "options": ["I drink a glass of water.", "I am drinking a glass of water.", "I drank a glass of water.", "I have drunk a glass of water."], "answer": "I drank a glass of water."},
+                {"question": "What is the active form of \"The blue dress was chosen by her.\"", "options": ["She chooses the blue dress.", "She is choosing the blue dress.", "She chose the blue dress.", "She has chosen the blue dress."], "answer": "She chose the blue dress."},
+                {"question": "What is the active form of \"The dishes were done by us.\"", "options": ["We do the dishes.", "We are doing the dishes.", "We did the dishes.", "We have done the dishes."], "answer": "We did the dishes."},
+                {"question": "What is the active form of \"A cake was brought to the party by me.\"", "options": ["I bring a cake to the party.", "I am bringing a cake to the party.", "I brought a cake to the party.", "I have brought a cake to the party."], "answer": "I brought a cake to the party."},
+                {"question": "What is the active form of \"A new park was found by us.\"", "options": ["We find a new park.", "We are finding a new park.", "We found a new park.", "We have found a new park."], "answer": "We found a new park."},
+                {"question": "What is the active form of \"A gift was given to her by me.\"", "options": ["I give a gift to her.", "I am giving a gift to her.", "I gave a gift to her.", "I have given a gift to her."], "answer": "I gave a gift to her."},
+                {"question": "What is the active form of \"The car was sold by her.\"", "options": ["She sells the car.", "She is selling the car.", "She sold the car.", "She has sold the car."], "answer": "She sold the car."},
+                {"question": "What is the active form of \"A marathon was run by me.\"", "options": ["I run a marathon.", "I am running a marathon.", "I ran a marathon.", "I have run a marathon."], "answer": "I ran a marathon."}
+            ],
+            'Round 5': [
+                {"question": "What is the active form of \"That movie has been seen by me before.\"", "options": ["I see that movie before.", "I saw that movie before.", "I am seeing that movie before.", "I have seen that movie before."], "answer": "I have seen that movie before."},
+                {"question": "What is the active form of \"A new staff has been hired by the company.\"", "options": ["The company hires a new staff.", "The company hired a new staff.", "The company is hiring a new staff.", "The company has hired a new staff."], "answer": "The company has hired a new staff."},
+                {"question": "What is the active form of \"Lunch has been eaten by us already.\"", "options": ["We eat lunch already.", "We ate lunch already.", "We are eating lunch already.", "We have eaten lunch already."], "answer": "We have eaten lunch already."},
+                {"question": "What is the active form of \"The race had been finished by them by the time we got there.\"", "options": ["They finished the race by the time we got there.", "They were finishing the race by the time we got there.", "They have finished the race by the time we got there.", "They had finished the race by the time we got there."], "answer": "They had finished the race by the time we got there."},
+                {"question": "What is the active form of \"The play had been seen by me before.\"", "options": ["I see the play before.", "I saw the play before.", "I have seen the play before.", "I had seen the play before."], "answer": "I had seen the play before."},
+                {"question": "What is the active form of \"Dinner had been cooked by us when the power went out.\"", "options": ["We cooked dinner when the power went out.", "We were cooking dinner when the power went out.", "We have cooked dinner when the power went out.", "We had cooked dinner when the power went out."], "answer": "We had cooked dinner when the power went out."},
+                {"question": "What is the active form of \"The house will have been built by them by spring.\"", "options": ["They will build the house by spring.", "They are building the house by spring.", "They have built the house by spring.", "They will have built the house by spring."], "answer": "They will have built the house by spring."},
+                {"question": "What is the active form of \"The book will have been written by her by then.\"", "options": ["She will write the book by then.", "She is writing the book by then.", "She has written the book by then.", "She will have written the book by then."], "answer": "She will have written the book by then."}
+            ],
+            'Tie': [
+                {"question": "What is the active form of \"The project will have been completed by us.\"", "options": ["We will complete the project.", "We are completing the project.", "We have completed the project.", "We will have completed the project."], "answer": "We will have completed the project."},
+                {"question": "What is the active form of \"Enough money will have been saved by him.\"", "options": ["He will save enough money.", "He is saving enough money.", "He has saved enough money.", "He will have saved enough money."], "answer": "He will have saved enough money."},
+                {"question": "What is the active form of \"The car had been repaired by him.\"", "options": ["He repaired the car.", "He was repairing the car.", "He has repaired the car.", "He had repaired the car."], "answer": "He had repaired the car."},
+                {"question": "What is the active form of \"Two dogs have to be killed by him\"", "options": ["He kills two dogs.", "He killed two dogs.", "He has to kill two dogs.", "He is killing two dogs."], "answer": "He has to kill two dogs."}
+            ]
+        };
+        
+        // Game state
+        let currentHouse = null;
+        let currentRound = null;
+        let currentQuestionIndex = null;
+        let timer = null;
+        let timeLeft = 30;
+        let scores = {
+            'Red': { correct: 0, total: 0 },
+            'Blue': { correct: 0, total: 0 },
+            'Green': { correct: 0, total: 0 },
+            'Yellow': { correct: 0, total: 0 }
+        };
+        let completedQuestions = new Set();
+
+        // DOM elements
+        const homePage = document.getElementById('homePage');
+        const questionPage = document.getElementById('questionPage');
+        const scorePage = document.getElementById('scorePage');
+        const statusDisplay = document.getElementById('statusDisplay');
+        const questionInfo = document.getElementById('questionInfo');
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const timerDisplay = document.getElementById('timer');
+        const feedback = document.getElementById('feedback');
+        const tieBtn = document.getElementById('tieBtn');
+
+        // Event listeners
+        document.querySelectorAll('.house-btn').forEach(btn => {
+            btn.addEventListener('click', () => selectHouse(btn.dataset.house));
+        });
+
+        document.querySelectorAll('.round-btn').forEach(btn => {
+            btn.addEventListener('click', () => selectRound(btn.dataset.round));
+        });
+
+        document.querySelectorAll('.question-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (!btn.disabled) {
+                    showQuestion(parseInt(btn.dataset.question) - 1);
+                }
+            });
+        });
+
+        document.getElementById('backToHome').addEventListener('click', () => {
+            clearInterval(timer);
+            showHome();
+        });
+
+        document.getElementById('backToHomeFromScore').addEventListener('click', showHome);
+
+        document.getElementById('scoreBoardBtn').addEventListener('click', showScoreBoard);
+
+        tieBtn.addEventListener('click', () => {
+            currentRound = 'Tie';
+            updateStatus();
+            enableQuestionButtons();
+        });
+
+        function selectHouse(house) {
+            currentHouse = house;
+            document.querySelectorAll('.house-btn').forEach(btn => {
+                btn.classList.remove('house-selected');
+            });
+            document.querySelector(`[data-house="${house}"]`).classList.add('house-selected');
+            updateStatus();
+            enableQuestionButtons();
+        }
+
+        function selectRound(round) {
+            currentRound = round;
+            document.querySelectorAll('.round-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-700');
+                btn.classList.add('bg-blue-500');
+            });
+            document.querySelector(`[data-round="${round}"]`).classList.remove('bg-blue-500');
+            document.querySelector(`[data-round="${round}"]`).classList.add('bg-blue-700');
+            updateStatus();
+            enableQuestionButtons();
+        }
+
+        function updateStatus() {
+            if (currentHouse && currentRound) {
+                statusDisplay.textContent = `Selected: ${currentHouse} House - ${currentRound}`;
+            } else if (currentHouse) {
+                statusDisplay.textContent = `Selected: ${currentHouse} House - Please select a round`;
+            } else if (currentRound) {
+                statusDisplay.textContent = `Selected: ${currentRound} - Please select a house`;
+            } else {
+                statusDisplay.textContent = 'Please select a house and round to begin';
+            }
+        }
+
+        function enableQuestionButtons() {
+            const canPlay = currentHouse && currentRound;
+            document.querySelectorAll('.question-btn').forEach((btn, index) => {
+                const questionKey = `${currentRound}-${index}`;
+                
+                // If question has been completed, keep it permanently disabled and marked
+                if (completedQuestions.has(questionKey)) {
+                    btn.disabled = true;
+                    btn.classList.remove('bg-blue-500', 'text-white', 'hover:bg-blue-600', 'bg-gray-300', 'text-gray-600');
+                    btn.classList.add('question-completed');
+                    // Add checkmark to show it's completed
+                    if (!btn.textContent.includes('✓')) {
+                        btn.textContent = `${index + 1} ✓`;
+                    }
+                } else if (canPlay) {
+                    // Only enable if both house and round are selected AND question hasn't been completed
+                    btn.disabled = false;
+                    btn.classList.remove('bg-gray-300', 'text-gray-600', 'question-completed');
+                    btn.classList.add('bg-blue-500', 'text-white', 'hover:bg-blue-600');
+                    // Reset text to just the number
+                    btn.textContent = index + 1;
+                } else {
+                    // Disable if house/round not selected, but don't override completed state
+                    btn.disabled = true;
+                    btn.classList.remove('bg-blue-500', 'text-white', 'hover:bg-blue-600', 'question-completed');
+                    btn.classList.add('bg-gray-300', 'text-gray-600');
+                    // Reset text to just the number
+                    btn.textContent = index + 1;
+                }
+            });
+
+            // Added check to disable buttons 5-8 if the Tie Breaker round is selected.
+            if (currentRound === 'Tie') {
+                for (let i = 4; i < 8; i++) {
+                    const btn = document.querySelector(`[data-question="${i + 1}"]`);
+                    if (btn) {
+                        btn.disabled = true;
+                        btn.classList.remove('bg-blue-500', 'text-white', 'hover:bg-blue-600');
+                        btn.classList.add('bg-gray-300', 'text-gray-600');
+                    }
+                }
+            }
+
+            // Check for tie condition
+            checkTieCondition();
+        }
+
+        function checkTieCondition() {
+            const scoreValues = Object.values(scores).map(s => s.correct);
+            const maxScore = Math.max(...scoreValues);
+            const tieCount = scoreValues.filter(score => score === maxScore && score > 0).length;
+            
+            tieBtn.disabled = !(tieCount > 1);
+            if (!tieBtn.disabled) {
+                tieBtn.classList.remove('bg-gray-400');
+                tieBtn.classList.add('bg-orange-500', 'hover:bg-orange-600');
+            } else {
+                tieBtn.classList.add('bg-gray-400');
+                tieBtn.classList.remove('bg-orange-500', 'hover:bg-orange-600');
+            }
+        }
+
+        function showQuestion(questionIndex) {
+            currentQuestionIndex = questionIndex;
+            const question = quizData[currentRound][questionIndex];
+            
+            questionInfo.textContent = `${currentHouse} House - ${currentRound} - Question ${questionIndex + 1}`;
+            questionText.textContent = question.question;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Add new options
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-btn w-full text-left p-4 bg-gray-100 hover:bg-gray-200 rounded-lg transition-all duration-200 font-bold';
+                button.style.fontSize = '1.7rem';
+                button.style.color = 'black';
+                button.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
+                button.addEventListener('click', () => selectAnswer(option));
+                optionsContainer.appendChild(button);
+            });
+            
+            // Start timer
+            timeLeft = 30;
+            timerDisplay.textContent = timeLeft;
+            timerDisplay.classList.remove('timer-warning');
+            timer = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = timeLeft;
+                if (timeLeft <= 10) {
+                    timerDisplay.classList.add('timer-warning');
+                }
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    selectAnswer(null); // Time up
+                }
+            }, 1000);
+            
+            feedback.classList.add('hidden');
+            homePage.classList.add('hidden');
+            questionPage.classList.remove('hidden');
+        }
+
+        function selectAnswer(selectedAnswer) {
+            clearInterval(timer);
+            const question = quizData[currentRound][currentQuestionIndex];
+            const isCorrect = selectedAnswer === question.answer;
+            
+            // Update scores
+            scores[currentHouse].total++;
+            if (isCorrect) {
+                scores[currentHouse].correct++;
+            }
+            
+            // Mark question as completed
+            const questionKey = `${currentRound}-${currentQuestionIndex}`;
+            completedQuestions.add(questionKey);
+            
+            // Show feedback
+            feedback.classList.remove('hidden');
+            if (selectedAnswer === null) {
+                feedback.textContent = 'Time\'s up! The correct answer was: ' + question.answer;
+                feedback.className = 'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 text-center p-6 rounded-lg mb-4 text-white text-3xl font-bold transition-all duration-300 transform scale-105 shadow-2xl bg-red-500 w-3/4';
+            } else if (isCorrect) {
+                feedback.textContent = '✓ Correct! Well done!';
+                feedback.className = 'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 text-center p-6 rounded-lg mb-4 text-white text-3xl font-bold transition-all duration-300 transform scale-105 shadow-2xl bg-green-500 w-3/4';
+            } else {
+                feedback.textContent = '✗ Wrong! The correct answer was: ' + question.answer;
+                feedback.className = 'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 text-center p-6 rounded-lg mb-4 text-white text-3xl font-bold transition-all duration-300 transform scale-105 shadow-2xl bg-red-500 w-3/4';
+            }
+            
+            // Disable option buttons
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.disabled = true;
+                btn.classList.remove('hover:bg-gray-200');
+                btn.classList.add('cursor-not-allowed');
+            });
+            
+            // Auto return to home after 3 seconds
+            setTimeout(() => {
+                showHome();
+            }, 3000);
+        }
+
+        function showHome() {
+            homePage.classList.remove('hidden');
+            questionPage.classList.add('hidden');
+            scorePage.classList.add('hidden');
+            enableQuestionButtons();
+        }
+
+        function showScoreBoard() {
+            const tableBody = document.getElementById('scoreTableBody');
+            tableBody.innerHTML = '';
+            
+            // Sort houses by score
+            const sortedHouses = Object.entries(scores)
+                .sort((a, b) => b[1].correct - a[1].correct)
+                .map(([house, score], index) => ({
+                    rank: index + 1,
+                    house,
+                    correct: score.correct,
+                    total: score.total,
+                    percentage: score.total > 0 ? ((score.correct / score.total) * 100).toFixed(1) : 0
+                }));
+            
+            sortedHouses.forEach(item => {
+                const row = document.createElement('tr');
+                row.className = item.rank <= 3 ? 'bg-yellow-50' : '';
+                row.innerHTML = `
+                    <td class="border px-4 py-3 font-semibold">${item.rank}</td>
+                    <td class="border px-4 py-3">
+                        <span class="inline-block w-4 h-4 rounded mr-2 house-${item.house.toLowerCase()}"></span>
+                        ${item.house} House
+                    </td>
+                    <td class="border px-4 py-3 text-center">${item.correct}</td>
+                    <td class="border px-4 py-3 text-center">${item.total}</td>
+                    <td class="border px-4 py-3 text-center">${item.percentage}%</td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            homePage.classList.add('hidden');
+            scorePage.classList.remove('hidden');
+        }
+
+        // Initialize
+        updateStatus();
+    </script>
+</body>
+</html>
