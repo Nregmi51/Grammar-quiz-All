@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Used Prepositions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
+            overflow: hidden;
+        }
+        
+        .slide-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .slide {
+            position: absolute;
+            width: 90%;
+            max-width: 1200px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 80vh;
+        }
+        
+        .slide.active {
+            display: flex;
+        }
+        
+        .slide-title {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: #fdbb2d;
+            text-align: center;
+        }
+        
+        .slide-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #e0e0e0;
+        }
+        
+        .content-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #4fc3f7;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title .icon {
+            margin-right: 15px;
+            font-size: 2.5rem;
+        }
+        
+        .rules-container, .examples-container, .practice-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .rules-list, .examples-list {
+            list-style-type: none;
+        }
+        
+        .rules-list li, .examples-list li {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .rules-list li::before, .examples-list li::before {
+            content: "•";
+            color: #fdbb2d;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .practice-container {
+            background: rgba(79, 195, 247, 0.2);
+            border-left: 5px solid #4fc3f7;
+        }
+        
+        .practice-question {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .practice-answer {
+            font-size: 1.3rem;
+            color: #4fc3f7;
+            font-style: italic;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            z-index: 100;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid #fdbb2d;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #fdbb2d;
+            color: #000;
+        }
+        
+        .slide-counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+        }
+        
+        .error-example {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .error-example .wrong {
+            color: #ff5252;
+            margin-right: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .error-example .right {
+            color: #69f0ae;
+            font-size: 1.3rem;
+        }
+        
+        .preposition-highlight {
+            color: #fdbb2d;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .slide {
+                padding: 20px;
+                width: 95%;
+            }
+            
+            .slide-title {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .rules-list li, .examples-list li {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="slide-counter">Slide <span id="current-slide">1</span> / 10</div>
+        
+        <!-- Slide 1: Title -->
+        <div class="slide active" id="slide1">
+            <h1 class="slide-title">Frequently Used Prepositions</h1>
+            <h2 class="slide-subtitle">Rules, Examples & Practice</h2>
+            <p class="slide-subtitle">A comprehensive guide to mastering prepositions in English</p>
+        </div>
+        
+        <!-- Slide 2: Introduction -->
+        <div class="slide" id="slide2">
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">📚</span>
+                    What are Prepositions?
+                </h2>
+                <div class="rules-container">
+                    <ul class="rules-list">
+                        <li>Words showing relationships between nouns/pronouns and other words</li>
+                        <li>Indicate: time, place, direction, manner, or reason</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">🎯</span>
+                    Why Learn Them?
+                </h2>
+                <div class="rules-container">
+                    <ul class="rules-list">
+                        <li>Essential for clear communication (e.g., "in the box" vs. "on the box")</li>
+                    </ul>
+                    <div class="error-example">
+                        <div class="wrong">"I am good <span class="preposition-highlight">in</span> math" ❌</div>
+                        <div class="right">"I am good <span class="preposition-highlight">at</span> math" ✅</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: IN -->
+        <div class="slide" id="slide3">
+            <h1 class="slide-title">Preposition "IN"</h1>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">📦</span>
+                    Rules
+                </h2>
+                <div class="rules-container">
+                    <ul class="rules-list">
+                        <li>Enclosed spaces: in a room, in a car</li>
+                        <li>Time periods: in 2023, in the morning</li>
+                        <li>Cities/countries: in Paris, in Canada</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">💡</span>
+                    Examples
+                </h2>
+                <div class="examples-container">
+                    <ul class="examples-list">
+                        <li>The keys are <span class="preposition-highlight">in</span> the drawer</li>
+                        <li>She was born <span class="preposition-highlight">in</span> 1995</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">✏️</span>
+                    Practice
+                </h2>
+                <div class="practice-container">
+                    <p class="practice-question">"The cat is sleeping ___ the basket."</p>
+                    <p class="practice-answer">Answer: <span class="preposition-highlight">in</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: ON -->
+        <div class="slide" id="slide4">
+            <h1 class="slide-title">Preposition "ON"</h1>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">📚</span>
+                    Rules
+                </h2>
+                <div class="rules-container">
+                    <ul class="rules-list">
+                        <li>Surfaces: on the table, on the wall</li>
+                        <li>Specific days/dates: on Monday, on July 4th</li>
+                        <li>Transport: on the bus, on a plane (not in)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">💡</span>
+                    Examples
+                </h2>
+                <div class="examples-container">
+                    <ul class="examples-list">
+                        <li>The book is <span class="preposition-highlight">on</span> the desk</li>
+                        <li>We meet <span class="preposition-highlight">on</span> Fridays</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">✏️</span>
+                    Practice
+                </h2>
+                <div class="practice-container">
+                    <p class="practice-question">"The painting is hanging ___ the wall."</p>
+                    <p class="practice-answer">Answer: <span class="preposition-highlight">on</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: AT -->
+        <div class="slide" id="slide5">
+            <h1 class="slide-title">Preposition "AT"</h1>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">📍</span>
+                    Rules
+                </h2>
+                <div class="rules-container">
+                    <ul class="rules-list">
+                        <li>Specific points: at the door, at the bus stop</li>
+                        <li>Precise times: at 5 PM, at noon</li>
+                        <li>Addresses: at 123 Main Street</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">💡</span>
+                    Examples
+                </h2>
+                <div class="examples-container">
+                    <ul class="examples-list">
+                        <li>I'll see you <span class="preposition-highlight">at</span> the cinema</li>
+                        <li>Class starts <span class="preposition-highlight">at</span> 9 AM</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">✏️</span>
+                    Practice
+                </h2>
+                <div class="practice-container">
+                    <p class="practice-question">"The party starts ___ 8 PM."</p>
+                    <p class="practice-answer">Answer: <span class="preposition-highlight">at</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6: TO -->
+        <div class="slide" id="slide6">
+            <h1 class="slide-title">Preposition "TO"</h1>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">➡️</span>
+                    Rules
+                </h2>
+                <div class="rules-container">
+                    <ul class="rules-list">
+                        <li>Direction/Movement: go to school, run to the store</li>
+                        <li>Recipient: give it to me, send a letter to Mom</li>
+                        <li>Comparison: prefer tea to coffee</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">💡</span>
+                    Examples
+                </h2>
+                <div class="examples-container">
+                    <ul class="examples-list">
+                        <li>We drove <span class="preposition-highlight">to</span> the beach</li>
+                        <li>This gift is <span class="preposition-highlight">to</span> you</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">✏️</span>
+                    Practice
+                </h2>
+                <div class="practice-container">
+                    <p class="practice-question">"Please pass the salt ___ me."</p>
+                    <p class="practice-answer">Answer: <span class="preposition-highlight">to</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 7: FOR -->
+        <div class="slide" id="slide7">
+            <h1 class="slide-title">Preposition "FOR"</h1>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">🎯</span>
+                    Rules
+                </h2>
+                <div class="rules-container">
+                    <ul class="rules-list">
+                        <li>Purpose: for dinner, for fun</li>
+                        <li>Duration: for 2 hours, for a week</li>
+                        <li>Benefit: a gift for you</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">💡</span>
+                    Examples
+                </h2>
+                <div class="examples-container">
+                    <ul class="examples-list">
+                        <li>I bought flowers <span class="preposition-highlight">for</span> my mom</li>
+                        <li>He studied <span class="preposition-highlight">for</span> the exam</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">✏️</span>
+                    Practice
+                </h2>
+                <div class="practice-container">
+                    <p class="practice-question">"We waited ___ an hour."</p>
+                    <p class="practice-answer">Answer: <span class="preposition-highlight">for</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 8: WITH -->
+        <div class="slide" id="slide8">
+            <h1 class="slide-title">Preposition "WITH"</h1>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">👥</span>
+                    Rules
+                </h2>
+                <div class="rules-container">
+                    <ul class="rules-list">
+                        <li>Accompaniment: go with friends, with my family</li>
+                        <li>Tools/Instruments: write with a pen, cut with a knife</li>
+                        <li>Possession: the girl with red hair</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">💡</span>
+                    Examples
+                </h2>
+                <div class="examples-container">
+                    <ul class="examples-list">
+                        <li>She danced <span class="preposition-highlight">with</span> her partner</li>
+                        <li>I write <span class="preposition-highlight">with</span> a pencil</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">✏️</span>
+                    Practice
+                </h2>
+                <div class="practice-container">
+                    <p class="practice-question">"He built the house ___ his hands."</p>
+                    <p class="practice-answer">Answer: <span class="preposition-highlight">with</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 9: BY -->
+        <div class="slide" id="slide9">
+            <h1 class="slide-title">Preposition "BY"</h1>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">✍️</span>
+                    Rules
+                </h2>
+                <div class="rules-container">
+                    <ul class="rules-list">
+                        <li>Agent (passive voice): written by Shakespeare</li>
+                        <li>Transport: travel by car, by train</li>
+                        <li>Deadline: finish by Friday</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">💡</span>
+                    Examples
+                </h2>
+                <div class="examples-container">
+                    <ul class="examples-list">
+                        <li>The song was sung <span class="preposition-highlight">by</span> Taylor Swift</li>
+                        <li>We traveled <span class="preposition-highlight">by</span> train</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">✏️</span>
+                    Practice
+                </h2>
+                <div class="practice-container">
+                    <p class="practice-question">"Submit your essay ___ Monday."</p>
+                    <p class="practice-answer">Answer: <span class="preposition-highlight">by</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 10: FROM -->
+        <div class="slide" id="slide10">
+            <h1 class="slide-title">Preposition "FROM"</h1>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">🌍</span>
+                    Rules
+                </h2>
+                <div class="rules-container">
+                    <ul class="rules-list">
+                        <li>Origin/Source: from Paris, from 9 to 5</li>
+                        <li>Separation: take from the shelf</li>
+                        <li>Material: made from wood</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">💡</span>
+                    Examples
+                </h2>
+                <div class="examples-container">
+                    <ul class="examples-list">
+                        <li>She is <span class="preposition-highlight">from</span> Japan</li>
+                        <li>Butter comes <span class="preposition-highlight">from</span> milk</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">
+                    <span class="icon">✏️</span>
+                    Practice
+                </h2>
+                <div class="practice-container">
+                    <p class="practice-question">"The train arrives ___ Boston."</p>
+                    <p class="practice-answer">Answer: <span class="preposition-highlight">from</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn">Previous</button>
+            <button class="nav-btn" id="nextBtn">Next</button>
+        </div>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const currentSlideElement = document.getElementById('current-slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        let currentSlide = 1;
+        const totalSlides = slides.length;
+        
+        function showSlide(n) {
+            // Hide all slides
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Show current slide
+            document.getElementById(`slide${n}`).classList.add('active');
+            
+            // Update slide counter
+            currentSlideElement.textContent = n;
+            
+            // Update navigation buttons
+            prevBtn.style.display = n === 1 ? 'none' : 'block';
+            nextBtn.style.display = n === totalSlides ? 'none' : 'block';
+        }
+        
+        // Next slide
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        });
+        
+        // Previous slide
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 1) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' && currentSlide < totalSlides) {
+                currentSlide++;
+                showSlide(currentSlide);
+            } else if (e.key === 'ArrowLeft' && currentSlide > 1) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        });
+        
+        // Initialize
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
