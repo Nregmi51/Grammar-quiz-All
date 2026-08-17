@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Smartboard Conditional Sentences Quiz (6×5)</title>
+<style>
+  :root{
+    --bg: #87CEEB;           /* sky blue */
+    --card: #ffffff;
+    --accent: #006400;       /* deep green for questions */
+    --accent-2: #054a29;
+    --text: #000000;         /* black */
+    --correct: #1e7f1e;
+    --wrong: #b00020;
+    --shadow: rgba(0,0,0,0.2);
+  }
+
+  * { box-sizing: border-box; }
+  body{
+    margin:0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .container{
+    max-width: 1100px;
+    margin: 24px auto 48px;
+    padding: 16px;
+  }
+
+  header{
+    background: var(--card);
+    border-radius: 20px;
+    box-shadow: 0 8px 24px var(--shadow);
+    padding: 16px 20px;
+    display:flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .title{
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--accent);
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  .controls{
+    display:flex; gap:12px; flex-wrap: wrap; align-items:center;
+  }
+
+  .btn{
+    font-size: 18px;
+    font-weight: 700;
+    padding: 12px 18px;
+    border-radius: 14px;
+    border: none;
+    box-shadow: 0 6px 14px var(--shadow);
+    cursor: pointer;
+    background: #ffffff;
+  }
+  .btn:hover{ transform: translateY(-1px); }
+  .btn:active{ transform: translateY(1px); }
+
+  .btn-primary{ background:#004aad; color:#fff; }
+  .btn-green{ background:#0f7b0f; color:#fff; }
+  .btn-warning{ background:#d97706; color:#fff; }
+  .btn-disabled{ opacity: 0.6; pointer-events: none; }
+
+  .meter{
+    background: var(--card);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px var(--shadow);
+    padding: 10px 14px;
+    display:flex; gap:18px; align-items:center; flex-wrap:wrap;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .meter .pill{
+    background: #eef6ff;
+    border-radius: 12px;
+    padding: 8px 12px;
+  }
+  .meter .pill.green{ background:#ecfdf3; color:#065f46; }
+  .meter .pill.orange{ background:#fff7ed; color:#9a3412; }
+  .meter .pill.purple{ background:#f5f3ff; color:#5b21b6; }
+
+  .quiz-card{
+    background: var(--card);
+    border-radius: 24px;
+    box-shadow: 0 12px 28px var(--shadow);
+    padding: 18px;
+    margin-top: 18px;
+  }
+
+  .set-header{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom: 10px;
+  }
+  .set-title{
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  .question{
+    margin: 16px 0 10px;
+    font-size: 28px;          /* big for smartboard */
+    line-height: 1.25;
+    color: var(--accent);
+    font-weight: 800;         /* bold deep green */
+  }
+
+  .options{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .option-btn{
+    text-align: left;
+    width: 100%;
+    font-size: 24px;          /* big option buttons */
+    font-weight: 800;         /* bold black text */
+    padding: 14px 16px;
+    border-radius: 16px;
+    border: 3px solid #0b1736;
+    background: #f8fafc;
+    color: #000;
+    cursor: pointer;
+    box-shadow: 0 6px 14px var(--shadow);
+  }
+  .option-btn:hover{ filter: brightness(0.98); }
+  .option-btn.correct{
+    border-color: var(--correct);
+    background: #ecfdf5;
+  }
+  .option-btn.wrong{
+    border-color: var(--wrong);
+    background: #fff1f2;
+  }
+  .option-btn.disabled{
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .feedback{
+    font-size: 22px;
+    font-weight: 700;
+    margin: 6px 2px 16px;
+    padding: 10px 12px;
+    border-left: 8px solid transparent;
+    border-radius: 10px;
+    background: #f1f5f9;
+  }
+  .feedback.correct{
+    color: var(--correct);
+    border-color: var(--correct);
+    background: #ecfdf5;
+  }
+  .feedback.wrong{
+    color: var(--wrong);
+    border-color: var(--wrong);
+    background: #fff1f2;
+  }
+
+  .nav{
+    display:flex; gap:12px; justify-content: center; margin-top: 12px; flex-wrap: wrap;
+  }
+
+  .footer-note{
+    text-align:center; margin-top:16px; font-size:16px; opacity:0.8;
+  }
+
+  @media (max-width: 700px){
+    .title{ font-size: 26px; }
+    .question{ font-size: 24px; }
+    .option-btn{ font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 class="title">Conditional Sentences Practice-3</h1>
+      <div class="controls">
+        <button class="btn btn-warning" id="resetBtn" title="Reset the whole quiz">Reset</button>
+        <button class="btn btn-primary" id="prevBtn">◀ Previous Set</button>
+        <button class="btn btn-primary" id="nextBtn">Next Set ▶</button>
+      </div>
+    </header>
+
+    <section class="meter" id="meter">
+      <div class="pill purple" id="timer">⏱ Time: 00:00</div>
+      <div class="pill">Set: <span id="setIndicator">1</span> / 6</div>
+      <div class="pill green">Correct: <span id="correctCount">0</span> / 30</div>
+      <div class="pill orange">Attempted: <span id="attemptedCount">0</span> / 30</div>
+      <div class="pill">Accuracy: <span id="accuracy">0%</span></div>
+    </section>
+
+    <div class="quiz-card">
+      <div class="set-header">
+        <div class="set-title">Set <span id="setTitle">1</span></div>
+      </div>
+      <div id="questionsContainer"></div>
+
+      <div class="nav">
+        <button class="btn btn-primary" id="prevBtnBottom">◀ Previous Set</button>
+        <button class="btn btn-primary" id="nextBtnBottom">Next Set ▶</button>
+      </div>
+
+      <div class="footer-note">
+        Click an option to get immediate feedback with explanations. Use Previous/Next to switch sets.
+      </div>
+    </div>
+  </div>
+
+<script>
+// ===================== DATA: 30 MCQs (6 sets × 5) =====================
+const QUESTIONS = [
+  // Set 1 — Zero Conditional
+  {
+    q: "1) If you heat ice, it ___.",
+    options: ["melted","melts","melt","melting"],
+    answer: 1,
+    why: "Zero conditional uses present simple in both clauses for general truths: 'If you heat ice, it melts.'"
+  },
+  {
+    q: "2) Unless you ___ water, plants die.",
+    options: ["give","gave","given","giving"],
+    answer: 0,
+    why: "'Unless' means 'if not'. Zero conditional takes present simple: 'Unless you give water, plants die.'"
+  },
+  {
+    q: "3) If students ___ hard, they succeed.",
+    options: ["studies","studying","study","studied"],
+    answer: 2,
+    why: "Plural subject 'students' -> present simple 'study' in zero conditional."
+  },
+  {
+    q: "4) Should you ___ sugar with water, it dissolves.",
+    options: ["mix","mixed","mixes","mixing"],
+    answer: 0,
+    why: "Inverted zero/first with 'Should + subject + base verb'. Here the general truth still holds."
+  },
+  {
+    q: "5) If you touch fire, it ___.",
+    options: ["burns","burning","burn","burnt"],
+    answer: 0,
+    why: "Zero conditional → present simple in result: 'it burns'."
+  },
+
+  // Set 2 — First Conditional
+  {
+    q: "6) If it rains tomorrow, we ___ at home.",
+    options: ["will stay","stay","stayed","staying"],
+    answer: 0,
+    why: "First conditional: if-clause present simple; main clause 'will + base verb' → 'will stay'."
+  },
+  {
+    q: "7) Unless you ___ early, you will miss the train.",
+    options: ["leave","leaves","leaving","left"],
+    answer: 0,
+    why: "With 'unless' in first conditional, use present simple in the condition: 'Unless you leave early...'"
+  },
+  {
+    q: "8) If she studies, she ___ the exam.",
+    options: ["passed","passes","will pass","would pass"],
+    answer: 2,
+    why: "Result clause in first conditional uses 'will + base verb': 'will pass'."
+  },
+  {
+    q: "9) Should you ___ any problem, call me immediately.",
+    options: ["have","had","has","having"],
+    answer: 0,
+    why: "Inversion with 'should' takes base form: 'Should you have any problem...'"
+  },
+  {
+    q: "10) If we don’t hurry, we ___ late.",
+    options: ["be","will be","are","were"],
+    answer: 1,
+    why: "Future result in first conditional → 'will be'."
+  },
+
+  // Set 3 — Second Conditional
+  {
+    q: "11) If I ___ rich, I would buy a big house.",
+    options: ["am","were","was","being"],
+    answer: 1,
+    why: "Subjunctive 'were' for unreal present in second conditional: 'If I were rich...'"
+  },
+  {
+    q: "12) Unless he ___ harder, he would fail.",
+    options: ["worked","work","working","works"],
+    answer: 0,
+    why: "Second conditional takes past simple in condition clause: 'Unless he worked harder...'"
+  },
+  {
+    q: "13) If she knew French, she ___ in Paris.",
+    options: ["lives","lived","will live","would live"],
+    answer: 3,
+    why: "Result clause in second conditional: 'would + base verb' → 'would live'."
+  },
+  {
+    q: "14) Were he ___ here, he would explain everything.",
+    options: ["be","being","was","to be"],
+    answer: 3,
+    why: "Inverted second conditional: 'Were + subject + to + base verb' → 'Were he to be here...'"
+  },
+  {
+    q: "15) If they ___ in Nepal, they would love the mountains.",
+    options: ["lives","lived","live","living"],
+    answer: 1,
+    why: "Use past simple in the if-clause of second conditional: 'If they lived in Nepal...'"
+  },
+
+  // Set 4 — Third Conditional
+  {
+    q: "16) If she ___ harder, she would have passed.",
+    options: ["study","studied","had studied","studies"],
+    answer: 2,
+    why: "Third conditional requires past perfect in if-clause: 'had studied'."
+  },
+  {
+    q: "17) Unless he ___ earlier, he would have missed the flight.",
+    options: ["leave","leaving","had left","left"],
+    answer: 2,
+    why: "With 'unless' in third conditional, still use past perfect for the condition: 'had left'."
+  },
+  {
+    q: "18) If they had invited me, I ___ gone.",
+    options: ["will have","would have","had","have"],
+    answer: 1,
+    why: "Third conditional result uses 'would have + past participle' → 'would have gone'."
+  },
+  {
+    q: "19) Had she ___ the truth, she would have been shocked.",
+    options: ["know","knew","known","knows"],
+    answer: 2,
+    why: "Inverted third conditional places 'had' before subject; verb is past participle → 'known'."
+  },
+  {
+    q: "20) If we ___ the map, we wouldn’t have been lost.",
+    options: ["checked","had checked","check","checking"],
+    answer: 1,
+    why: "If-clause in third conditional uses past perfect: 'had checked'."
+  },
+
+  // Set 5 — Mixed & Variations
+  {
+    q: "21) If I ___ more confident, I would have spoken in the meeting.",
+    options: ["am","were","had been","was"],
+    answer: 1,
+    why: "Present condition + past result (mixed). Use 'were' in the if-clause."
+  },
+  {
+    q: "22) Had they ___ harder, they would succeed now.",
+    options: ["study","studied","studying","studies"],
+    answer: 1,
+    why: "Inverted mixed: past condition with present result. Past participle 'studied' fits 'Had they studied...'"
+  },
+  {
+    q: "23) If he ___ a doctor, he would have treated her yesterday.",
+    options: ["is","was","were","had been"],
+    answer: 2,
+    why: "Present unreal condition + past result: 'If he were a doctor, he would have treated her yesterday.'"
+  },
+  {
+    q: "24) If I ___ more careful, I would not be in trouble now.",
+    options: ["am","was","had been","were"],
+    answer: 2,
+    why: "Past condition + present result (mixed). Use 'had been' in if-clause."
+  },
+  {
+    q: "25) Were you ___ a king, you would be powerful.",
+    options: ["be","to be","being","been"],
+    answer: 1,
+    why: "Inverted second conditional pattern: 'Were + subject + to + base verb'."
+  },
+
+  // Set 6 — More Variations
+  {
+    q: "26) If the driver ___ more careful, the accident wouldn’t have happened.",
+    options: ["is","was","were","had been"],
+    answer: 3,
+    why: "Third conditional structure; if-clause should be past perfect → 'had been' more careful."
+  },
+  {
+    q: "27) Unless she ___ the key, she cannot open the door.",
+    options: ["has","had","having","have"],
+    answer: 0,
+    why: "Real present necessity: use present simple 'has' with 'she'."
+  },
+  {
+    q: "28) Should you ___ late, we will start without you.",
+    options: ["arrive","arrived","arriving","arrives"],
+    answer: 0,
+    why: "Inverted first conditional with 'should' takes the base verb 'arrive'."
+  },
+  {
+    q: "29) Had I ___ the bus, I would be home by now.",
+    options: ["catch","caught","catching","catches"],
+    answer: 1,
+    why: "Inverted mixed: past perfect meaning → use past participle 'caught' after 'Had I ...'"
+  },
+  {
+    q: "30) If we ___ enough money, we could have bought that car.",
+    options: ["have","had","has","having"],
+    answer: 1,
+    why: "Unreal past possibility → condition in past simple 'had' fits the structure."
+  }
+];
+
+// ============== STATE ==============
+const STATE = {
+  currentSet: 1, // 1..6
+  answered: Array(QUESTIONS.length).fill(false),
+  chosen: Array(QUESTIONS.length).fill(null),
+  correctCount: 0,
+  attempted: 0,
+  startTime: Date.now(),
+  timerId: null
+};
+
+// ============== HELPERS ==============
+function fmtTime(totalSeconds){
+  const m = Math.floor(totalSeconds / 60).toString().padStart(2,'0');
+  const s = (totalSeconds % 60).toString().padStart(2,'0');
+  return `${m}:${s}`;
+}
+function updateTimer(){
+  const elapsed = Math.floor((Date.now() - STATE.startTime)/1000);
+  document.getElementById('timer').textContent = `⏱ Time: ${fmtTime(elapsed)}`;
+}
+function startTimer(){
+  if(STATE.timerId) clearInterval(STATE.timerId);
+  STATE.startTime = Date.now();
+  STATE.timerId = setInterval(updateTimer, 1000);
+  updateTimer();
+}
+
+function updateMeter(){
+  const acc = STATE.attempted > 0 ? Math.round((STATE.correctCount/STATE.attempted)*100) : 0;
+  document.getElementById('correctCount').textContent = STATE.correctCount;
+  document.getElementById('attemptedCount').textContent = STATE.attempted;
+  document.getElementById('accuracy').textContent = `${acc}%`;
+  document.getElementById('setIndicator').textContent = STATE.currentSet;
+  document.getElementById('setTitle').textContent = STATE.currentSet;
+}
+
+function setRangeForSet(setNumber){
+  const start = (setNumber-1)*5;
+  const end = start + 5;
+  return [start, end];
+}
+
+// ============== RENDER ==============
+function renderSet(setNumber){
+  STATE.currentSet = setNumber;
+  updateMeter();
+
+  const [start, end] = setRangeForSet(setNumber);
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+
+  for(let i=start;i<end;i++){
+    const item = QUESTIONS[i];
+    const qCard = document.createElement('div');
+    const qText = document.createElement('div');
+    qText.className = 'question';
+    qText.textContent = item.q;
+    qCard.appendChild(qText);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+
+    item.options.forEach((opt, idx)=>{
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.textContent = String.fromCharCode(97+idx) + ') ' + opt; // a) b) c) d)
+      btn.addEventListener('click', ()=> handleAnswer(i, idx, btn, feedback));
+      
+      // If already answered, show locked state and style
+      if(STATE.answered[i]){
+        btn.classList.add('disabled');
+        if(idx === item.answer) btn.classList.add('correct');
+        if(STATE.chosen[i] === idx && idx !== item.answer) btn.classList.add('wrong');
+      }
+
+      opts.appendChild(btn);
+    });
+    qCard.appendChild(opts);
+
+    const feedback = document.createElement('div');
+    feedback.className = 'feedback';
+    feedback.style.display = 'none';
+    qCard.appendChild(feedback);
+
+    // If answered previously, show feedback
+    if(STATE.answered[i]){
+      feedback.style.display = 'block';
+      const chosen = STATE.chosen[i];
+      if(chosen === item.answer){
+        feedback.classList.add('correct');
+        feedback.textContent = `✔ Correct. ${item.why}`;
+      }else{
+        feedback.classList.add('wrong');
+        const correctLabel = String.fromCharCode(97 + item.answer);
+        feedback.textContent = `✘ Incorrect. Correct answer: ${correctLabel}). ${item.why}`;
+      }
+    }
+
+    container.appendChild(qCard);
+  }
+
+  // Update navigation button disabled states
+  const prevs = [document.getElementById('prevBtn'), document.getElementById('prevBtnBottom')];
+  const nexts = [document.getElementById('nextBtn'), document.getElementById('nextBtnBottom')];
+  prevs.forEach(b=> b.classList.toggle('btn-disabled', setNumber===1));
+  nexts.forEach(b=> b.classList.toggle('btn-disabled', setNumber===6));
+}
+
+function handleAnswer(index, chosenIdx, btnEl, feedbackEl){
+  // If already answered, ignore
+  if(STATE.answered[index]) return;
+
+  const item = QUESTIONS[index];
+  STATE.answered[index] = true;
+  STATE.chosen[index] = chosenIdx;
+  STATE.attempted++;
+
+  // Lock all option buttons in this question
+  const questionBlock = btnEl.closest('.options');
+  const buttons = questionBlock.querySelectorAll('.option-btn');
+  buttons.forEach(b => b.classList.add('disabled'));
+
+  // Style correctness
+  if(chosenIdx === item.answer){
+    btnEl.classList.add('correct');
+    STATE.correctCount++;
+    feedbackEl.classList.remove('wrong');
+    feedbackEl.classList.add('correct');
+    feedbackEl.textContent = `✔ Correct. ${item.why}`;
+  } else {
+    btnEl.classList.add('wrong');
+    // also mark the correct one
+    buttons[item.answer].classList.add('correct');
+    feedbackEl.classList.remove('correct');
+    feedbackEl.classList.add('wrong');
+    const correctLabel = String.fromCharCode(97 + item.answer);
+    feedbackEl.textContent = `✘ Incorrect. Correct answer: ${correctLabel}). ${item.why}`;
+  }
+
+  feedbackEl.style.display = 'block';
+  updateMeter();
+}
+
+// ============== NAVIGATION & RESET ==============
+function goPrev(){
+  if(STATE.currentSet>1) renderSet(STATE.currentSet-1);
+}
+function goNext(){
+  if(STATE.currentSet<6) renderSet(STATE.currentSet+1);
+}
+function resetQuiz(){
+  STATE.currentSet = 1;
+  STATE.answered.fill(false);
+  STATE.chosen.fill(null);
+  STATE.correctCount = 0;
+  STATE.attempted = 0;
+  startTimer();
+  updateMeter();
+  renderSet(1);
+}
+
+document.getElementById('prevBtn').addEventListener('click', goPrev);
+document.getElementById('nextBtn').addEventListener('click', goNext);
+document.getElementById('prevBtnBottom').addEventListener('click', goPrev);
+document.getElementById('nextBtnBottom').addEventListener('click', goNext);
+document.getElementById('resetBtn').addEventListener('click', resetQuiz);
+
+// Init
+startTimer();
+renderSet(1);
+</script>
+</body>
+</html>

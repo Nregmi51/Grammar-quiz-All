@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditional Sentences Quiz - Mixed Set 3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 28px;
+            background-color: #e0f7fa;
+            color: #333;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #00796b;
+            font-size: 48px;
+        }
+        h2 {
+            color: #388e3c;
+            font-size: 36px;
+            margin-top: 40px;
+        }
+        .set {
+            margin-bottom: 60px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fffde7;
+            border: 2px solid #fbc02d;
+            border-radius: 8px;
+            text-align: left;
+            max-width: 800px;
+        }
+        .option {
+            display: block;
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #ffeb3b;
+            color: #333;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .option:hover {
+            background-color: #fdd835;
+        }
+        .correct {
+            background-color: #4caf50 !important;
+            color: white !important;
+        }
+        .wrong {
+            background-color: #f44336 !important;
+            color: white !important;
+        }
+        .feedback {
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            font-size: 32px;
+            color: #d32f2f;
+            background-color: #ffebee;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>MCQs for Conditional Sentences - Mixed Set 3</h1>
+    <div id="timer">Time: 0:00</div>
+
+    <div class="set">
+        <h2>Set 1 (Questions 1-5)</h2>
+        <div class="question" id="q1">
+            <p>1. If you _____ too much sugar, you get sick.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(1, 'A', this)">A) eat</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(1, 'B', this)">B) eats</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(1, 'C', this)">C) ate</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(1, 'D', this)">D) will eat</div>
+            <div id="feedback1" class="feedback"></div>
+        </div>
+        <div class="question" id="q2">
+            <p>2. If she _____ the exam, she will celebrate.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(2, 'A', this)">A) passes</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(2, 'B', this)">B) pass</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(2, 'C', this)">C) passed</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(2, 'D', this)">D) will pass</div>
+            <div id="feedback2" class="feedback"></div>
+        </div>
+        <div class="question" id="q3">
+            <p>3. If I _____ you, I would have told you the truth.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(3, 'A', this)">A) trusted</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(3, 'B', this)">B) trust</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(3, 'C', this)">C) will trust</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(3, 'D', this)">D) had trusted</div>
+            <div id="feedback3" class="feedback"></div>
+        </div>
+        <div class="question" id="q4">
+            <p>4. If he _____ harder, he would have succeeded.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(4, 'A', this)">A) tried</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(4, 'B', this)">B) tries</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(4, 'C', this)">C) had tried</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(4, 'D', this)">D) will try</div>
+            <div id="feedback4" class="feedback"></div>
+        </div>
+        <div class="question" id="q5">
+            <p>5. If it _____ yesterday, we would have gone to the beach.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(5, 'A', this)">A) didn't rain</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(5, 'B', this)">B) doesn't rain</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(5, 'C', this)">C) hadn't rained</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(5, 'D', this)">D) won't rain</div>
+            <div id="feedback5" class="feedback"></div>
+        </div>
+    </div>
+
+    <div class="set">
+        <h2>Set 2 (Questions 6-10)</h2>
+        <div class="question" id="q6">
+            <p>6. If I _____ rich, I would buy a castle.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(6, 'A', this)">A) am</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(6, 'B', this)">B) was</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(6, 'C', this)">C) were</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(6, 'D', this)">D) will be</div>
+            <div id="feedback6" class="feedback"></div>
+        </div>
+        <div class="question" id="q7">
+            <p>7. If you _____ early, you will get good seats.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(7, 'A', this)">A) arrive</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(7, 'B', this)">B) arrives</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(7, 'C', this)">C) arrived</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(7, 'D', this)">D) will arrive</div>
+            <div id="feedback7" class="feedback"></div>
+        </div>
+        <div class="question" id="q8">
+            <p>8. Had I _____ your message, I would have replied immediately.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(8, 'A', this)">A) receive</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(8, 'B', this)">B) received</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(8, 'C', this)">C) will receive</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(8, 'D', this)">D) would receive</div>
+            <div id="feedback8" class="feedback"></div>
+        </div>
+        <div class="question" id="q9">
+            <p>9. If they _____ us, we would join the project.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(9, 'A', this)">A) invite</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(9, 'B', this)">B) invites</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(9, 'C', this)">C) invited</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(9, 'D', this)">D) will invite</div>
+            <div id="feedback9" class="feedback"></div>
+        </div>
+        <div class="question" id="q10">
+            <p>10. If she _____ the job offer, she would move to London.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(10, 'A', this)">A) accepts</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(10, 'B', this)">B) accept</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(10, 'C', this)">C) accepted</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(10, 'D', this)">D) will accept</div>
+            <div id="feedback10" class="feedback"></div>
+        </div>
+    </div>
+
+    <div class="set">
+        <h2>Set 3 (Questions 11-15)</h2>
+        <div class="question" id="q11">
+            <p>11. If you _____ ice, it melts.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(11, 'A', this)">A) heat</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(11, 'B', this)">B) heats</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(11, 'C', this)">C) heated</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(11, 'D', this)">D) will heat</div>
+            <div id="feedback11" class="feedback"></div>
+        </div>
+        <div class="question" id="q12">
+            <p>12. If it _____ tomorrow, the match will be canceled.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(12, 'A', this)">A) rains</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(12, 'B', this)">B) rained</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(12, 'C', this)">C) will rain</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(12, 'D', this)">D) would rain</div>
+            <div id="feedback12" class="feedback"></div>
+        </div>
+        <div class="question" id="q13">
+            <p>13. If I _____ more time, I could help you.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(13, 'A', this)">A) have</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(13, 'B', this)">B) has</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(13, 'C', this)">C) had</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(13, 'D', this)">D) will have</div>
+            <div id="feedback13" class="feedback"></div>
+        </div>
+        <div class="question" id="q14">
+            <p>14. If she _____ the requirements, she would be hired.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(14, 'A', this)">A) meets</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(14, 'B', this)">B) met</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(14, 'C', this)">C) had met</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(14, 'D', this)">D) will meet</div>
+            <div id="feedback14" class="feedback"></div>
+        </div>
+        <div class="question" id="q15">
+            <p>15. If we _____ the tickets in advance, we would have saved money.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(15, 'A', this)">A) book</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(15, 'B', this)">B) books</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(15, 'C', this)">C) had booked</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(15, 'D', this)">D) will book</div>
+            <div id="feedback15" class="feedback"></div>
+        </div>
+    </div>
+
+    <div class="set">
+        <h2>Set 4 (Questions 16-20)</h2>
+        <div class="question" id="q16">
+            <p>16. If I _____ you, I would give you a ride.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(16, 'A', this)">A) see</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(16, 'B', this)">B) sees</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(16, 'C', this)">C) saw</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(16, 'D', this)">D) will see</div>
+            <div id="feedback16" class="feedback"></div>
+        </div>
+        <div class="question" id="q17">
+            <p>17. If you _____ the rules, you won't get into trouble.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(17, 'A', this)">A) follow</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(17, 'B', this)">B) follows</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(17, 'C', this)">C) followed</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(17, 'D', this)">D) will follow</div>
+            <div id="feedback17" class="feedback"></div>
+        </div>
+        <div class="question" id="q18">
+            <p>18. Had he _____ the warning, he wouldn't have had the accident.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(18, 'A', this)">A) heed</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(18, 'B', this)">B) heeds</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(18, 'C', this)">C) heeded</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(18, 'D', this)">D) will heed</div>
+            <div id="feedback18" class="feedback"></div>
+        </div>
+        <div class="question" id="q19">
+            <p>19. If I _____ the lottery, I would travel the world.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(19, 'A', this)">A) win</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(19, 'B', this)">B) wins</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(19, 'C', this)">C) won</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(19, 'D', this)">D) will win</div>
+            <div id="feedback19" class="feedback"></div>
+        </div>
+        <div class="question" id="q20">
+            <p>20. If she _____ harder, she might win the competition.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(20, 'A', this)">A) practices</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(20, 'B', this)">B) practice</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(20, 'C', this)">C) practiced</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(20, 'D', this)">D) will practice</div>
+            <div id="feedback20" class="feedback"></div>
+        </div>
+    </div>
+
+    <div class="set">
+        <h2>Set 5 (Questions 21-25)</h2>
+        <div class="question" id="q21">
+            <p>21. If you _____ the button, the machine starts.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(21, 'A', this)">A) press</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(21, 'B', this)">B) presses</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(21, 'C', this)">C) pressed</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(21, 'D', this)">D) will press</div>
+            <div id="feedback21" class="feedback"></div>
+        </div>
+        <div class="question" id="q22">
+            <p>22. If it _____ next week, we will cancel the picnic.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(22, 'A', this)">A) snows</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(22, 'B', this)">B) snowed</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(22, 'C', this)">C) will snow</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(22, 'D', this)">D) would snow</div>
+            <div id="feedback22" class="feedback"></div>
+        </div>
+        <div class="question" id="q23">
+            <p>23. If I _____ fluent English, I would get the job.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(23, 'A', this)">A) speak</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(23, 'B', this)">B) speaks</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(23, 'C', this)">C) spoke</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(23, 'D', this)">D) will speak</div>
+            <div id="feedback23" class="feedback"></div>
+        </div>
+        <div class="question" id="q24">
+            <p>24. If they _____ the deadline, they would have been fired.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(24, 'A', this)">A) miss</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(24, 'B', this)">B) misses</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(24, 'C', this)">C) had missed</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(24, 'D', this)">D) will miss</div>
+            <div id="feedback24" class="feedback"></div>
+        </div>
+        <div class="question" id="q25">
+            <p>25. If we _____ the opportunity, we should take it.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(25, 'A', this)">A) have</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(25, 'B', this)">B) has</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(25, 'C', this)">C) had</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(25, 'D', this)">D) will have</div>
+            <div id="feedback25" class="feedback"></div>
+        </div>
+    </div>
+
+    <div class="set">
+        <h2>Set 6 (Questions 26-30)</h2>
+        <div class="question" id="q26">
+            <p>26. If you _____ me, I will explain everything.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(26, 'A', this)">A) ask</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(26, 'B', this)">B) asks</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(26, 'C', this)">C) asked</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(26, 'D', this)">D) will ask</div>
+            <div id="feedback26" class="feedback"></div>
+        </div>
+        <div class="question" id="q27">
+            <p>27. If she _____ her promise, people will trust her more.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(27, 'A', this)">A) keeps</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(27, 'B', this)">B) keep</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(27, 'C', this)">C) kept</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(27, 'D', this)">D) will keep</div>
+            <div id="feedback27" class="feedback"></div>
+        </div>
+        <div class="question" id="q28">
+            <p>28. Had I _____ the consequences, I wouldn't have done it.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(28, 'A', this)">A) know</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(28, 'B', this)">B) knows</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(28, 'C', this)">C) known</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(28, 'D', this)">D) will know</div>
+            <div id="feedback28" class="feedback"></div>
+        </div>
+        <div class="question" id="q29">
+            <p>29. If he _____ the truth, he would confess.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(29, 'A', this)">A) know</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(29, 'B', this)">B) knows</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(29, 'C', this)">C) knew</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(29, 'D', this)">D) will know</div>
+            <div id="feedback29" class="feedback"></div>
+        </div>
+        <div class="question" id="q30">
+            <p>30. If I _____ the answer, I would tell you immediately.</p>
+            <div class="option" data-choice="A" onclick="checkAnswer(30, 'A', this)">A) know</div>
+            <div class="option" data-choice="B" onclick="checkAnswer(30, 'B', this)">B) knows</div>
+            <div class="option" data-choice="C" onclick="checkAnswer(30, 'C', this)">C) knew</div>
+            <div class="option" data-choice="D" onclick="checkAnswer(30, 'D', this)">D) will know</div>
+            <div id="feedback30" class="feedback"></div>
+        </div>
+    </div>
+
+    <script>
+        const answers = ['A', 'A', 'D', 'C', 'C', 'C', 'A', 'B', 'C', 'C', 'A', 'A', 'C', 'B', 'C', 'C', 'A', 'C', 'C', 'C', 'A', 'A', 'C', 'C', 'A', 'A', 'A', 'C', 'C', 'C'];
+
+        function checkAnswer(qnum, selected, elem) {
+            const correct = answers[qnum - 1];
+            const isCorrect = selected === correct;
+            const questionDiv = document.getElementById('q' + qnum);
+            const options = questionDiv.querySelectorAll('.option');
+            const feedback = document.getElementById('feedback' + qnum);
+
+            // Highlight selected
+            elem.classList.add(isCorrect ? 'correct' : 'wrong');
+
+            // If wrong, highlight correct one
+            if (!isCorrect) {
+                options.forEach(opt => {
+                    if (opt.getAttribute('data-choice') === correct) {
+                        opt.classList.add('correct');
+                    }
+                });
+                feedback.innerHTML = 'Wrong!';
+                feedback.classList.add('wrong');
+            } else {
+                feedback.innerHTML = 'Correct!';
+                feedback.classList.add('correct');
+            }
+
+            // Disable all options in this question
+            options.forEach(opt => {
+                opt.onclick = null;
+                opt.style.cursor = 'default';
+            });
+        }
+
+        // Timer
+        let seconds = 0;
+        const timerElement = document.getElementById('timer');
+        setInterval(() => {
+            seconds++;
+            const min = Math.floor(seconds / 60);
+            const sec = seconds % 60;
+            timerElement.innerHTML = `Time: ${min}:${sec < 10 ? '0' + sec : sec}`;
+        }, 1000);
+    </script>
+</body>
+</html>
