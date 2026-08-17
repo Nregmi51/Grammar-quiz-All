@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>91-Question Reported-Speech Quiz</title>
+<style>
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#ffffe6;color:#0044cc}
+    h1,h2{text-align:center;color:#0044cc;font-weight:bold}
+    .container{max-width:1100px;margin:auto;padding:20px}
+    progress{width:100%;height:20px;border-radius:10px;overflow:hidden;background:#f0f0f0}
+    progress::-webkit-progress-bar{background:#f0f0f0}
+    progress::-webkit-progress-value{background:#0044cc}
+    progress::-moz-progress-bar{background:#0044cc}
+    .qBox{background:#e6ffe6;padding:16px;border-radius:14px;margin-bottom:16px;box-shadow:0 2px 5px rgba(0,0,0,.1)}
+    .qText{font-size:1.9rem;font-weight:bold;color:#0044cc;margin-bottom:10px}
+    .option{display:block;width:100%;padding:12px 18px;margin:8px 0;font-size:1.5rem;font-weight:bold;background:#fff;border:2px solid transparent;border-radius:14px;cursor:pointer;transition:border .2s}
+    .option:hover{border-color:#0044cc}
+    .correct{border-color:#00aa00}
+    .wrong{border-color:#cc0000}
+    .btn{display:inline-block;padding:10px 20px;margin:6px;border:none;border-radius:6px;font-size:1rem;cursor:pointer}
+    .btn-primary{background:#0044cc;color:#fff}
+    .btn-secondary{background:#66aaff;color:#fff}
+    .btn-ghost{background:#f0f0f0;color:#0044cc}
+    #summary{display:none}
+    @media print{
+        body{background:#fff!important;color:#000!important}
+        .no-print{display:none}
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Reported Speech MCQ Quiz (91 Questions)</h1>
+    <progress id="progress" value="0" max="13"></progress>
+
+    <div id="quizArea">
+        <h2 id="setTitle">Set 1 / 13</h2>
+        <div id="questionContainer"></div>
+        <button id="submitBtn" class="btn btn-primary" disabled>Submit This Set</button>
+        <div id="setResult" style="margin-top:12px;font-weight:bold"></div>
+        <div id="navButtons" style="margin-top:12px;display:none">
+            <button id="retryBtn" class="btn btn-secondary">Retry This Set</button>
+            <button id="nextBtn" class="btn btn-primary">Next Set</button>
+        </div>
+    </div>
+
+    <div id="summary">
+        <h2>Quiz Summary</h2>
+        <ul id="summaryList"></ul>
+        <button class="btn btn-primary no-print" onclick="window.print()">Print Summary</button>
+        <button class="btn btn-ghost no-print" onclick="restartQuiz()">Restart Quiz</button>
+    </div>
+</div>
+
+<script>
+/* ------------  91  FULLY-SHUFFLED  MCQs  ------------ */
+const ALL = [
+{q:'Sita to Ramesh: “I am reading a book.”',options:[
+    "Sita told Ramesh that she was reading a book.",
+    "Sita said to Ramesh if she was reading the book.",
+    "Sita asked Ramesh to read the book.",
+    "Sita told Ramesh that she is reading a book."],answer:0},
+{q:'Mohan to his friend: “Did you complete your homework?”',options:[
+    "Mohan asked his friend if he had completed his homework.",
+    "Mohan told his friend that he had completed his homework.",
+    "Mohan said to his friend why he completed his homework.",
+    "Mohan asked his friend if he completed his homework."],answer:0},
+{q:'Teacher to student: “Why are you late today?”',options:[
+    "The teacher told the student why he was late that day.",
+    "The teacher asked the student why he was late that day.",
+    "The teacher said to the student that he was late that day.",
+    "The teacher asked the student why he is late today."],answer:1},
+{q:'Father to son: “Be careful while crossing the road.”',options:[
+    "The father ordered his son be careful while crossing the road.",
+    "The father said to his son to be careful while crossing the road.",
+    "The father advised his son to be careful while crossing the road.",
+    "The father told his son that he is careful while crossing the road."],answer:2},
+{q:'Mother to daughter: “Don’t eat too many chocolates.”',options:[
+    "The mother said to her daughter to not eating too many chocolates.",
+    "The mother warned her daughter not to eat too many chocolates.",
+    "The mother advised her daughter don’t eat too many chocolates.",
+    "The mother told her daughter that she doesn’t eat too many chocolates."],answer:1},
+{q:'Ramesh to Sita: “Please, lend me your notes.”',options:[
+    "Ramesh told Sita to lending him her notes.",
+    "Ramesh requested Sita to lend him her notes.",
+    "Ramesh asked Sita that she lends him her notes.",
+    "Ramesh said Sita please lend me your notes."],answer:1},
+{q:'Stranger to me: “Could you tell me the way to the hospital?”',options:[
+    "The stranger requested me that I tell him the way to the hospital.",
+    "The stranger told me that I could tell him the way to the hospital.",
+    "The stranger asked me if I could tell him the way to the hospital.",
+    "The stranger said to me could I tell him the way to the hospital."],answer:2},
+{q:'Rina to her friend: “I will visit my grandmother tomorrow.”',options:[
+    "Rina asked her friend if she would visit her grandmother tomorrow.",
+    "Rina told her friend that she would visit her grandmother the next day.",
+    "Rina said her friend that she was visiting her grandmother tomorrow.",
+    "Rina told her friend that she will visit her grandmother tomorrow."],answer:1},
+{q:'Boss to employee: “Have you finished the report?”',options:[
+    "The boss told the employee that he has finished the report.",
+    "The boss asked the employee whether he had finished the report.",
+    "The boss said to the employee have you finished the report.",
+    "The boss enquired the employee that he finished the report."],answer:1},
+{q:'Man to policeman: “Where is the nearest ATM?”',options:[
+    "The man asked the policeman where the nearest ATM was.",
+    "The man said to the policeman where is the nearest ATM.",
+    "The man told the policeman where the nearest ATM is.",
+    "The man asked the policeman where was the nearest ATM."],answer:0},
+{q:'Doctor to patient: “Take this medicine twice a day.”',options:[
+    "The doctor said the patient take this medicine twice a day.",
+    "The doctor advised the patient to take that medicine twice a day.",
+    "The doctor told the patient that he takes that medicine twice a day.",
+    "The doctor ordered the patient take this medicine twice a day."],answer:1},
+{q:'Coach to players: “Never lose hope.”',options:[
+    "The coach said the players never lose hope.",
+    "The coach told the players that they never lose hope.",
+    "The coach advised the players never to lose hope.",
+    "The coach ordered the players don’t lose hope."],answer:2},
+{q:'Teacher to student: “Can you solve this question?”',options:[
+    "The teacher said to the student can he solve this question.",
+    "The teacher asked the student if he could solve that question.",
+    "The teacher told the student that he can solve that question.",
+    "The teacher requested the student can he solve that question."],answer:1},
+{q:'The girl to her mother: “Shall I help you in the kitchen?”',options:[
+    "The girl requested her mother that she helps in the kitchen.",
+    "The girl told her mother that she shall help her in the kitchen.",
+    "The girl asked her mother if she should help her in the kitchen.",
+    "The girl said her mother shall I help you in the kitchen."],answer:2},
+{q:'Hari to his friend: “I have been waiting for you since morning.”',options:[
+    "Hari asked his friend if he had been waiting since morning.",
+    "Hari told his friend that he had been waiting for him since morning.",
+    "Hari said his friend that he was waiting for him since morning.",
+    "Hari told his friend that he has been waiting for him since morning."],answer:1},
+{q:'Customer to shopkeeper: “How much does this cost?”',options:[
+    "The customer enquired the shopkeeper that how much it costs.",
+    "The customer asked the shopkeeper how much that cost.",
+    "The customer said the shopkeeper how much does this cost.",
+    "The customer told the shopkeeper how much this cost."],answer:1},
+{q:'Old man to a boy: “Don’t run on the wet floor.”',options:[
+    "The old man advised the boy don’t run on the wet floor.",
+    "The old man said to the boy don’t run on the wet floor.",
+    "The old man warned the boy not to run on the wet floor.",
+    "The old man told the boy that he doesn’t run on the wet floor."],answer:2},
+{q:'Captain to the team: “Let’s work hard and win the match.”',options:[
+    "The captain suggested to the team that they should work hard and win the match.",
+    "The captain told the team let’s work hard and win the match.",
+    "The captain said the team let us work hard and win the match.",
+    "The captain ordered the team to work hard and win the match."],answer:0},
+{q:'Tourist to local: “Can you recommend a good restaurant?”',options:[
+    "The tourist requested the local to recommending a good restaurant.",
+    "The tourist told the local that he can recommend a good restaurant.",
+    "The tourist asked the local if he could recommend a good restaurant.",
+    "The tourist said the local can you recommend a good restaurant."],answer:2},
+{q:'Teacher to students: “Don’t talk during the exam.”',options:[
+    "The teacher advised the students don’t talk during the exam.",
+    "The teacher told the students that they don’t talk during the exam.",
+    "The teacher warned the students not to talk during the exam.",
+    "The teacher said the students don’t talk during the exam."],answer:2},
+{q:'Policeman to the driver: “Why are you driving so fast?”',options:[
+    "The policeman said the driver why are you driving so fast.",
+    "The policeman enquired the driver that why he drives so fast.",
+    "The policeman asked the driver why he was driving so fast.",
+    "The policeman told the driver why he is driving so fast."],answer:2},
+{q:'Ramesh to his friend: “I had finished my work before you came.”',options:[
+    "Ramesh asked his friend if he had finished his work before he came.",
+    "Ramesh told his friend that he had finished his work before he came.",
+    "Ramesh said his friend that he had finished his work before he had come.",
+    "Ramesh told his friend that he finished his work before he came."],answer:1},
+{q:'Mother to son: “Are you feeling well now?”',options:[
+    "The mother asked her son if he was feeling well then.",
+    "The mother said her son are you feeling well now.",
+    "The mother told her son that he is feeling well now.",
+    "The mother enquired her son that he feels well now."],answer:0},
+{q:'Stranger to me: “Where is the railway station?”',options:[
+    "The stranger enquired me where was the railway station.",
+    "The stranger told me where the railway station is.",
+    "The stranger asked me where the railway station was.",
+    "The stranger said to me where is the railway station."],answer:2},
+{q:'Teacher to students: “Always believe in yourself.”',options:[
+    "The teacher ordered the students believe in yourselves always.",
+    "The teacher told the students that they always believe in themselves.",
+    "The teacher advised the students always to believe in themselves.",
+    "The teacher said the students always believe in yourself."],answer:2},
+{q:'Elder sister to younger brother: “Don’t touch my laptop.”',options:[
+    "The elder sister advised her younger brother to not touch her phone.",
+    "The elder sister told her younger brother that he doesn’t touch her laptop.",
+    "The elder sister warned her younger brother not to touch her laptop.",
+    "The elder sister said her younger brother don’t touch my laptop."],answer:2},
+{q:'Waiter to customer: “Would you like tea or coffee?”',options:[
+    "The waiter requested the customer whether he likes tea or coffee.",
+    "The waiter told the customer that he would like tea or coffee.",
+    "The waiter asked the customer if he would like tea or coffee.",
+    "The waiter said the customer would you like tea or coffee."],answer:2},
+{q:'Father to his son: “Could you bring me a glass of water?”',options:[
+    "The father asked his son if he can bring him a glass of water.",
+    "The father said to his son could you bring me a glass of water.",
+    "The father requested his son to bring him a glass of water.",
+    "The father told his son that he could bring him a glass of water."],answer:2},
+{q:'Rahul to his mother: “I am going to a party tonight.”',options:[
+    "Rahul told his mother that he was going to a party that night.",
+    "Rahul said his mother that he goes to a party tonight.",
+    "Rahul asked his mother if he was going to a party tonight.",
+    "Rahul told his mother that he is going to a party tonight."],answer:0},
+{q:'Woman to the waiter: “How long will it take to get my order?”',options:[
+    "The woman enquired the waiter that how long it takes to get her order.",
+    "The woman asked the waiter how long it would take to get her order.",
+    "The woman told the waiter how long it will take to get her order.",
+    "The woman said the waiter how long it would take to get my order."],answer:1},
+{q:'Teacher to the class: “Have you understood the lesson?”',options:[
+    "The teacher enquired the class that they understood the previous lesson.",
+    "The teacher asked the class if they had understood the lesson.",
+    "The teacher said the class have you revised the previous lesson.",
+    "The teacher told the class that they have understood the lesson."],answer:1},
+{q:'Doctor to patient: “Don’t eat oily food.”',options:[
+    "The doctor warned the patient that he eats oily food.",
+    "The doctor told the patient that he doesn’t eat oily food.",
+    "The doctor advised the patient not to eat oily food.",
+    "The doctor said the patient don’t eat oily food."],answer:2},
+{q:'Elder brother to younger sister: “Keep my books in the cupboard.”',options:[
+    "The elder brother requested his younger sister for keeping his books in the cupboard.",
+    "The elder brother told his younger sister to keep his books in the cupboard.",
+    "The elder brother said to his younger sister keep my books in the cupboard.",
+    "The elder brother asked his younger sister that she keeps his books in the cupboard."],answer:1},
+{q:'Tourist to guide: “Can you show me the way to the museum?”',options:[
+    "The tourist said the guide can you show me the way to the museum.",
+    "The tourist asked the guide if he could show him the way to the museum.",
+    "The tourist requested the guide to showing him the way to the museum.",
+    "The tourist told the guide that he can show him the way to the museum."],answer:1},
+{q:'Policeman to the thief: “Where did you hide the stolen goods?”',options:[
+    "The policeman told the thief where he hid the stolen goods.",
+    "The policeman asked the thief where he had hidden the stolen goods.",
+    "The policeman said the thief where did you hide the stolen goods.",
+    "The policeman enquired the thief that where he hides the stolen goods."],answer:1},
+{q:'Ravi to his friend: “I have been learning French for two years.”',options:[
+    "Ravi told his friend that he had been learning French for two years.",
+    "Ravi said his friend that he was learning French for two years.",
+    "Ravi asked his friend if he had been learning French for two years.",
+    "Ravi told his friend that he has been learning French for two years."],answer:0},
+{q:'Shopkeeper to the customer: “Do you want a plastic bag?”',options:[
+    "The shopkeeper told the customer that he wants a plastic bag.",
+    "The shopkeeper asked the customer if he wanted a plastic bag.",
+    "The shopkeeper enquired the customer that whether he wants a plastic bag.",
+    "The shopkeeper said the customer do you want a plastic bag."],answer:1},
+{q:'Mother to daughter: “Why didn’t you call me yesterday?”',options:[
+    "The mother told her daughter why she didn’t call her yesterday.",
+    "The mother asked her daughter why she had not called her the previous day.",
+    "The mother said to her daughter why didn’t you call me yesterday.",
+    "The mother enquired her daughter that why she didn’t call her yesterday."],answer:1},
+{q:'Coach to the team: “Work hard if you want to win the match.”',options:[
+    "The coach ordered the team that they must work hard to win the match.",
+    "The coach told the team that they work hard if they want to win the match.",
+    "The coach advised the team to work hard if they wanted to win the match.",
+    "The coach said the team work hard if you want to win the match."],answer:2},
+{q:'Teacher to student: “Don’t forget to submit your assignment.”',options:[
+    "The teacher reminded the student not to forget to submit his assignment.",
+    "The teacher asked the student if he forgets to submit his assignment.",
+    "The teacher told the student that he doesn’t forget to submit his assignment.",
+    "The teacher said the student don’t forget to submit your assignment."],answer:0},
+{q:'Passenger to the bus conductor: “Please, tell me when we reach my stop.”',options:[
+    "The passenger requested the bus conductor to tell him when they reached his stop.",
+    "The passenger told the bus conductor to tell him when they reach his stop.",
+    "The passenger said to the bus conductor please tell me when we reach my stop.",
+    "The passenger asked the bus conductor that when they reach his stop."],answer:0},
+{q:'Father to son: “Could you help me with this work?”',options:[
+    "The father said to his son could you help me with this work.",
+    "The father asked his son if he can help him with this work.",
+    "The father requested his son to help him with that work.",
+    "The father told his son that he could help him with that work."],answer:2},
+{q:'Mina to her brother: “I will buy a gift for you.”',options:[
+    "Mina asked her brother if she would buy a gift for him.",
+    "Mina told her brother that she would buy a gift for him.",
+    "Mina said her brother that she was buying a gift for him.",
+    "Mina told her brother that she will buy a gift for you."],answer:1},
+{q:'Customer to cashier: “Can I pay by credit card?”',options:[
+    "The customer said the cashier can I pay by credit card.",
+    "The customer asked the cashier if he could pay by credit card.",
+    "The customer told the cashier that he can pay by credit card.",
+    "The customer enquired the cashier that he pays by credit card."],answer:1},
+{q:'Doctor to patient: “Have you been taking your medicine regularly?”',options:[
+    "The doctor said the patient have you been taking your medicine regularly.",
+    "The doctor asked the patient if he had been taking his medicine regularly.",
+    "The doctor told the patient that he has been taking his medicine regularly.",
+    "The doctor enquired the patient that he takes his medicine regularly."],answer:1},
+{q:'Teacher to student: “Who wrote this poem?”',options:[
+    "The teacher asked the student who had written that poem.",
+    "The teacher told the student who wrote this poem.",
+    "The teacher said the student who writes that poem.",
+    "The teacher enquired the student that who wrote this poem."],answer:0},
+{q:'Boss to employee: “Don’t be late for the meeting.”',options:[
+    "The boss said the employee don’t be late for the meeting.",
+    "The boss advised the employee not to be late for the meeting.",
+    "The boss told the employee that he is not late for the meeting.",
+    "The boss ordered the employee be not late for the meeting."],answer:1},
+{q:'Man to taxi driver: “Please, take me to the airport.”',options:[
+    "The man said to the taxi driver please take me to the airport.",
+    "The man asked the taxi driver if he takes him to the airport.",
+    "The man told the taxi driver to take him to the airport.",
+    "The man requested the taxi driver to take him to the airport."],answer:3},
+{q:'Woman to her friend: “Shall we go shopping together?”',options:[
+    "The woman asked her friend if they shall go shopping together.",
+    "The woman suggested to her friend that they should go shopping together.",
+    "The woman said her friend shall we go shopping together.",
+    "The woman told her friend that they shall go shopping together."],answer:1},
+{q:'Son to mother: “I am feeling very tired.”',options:[
+    "The son asked his mother if he was feeling very tired.",
+    "The son told his mother that he was feeling very tired.",
+    "The son said his mother that he feels very tired.",
+    "The son told his mother that he is feeling very tired."],answer:1},
+{q:'Stranger to police officer: “Where can I find a pharmacy?”',options:[
+    "The stranger enquired the police officer that where he finds a pharmacy.",
+    "The stranger asked the police officer where he could find a pharmacy.",
+    "The stranger said the police officer where can I find a pharmacy.",
+    "The stranger told the police officer where he can find a pharmacy."],answer:1},
+{q:'Teacher to student: “Why didn’t you complete your homework?”',options:[
+    "The teacher asked the student why he had not completed his homework.",
+    "The teacher told the student why he didn’t complete his homework.",
+    "The teacher said the student why didn’t you complete your homework.",
+    "The teacher asked the student why he doesn’t complete his homework."],answer:0},
+{q:'Father to daughter: “Turn off the lights before sleeping.”',options:[
+    "The father ordered his daughter that she should turn off lights.",
+    "The father advised his daughter to turn off the lights before sleeping.",
+    "The father said his daughter turn off the lights before sleeping.",
+    "The father told his daughter that she turns off the lights before sleeping."],answer:1},
+{q:'Doctor to patient: “You must exercise daily.”',options:[
+    "The doctor said the patient you must exercise daily.",
+    "The doctor advised the patient that he must exercise daily.",
+    "The doctor asked the patient if he must exercise daily.",
+    "The doctor told the patient that you must exercise daily."],answer:1},
+{q:'Receptionist to guest: “Would you like a single or a double room?”',options:[
+    "The receptionist asked the guest whether he would like a single or a double room.",
+    "The receptionist told the guest that he would like a single or a double room.",
+    "The receptionist enquired the guest that he wants a single or a double room.",
+    "The receptionist said the guest would you like a single or a double room."],answer:0},
+{q:'Tourist to guide: “Could you take a photo of me?”',options:[
+    "The tourist requested the guide to take a photo of him.",
+    "The tourist said the guide could you take a photo of me.",
+    "The tourist asked the guide if he could take a photo of him.",
+    "The tourist told the guide that he could take a photo of him."],answer:0},
+{q:'Anil to his friend: “I was watching TV when you called me.”',options:[
+    "Anil told his friend that he had been watching TV when he had called him.",
+    "Anil asked his friend if he was watching TV when he called him.",
+    "Anil said his friend that he watched TV when he called me.",
+    "Anil told his friend that he was watching TV when he called him."],answer:0},
+{q:'Waiter to customer: “Would you like to order anything else?”',options:[
+    "The waiter said the customer would you like to order anything else.",
+    "The waiter asked the customer if he would like to order anything else.",
+    "The waiter told the customer that he would like to order anything else.",
+    "The waiter requested the customer to order anything else."],answer:1},
+{q:'Teacher to students: “Do your work honestly.”',options:[
+    "The teacher told the students that they do their work honestly.",
+    "The teacher advised the students to do their work honestly.",
+    "The teacher said the students do your work honestly.",
+    "The teacher ordered the students that they should do their work honestly."],answer:1},
+{q:'Policeman to the man: “Why are you standing here?”',options:[
+    "The policeman enquired the man that why he stands here.",
+    "The policeman told the man why he is standing here.",
+    "The policeman asked the man why he was standing there.",
+    "The policeman said the man why are you standing here."],answer:2},
+{q:'Parent to child: “Don’t waste your time on video games.”',options:[
+    "The parent told the child that he doesn’t waste his time on video games.",
+    "The parent advised the child not to waste his time on video games.",
+    "The parent said the child don’t waste your time on video games.",
+    "The parent ordered the child that he must not waste time on video games."],answer:1},
+{q:'Interviewer to candidate: “Can you describe your strengths?”',options:[
+    "The interviewer requested the candidate to describing his strengths.",
+    "The interviewer said the candidate can you describe your strengths.",
+    "The interviewer asked the candidate if he could describe his strengths.",
+    "The interviewer told the candidate that he can describe his strengths."],answer:2},
+{q:'Manager to employee: “Send me the report by tomorrow.”',options:[
+    "The manager said the employee send me the report by tomorrow.",
+    "The manager instructed the employee to send him the report by the next day.",
+    "The manager told the employee that he sends the report by tomorrow.",
+    "The manager asked the employee if he sends the report by tomorrow."],answer:1},
+{q:'Woman to doctor: “I have been feeling unwell for a week.”',options:[
+    "The woman told the doctor that she had been feeling unwell for a week.",
+    "The woman asked the doctor if she had been feeling unwell for a week.",
+    "The woman said the doctor that she felt unwell for a week.",
+    "The woman told the doctor that she has been feeling unwell for a week."],answer:0},
+{q:'Teacher to class: “Have you revised the previous lesson?”',options:[
+    "The teacher enquired the class that they revised the previous lesson.",
+    "The teacher asked the class if they had revised the previous lesson.",
+    "The teacher said the class have you revised the previous lesson.",
+    "The teacher told the class that they have revised the previous lesson."],answer:1},
+{q:'Customer to shopkeeper: “Do you have this shirt in a different colour?”',options:[
+    "The customer said the shopkeeper do you have this shirt in a different colour.",
+    "The customer asked the shopkeeper if he had that shirt in a different colour.",
+    "The customer told the shopkeeper that he has this shirt in a different colour.",
+    "The customer enquired the shopkeeper whether he has this shirt in another colour."],answer:1},
+{q:'Father to son: “Always speak the truth.”',options:[
+    "The father said his son work hard to achieve your dreams.",
+    "The father advised his son always to speak the truth.",
+    "The father told his son that he always speaks the truth.",
+    "The father ordered his son that he should always speak the truth."],answer:1},
+{q:'Mother to children: “Don’t play outside in the rain.”',options:[
+    "The mother told the children that they don’t play outside in the rain.",
+    "The mother warned the children not to play outside in the rain.",
+    "The mother advised the children don’t play outside in the rain.",
+    "The mother said the children don’t play outside in the rain."],answer:1},
+{q:'Boss to employee: “You must finish this project by next week.”',options:[
+    "The boss asked the employee if he finishes that project by next week.",
+    "The boss said the employee you must finish this project by next week.",
+    "The boss instructed the employee to finish that project by the following week.",
+    "The boss ordered the employee to finishing that project by next week."],answer:2},
+{q:'Stranger to me: “Could you help me find this address?”',options:[
+    "The stranger requested me to helping him find that address.",
+    "The stranger said to me could you help me find this address.",
+    "The stranger asked me if I could help him find that address.",
+    "The stranger told me that I could help him find this address."],answer:2},
+{q:'Ram to his friend: “I will call you after the meeting.”',options:[
+    "Ram told his friend that he would call him after the meeting.",
+    "Ram asked his friend if he would call him after the meeting.",
+    "Ram said his friend that he was calling him after the meeting.",
+    "Ram told his friend that he will call him after the meeting."],answer:0},
+{q:'Teacher to student: “Why were you absent yesterday?”',options:[
+    "The teacher asked the student why he had been absent the previous day.",
+    "The teacher told the student why he was absent yesterday.",
+    "The teacher said the student why were you absent yesterday.",
+    "The teacher enquired the student that he was absent yesterday."],answer:0},
+{q:'Police officer to witness: “Did you see what happened?”',options:[
+    "The police officer asked the witness if he had seen what had happened.",
+    "The police officer told the witness that he saw what happened.",
+    "The police officer said the witness did you see what happened.",
+    "The police officer enquired the witness that he sees what happened."],answer:0},
+{q:'Doctor to patient: “Drink plenty of water every day.”',options:[
+    "The doctor advised the patient to drink plenty of water every day.",
+    "The doctor told the patient that he drinks plenty of water every day.",
+    "The doctor said the patient drink plenty of water every day.",
+    "The doctor ordered the patient drink plenty of water every day."],answer:0},
+{q:'Elder sister to younger brother: “Don’t touch my phone.”',options:[
+    "The elder sister warned her younger brother not to touch her phone.",
+    "The elder sister told her younger brother that he doesn’t touch her phone.",
+    "The elder sister said her younger brother don’t touch my phone.",
+    "The elder sister advised her younger brother to not touch her phone."],answer:0},
+{q:'Tourist to local: “Can you suggest a good place to eat?”',options:[
+    "The tourist requested the local to suggesting a good place to eat.",
+    "The tourist told the local that he can suggest a good place to eat.",
+    "The tourist asked the local if he could suggest a good place to eat.",
+    "The tourist said the local can you suggest a good place to eat."],answer:2},
+{q:'Man to shopkeeper: “Please, show me some leather jackets.”',options:[
+    "The man requested the shopkeeper to show him some leather jackets.",
+    "The man told the shopkeeper to show him some leather jackets.",
+    "The man said the shopkeeper please show me some leather jackets.",
+    "The man asked the shopkeeper if he shows him some leather jackets."],answer:0},
+{q:'Ramesh to his mother: “I have completed my homework.”',options:[
+    "Ramesh told his mother that he had completed his homework.",
+    "Ramesh told his mother that he has completed his homework.",
+    "Ramesh said his mother that he completed his homework.",
+    "Ramesh asked his mother if he had completed his homework."],answer:0},
+{q:'Friend to friend: “Can you lend me your pen for a while?”',options:[
+    "The friend asked the other if he could lend him his pen for a while.",
+    "The friend told the other that he can lend him his pen for a while.",
+    "The friend said the other can you lend me your pen for a while.",
+    "The friend requested the other to lending him his pen for a while."],answer:0},
+{q:'Teacher to students: “Who can solve this question?”',options:[
+    "The teacher asked the students who could solve that question.",
+    "The teacher told the students who can solve this question.",
+    "The teacher said the students who could solve this question.",
+    "The teacher enquired the students that who solves that question."],answer:0},
+{q:'Father to son: “Work hard to achieve your dreams.”',options:[
+    "The father advised his son to work hard to achieve his dreams.",
+    "The father told his son that he works hard to achieve his dreams.",
+    "The father said his son work hard to achieve your dreams.",
+    "The father ordered his son that he should work hard to achieve his dreams."],answer:0},
+{q:'Passenger to driver: “How long will it take to reach the station?”',options:[
+    "The passenger asked the driver how long it would take to reach the station.",
+    "The passenger told the driver how long it will take to reach the station.",
+    "The passenger said the driver how long it would take to reach the station.",
+    "The passenger enquired the driver that how long it takes to reach the station."],answer:0},
+{q:'Doctor to patient: “Don’t skip your meals.”',options:[
+    "The doctor advised the patient not to skip his meals.",
+    "The doctor told the patient that he doesn’t skip his meals.",
+    "The doctor said the patient don’t skip your meals.",
+    "The doctor warned the patient don’t skip meals."],answer:0},
+{q:'Manager to employee: “Send me the updated file immediately.”',options:[
+    "The manager instructed the employee to send him the updated file immediately.",
+    "The manager told the employee that he sends the updated file immediately.",
+    "The manager said the employee send me the updated file immediately.",
+    "The manager asked the employee if he sends the updated file immediately."],answer:0},
+{q:'Raju to his teacher: “I didn’t understand this topic.”',options:[
+    "Raju told his teacher that he had not understood that topic.",
+    "Raju told his teacher that he did not understand this topic.",
+    "Raju said his teacher that he doesn’t understand this topic.",
+    "Raju asked his teacher if he hadn’t understood that topic."],answer:0},
+{q:'Shopkeeper to customer: “Would you like a paper bag?”',options:[
+    "The shopkeeper asked the customer if he would like a paper bag.",
+    "The shopkeeper told the customer that he would like a paper bag.",
+    "The shopkeeper said the customer would you like a paper bag.",
+    "The shopkeeper enquired the customer that he wants a paper bag."],answer:0}
+];
+
+/* -------------  QUIZ LOGIC  ------------- */
+let currentSet = 0;
+const SETS = []; // 13 sets × 7 questions
+for (let i = 0; i < 13; i++) SETS.push(ALL.slice(i*7, i*7+7));
+let userAnswers = [];
+let scores = [];
+
+const container = document.getElementById('questionContainer');
+const progress = document.getElementById('progress');
+const setTitle = document.getElementById('setTitle');
+const submitBtn = document.getElementById('submitBtn');
+const setResult = document.getElementById('setResult');
+const navButtons = document.getElementById('navButtons');
+
+function renderSet(setIdx){
+    container.innerHTML='';
+    userAnswers[setIdx]=Array(SETS[setIdx].length).fill(null);
+    setTitle.textContent=`Set ${setIdx+1} / 13`;
+    progress.value=setIdx;
+    SETS[setIdx].forEach((qObj,i)=>{
+        const qDiv=document.createElement('div');
+        qDiv.className='qBox';
+        qDiv.innerHTML=`
+            <div class="qText">${i+1}. ${qObj.q}</div>
+            ${qObj.options.map((opt,idx)=>`
+                <label class="option">
+                    <input type="radio" name="q${i}" value="${idx}">
+                    ${opt}
+                </label>`).join('')}
+        `;
+        container.appendChild(qDiv);
+    });
+    submitBtn.disabled=true;
+    setResult.textContent='';
+    navButtons.style.display='none';
+    container.addEventListener('change',()=>{
+        const answered=[...container.querySelectorAll('input[type=radio]:checked')].length;
+        submitBtn.disabled = answered < SETS[setIdx].length;
+    });
+}
+
+function submitSet(){
+    const setIdx=currentSet;
+    const radios=[...container.querySelectorAll('input[type=radio]:checked')];
+    radios.forEach((r,i)=>userAnswers[setIdx][i]=parseInt(r.value));
+    let correct=0;
+    SETS[setIdx].forEach((q,i)=>{
+        const labels=document.querySelectorAll(`input[name=q${i}] + .option`);
+        const sel=userAnswers[setIdx][i];
+        labels.forEach((l,idx)=>{
+            if(idx===q.answer) l.classList.add('correct');
+            else if(idx===sel) l.classList.add('wrong');
+        });
+    });
+    correct=userAnswers[setIdx].reduce((c,a,i)=>c+(a===SETS[setIdx][i].answer?1:0),0);
+    scores[setIdx]=correct;
+    setResult.textContent=`Set ${setIdx+1} Result: ${correct}/${SETS[setIdx].length}`;
+    submitBtn.disabled=true;
+    navButtons.style.display='block';
+}
+function nextSet(){
+    currentSet++;
+    if(currentSet<SETS.length) renderSet(currentSet);
+    else showSummary();
+}
+function retrySet(){ renderSet(currentSet); }
+function showSummary(){
+    document.getElementById('quizArea').style.display='none';
+    document.getElementById('summary').style.display='block';
+    progress.value=SETS.length;
+    const ul=document.getElementById('summaryList');
+    ul.innerHTML='';
+    let total=0,max=0;
+    scores.forEach((s,i)=>{
+        const m=SETS[i].length;
+        ul.innerHTML+=`<li>Set ${i+1}: ${s}/${m}</li>`;
+        total+=s; max+=m;
+    });
+    ul.innerHTML+=`<li><strong>Total: ${total}/${max} (${Math.round(total/max*100)}%)</strong></li>`;
+}
+function restartQuiz(){
+    currentSet=0; scores=[]; userAnswers=[];
+    document.getElementById('quizArea').style.display='block';
+    document.getElementById('summary').style.display='none';
+    renderSet(0);
+}
+submitBtn.onclick=submitSet;
+document.getElementById('retryBtn').onclick=retrySet;
+document.getElementById('nextBtn').onclick=nextSet;
+renderSet(0);
+</script>
+</body>
+</html>
