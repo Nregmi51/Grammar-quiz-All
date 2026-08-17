@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Quiz Competition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 2px solid transparent;
+        }
+        
+        .button.inactive {
+            cursor: not-allowed;
+            opacity: 0.5;
+            transform: none;
+            box-shadow: none;
+        }
+        .button:not(.inactive):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        /* Styling for selected state with a bold blue border */
+        .button.selected {
+            transform: scale(1.05);
+            border-color: #1e40af; /* Deep blue border */
+            border-width: 4px;
+        }
+        /* Styling for answered questions with a bold red border */
+        .question-btn.answered {
+            background-color: #fecaca; /* Light red background */
+            color: #b91c1c; /* Dark red text */
+            border-color: #b91c1c; /* Deep red border */
+            border-width: 4px;
+            cursor: not-allowed;
+            opacity: 0.8;
+            transform: none;
+        }
+        
+        .house-btn {
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .house-btn.red { background-color: #ef4444; }
+        .house-btn.blue { background-color: #3b82f6; }
+        .house-btn.green { background-color: #22c55e; }
+        .house-btn.yellow { background-color: #eab308; }
+        .round-btn, #tie-button {
+            background-color: #6b7280;
+            color: white;
+        }
+        .question-btn {
+            background-color: #d1d5db;
+            color: #374151;
+        }
+        .score-btn {
+            background-color: #4b5563;
+            color: white;
+        }
+        .submit-btn {
+            background-color: #10b981;
+            color: white;
+        }
+        
+        .home-btn {
+            background-color: #6b7280;
+            color: white;
+        }
+        /* Scoreboard Table Styling */
+        .scoreboard-container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .scoreboard-table {
+            border-collapse: separate;
+            border-spacing: 0 1rem;
+        }
+        .scoreboard-table th, .scoreboard-table td {
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        .scoreboard-table th {
+            color: #4b5563;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+        
+        .scoreboard-table td {
+            background-color: #f9fafb;
+            border-radius: 0.5rem;
+            font-size: 1.25rem;
+            color: #1f2937;
+            padding-top: 0.5rem;
+        }
+        /* Message Box Styling */
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: white;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .message-box.correct {
+            background-color: #10b981;
+        }
+        .message-box.wrong {
+            background-color: #ef4444;
+        }
+        
+        /* Custom font styles for question card */
+        .question-text-custom {
+            font-size: 1.9rem;
+            font-weight: bold;
+            color: #1a237e; /* Deep blue */
+        }
+        .option-text-custom {
+            font-size: 1.7rem;
+            font-weight: bold;
+            color: #000000; /* Black */
+        }
+        
+        /* Timer Ring Styling */
+        .timer-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+        .timer-ring {
+            transform: rotate(-90deg);
+        }
+        .timer-ring__circle {
+            stroke-dasharray: 283;
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 1s linear;
+        }
+        .timer-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        /* Confetti Animation */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f0f;
+            position: absolute;
+            animation: confetti-fall 3s ease-in-out infinite;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background-color: #e5e7eb;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        
+        /* Power-up Button */
+        .powerup-btn {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+        }
+        
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            right: -300px;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            background-color: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            z-index: 100;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        .settings-panel.open {
+            right: 0;
+        }
+        .settings-toggle {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #4b5563;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 101;
+        }
+        
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #1f2937;
+            color: #f3f4f6;
+        }
+        body.dark-mode .scoreboard-container,
+        body.dark-mode #question-card > div {
+            background-color: #374151;
+            color: #f3f4f6;
+        }
+        body.dark-mode .scoreboard-table td {
+            background-color: #4b5563;
+            color: #f3f4f6;
+        }
+        body.dark-mode .question-btn {
+            background-color: #4b5563;
+            color: #f3f4f6;
+        }
+        
+        /* Buzzer Animation */
+        .buzzer-active {
+            animation: buzzer-pulse 0.5s ease-in-out;
+        }
+        @keyframes buzzer-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Stats Chart */
+        .chart-container {
+            width: 100%;
+            height: 200px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div id="home-page" class="main-container flex-col">
+    <div class="text-center">
+        <h1 class="text-4xl font-bold mb-8">N.Regmi's Quiz Competition For Tense Use</h1>
+    </div>
+    <!-- House Buttons -->
+    <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
+        <button class="button house-btn red w-full sm:w-auto" data-house="Red">
+            <i class="fas fa-home mr-2"></i>RED HOUSE
+        </button>
+        <button class="button house-btn blue w-full sm:w-auto" data-house="Blue">
+            <i class="fas fa-home mr-2"></i>BLUE HOUSE
+        </button>
+        <button class="button house-btn green w-full sm:w-auto" data-house="Green">
+            <i class="fas fa-home mr-2"></i>GREEN HOUSE
+        </button>
+        <button class="button house-btn yellow w-full sm:w-auto" data-house="Yellow">
+            <i class="fas fa-home mr-2"></i>YELLOW HOUSE
+        </button>
+    </div>
+    <!-- Score Board Button -->
+    <div class="flex justify-center mb-8">
+        <button id="scoreboard-button" class="button score-btn w-full sm:w-auto">
+            <i class="fas fa-trophy mr-2"></i>Score Board
+        </button>
+    </div>
+    <!-- Round Buttons -->
+    <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
+        <button class="button round-btn w-full sm:w-auto" data-round="Round 1">
+            <i class="fas fa-circle mr-2"></i>Round 1
+        </button>
+        <button class="button round-btn w-full sm:w-auto" data-round="Round 2">
+            <i class="fas fa-circle mr-2"></i>Round 2
+        </button>
+        <button class="button round-btn w-full sm:w-auto" data-round="Round 3">
+            <i class="fas fa-circle mr-2"></i>Round 3
+        </button>
+        <button class="button round-btn w-full sm:w-auto" data-round="Round 4">
+            <i class="fas fa-circle mr-2"></i>Round 4
+        </button>
+        <button id="tie-button" class="button round-btn w-full sm:w-auto inactive" disabled data-round="Tie">
+            <i class="fas fa-handshake mr-2"></i>Tie
+        </button>
+    </div>
+    <!-- Question Buttons -->
+    <div id="question-buttons-container" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
+        <button class="button question-btn" data-question="1">1</button>
+        <button class="button question-btn" data-question="2">2</button>
+        <button class="button question-btn" data-question="3">3</button>
+        <button class="button question-btn" data-question="4">4</button>
+        <button class="button question-btn" data-question="5">5</button>
+        <button class="button question-btn" data-question="6">6</button>
+        <button class="button question-btn" data-question="7">7</button>
+        <button class="button question-btn" data-question="8">8</button>
+    </div>
+    <!-- Progress Bar -->
+    <div class="mt-8">
+        <div class="flex justify-between mb-2">
+            <span class="text-sm font-medium">Round Progress</span>
+            <span id="progress-text" class="text-sm font-medium">0/8</span>
+        </div>
+        <div class="progress-container">
+            <div id="progress-bar" class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+<!-- Question Card Page (initially hidden) -->
+<div id="question-card" class="main-container hidden">
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full">
+        <h2 id="question-header" class="text-2xl font-bold mb-4 text-center"></h2>
+        <div id="question-body" class="mb-6">
+            <p id="question-text" class="question-text-custom mb-4"></p>
+            <div id="options-container" class="flex flex-col gap-3">
+            </div>
+        </div>
+        <div class="flex justify-between items-center mb-6">
+            <div class="timer-container">
+                <svg class="timer-ring" width="100" height="100">
+                    <circle
+                        class="timer-ring__circle"
+                        stroke="#e5e7eb"
+                        stroke-width="8"
+                        fill="transparent"
+                        r="45"
+                        cx="50"
+                        cy="50"
+                    />
+                    <circle
+                        id="timer-progress"
+                        class="timer-ring__circle"
+                        stroke="#3b82f6"
+                        stroke-width="8"
+                        fill="transparent"
+                        r="45"
+                        cx="50"
+                        cy="50"
+                        stroke-dasharray="283"
+                        stroke-dashoffset="0"
+                    />
+                </svg>
+                <div id="timer" class="timer-text">30</div>
+            </div>
+            <div id="buzzer-container" class="hidden">
+                <button id="buzzer-btn" class="button powerup-btn w-32 h-32 rounded-full text-2xl">
+                    <i class="fas fa-bell"></i>
+                </button>
+            </div>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 justify-between">
+            <button id="submit-answer-btn" class="button submit-btn w-full sm:w-auto">
+                <i class="fas fa-check mr-2"></i>Submit Answer
+            </button>
+            <button id="return-home-btn" class="button home-btn w-full sm:w-auto">
+                <i class="fas fa-home mr-2"></i>RETURN HOME
+            </button>
+        </div>
+    </div>
+</div>
+<!-- Score Board Page (initially hidden) -->
+<div id="scoreboard-page" class="main-container hidden">
+    <div class="scoreboard-container">
+        <h2 class="text-2xl font-bold text-center mb-6">
+            <i class="fas fa-trophy mr-2 text-yellow-500"></i>Score Board
+        </h2>
+        <div class="overflow-x-auto">
+            <table class="min-w-full scoreboard-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Groups Name</th>
+                        <th scope="col">Right Answers</th>
+                        <th scope="col">Wrong Answers</th>
+                        <th scope="col">Position</th>
+                    </tr>
+                </thead>
+                <tbody id="score-table-body">
+                    <!-- Scores will be populated here -->
+                </tbody>
+            </table>
+        </div>
+        <div class="chart-container">
+            <canvas id="score-chart"></canvas>
+        </div>
+        <div class="flex justify-center mt-6 gap-4">
+            <button id="scoreboard-return-home-btn" class="button home-btn">
+                <i class="fas fa-home mr-2"></i>RETURN HOME
+            </button>
+            <button id="export-results-btn" class="button score-btn">
+                <i class="fas fa-download mr-2"></i>Export Results
+            </button>
+        </div>
+    </div>
+</div>
+<!-- Custom Message Box -->
+<div id="message-box" class="message-box"></div>
+<!-- Settings Toggle Button -->
+<div class="settings-toggle" id="settings-toggle">
+    <i class="fas fa-cog"></i>
+</div>
+<!-- Settings Panel -->
+<div class="settings-panel" id="settings-panel">
+    <h3 class="text-xl font-bold mb-4">Game Settings</h3>
+    
+    <div class="mb-6">
+        <h4 class="font-medium mb-2">Timer Duration</h4>
+        <input type="range" id="timer-setting" min="10" max="60" value="30" class="w-full">
+        <div class="flex justify-between text-sm">
+            <span>10s</span>
+            <span id="timer-value">30s</span>
+            <span>60s</span>
+        </div>
+    </div>
+    
+    <div class="mb-6">
+        <h4 class="font-medium mb-2">Sound Effects</h4>
+        <label class="flex items-center cursor-pointer">
+            <input type="checkbox" id="sound-toggle" class="mr-2" checked>
+            <span>Enable Sound</span>
+        </label>
+    </div>
+    
+    <div class="mb-6">
+        <h4 class="font-medium mb-2">Buzzer Mode</h4>
+        <label class="flex items-center cursor-pointer">
+            <input type="checkbox" id="buzzer-toggle" class="mr-2">
+            <span>Enable Buzzer</span>
+        </label>
+    </div>
+    
+    <div class="mb-6">
+        <h4 class="font-medium mb-2">Theme</h4>
+        <label class="flex items-center cursor-pointer">
+            <input type="checkbox" id="dark-mode-toggle" class="mr-2">
+            <span>Dark Mode</span>
+        </label>
+    </div>
+    
+    <div class="mb-6">
+        <h4 class="font-medium mb-2">Game Controls</h4>
+        <button id="reset-game-btn" class="button score-btn w-full mb-2">
+            <i class="fas fa-redo mr-2"></i>Reset Game
+        </button>
+        <button id="save-game-btn" class="button score-btn w-full">
+            <i class="fas fa-save mr-2"></i>Save Game
+        </button>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // **JavaScript Logic**
+    // Data structures to hold quiz questions and scores
+    const quizData = {
+        'Round 1': [
+            { question: 'She _____ to school every day.', options: ['a) go', 'b) goes', 'c) going', 'd) gone'], answer: 'b) goes' },
+            { question: 'They _____ football when it started raining.', options: ['a) play', 'b) played', 'c) were playing', 'd) plays'], answer: 'c) were playing' },
+            { question: 'The sun always _____ in the east.', options: ['a) rise', 'b) rose', 'c) is rising', 'd) rises'], answer: 'd) rises' },
+            { question: 'I _____ my homework by the time my mother came home.', options: ['a) finished', 'b) have finished', 'c) had finished', 'd) will finish'], answer: 'c) had finished' },
+            { question: 'He _____ a new car next month.', options: ['a) buy', 'b) is buying', 'c) will be buying', 'd) has bought'], answer: 'b) is buying' },
+            { question: 'We _____ for two hours when the coach finally arrived.', options: ['a) wait', 'b) were waiting', 'c) had been waiting', 'd) waited'], answer: 'c) had been waiting' },
+            { question: 'The movie _____ already _____ when we arrived at the cinema.', options: ['a) had ... started', 'b) has ... started', 'c) was ... starting', 'd) will ... start'], answer: 'a) had ... started' },
+            { question: 'Look! The cat _____ up the tree.', options: ['a) climb', 'b) climbs', 'c) is climbing', 'd) will climb'], answer: 'c) is climbing' }
+        ],
+        'Round 2': [
+            { question: 'By next year, I _____ my degree.', options: ['a) will finish', 'b) have finished', 'c) will have finished', 'd) finish'], answer: 'c) will have finished' },
+            { question: 'If you heat ice, it _____.', options: ['a) will melt', 'b) melts', 'c) melted', 'd) is melting'], answer: 'b) melts' },
+            { question: 'Sarah _____ her friend\'s call while she was driving.', options: ['a) answer', 'b) answered', 'c) has answered', 'd) was answering'], answer: 'b) answered' },
+            { question: 'The baby _____ since morning.', options: ['a) cried', 'b) cries', 'c) has been crying', 'd) will cry'], answer: 'c) has been crying' },
+            { question: 'We _____ on vacation next week.', options: ['a) go', 'b) went', 'c) are going', 'd) have gone'], answer: 'c) are going' },
+            { question: 'She _____ be at the office. Her car is not there.', options: ['a) must not', 'b) should not', 'c) can not', 'd) might not'], answer: 'a) must not' },
+            { question: 'If I _____ the lottery, I would buy a house.', options: ['a) win', 'b) won', 'c) had won', 'd) will win'], answer: 'b) won' },
+            { question: 'He _____ the letter by 9 a.m.', options: ['a) will be writing', 'b) will have written', 'c) wrote', 'd) writes'], answer: 'b) will have written' }
+        ],
+        'Round 3': [
+            { question: 'The students _____ to the teacher attentively during the lecture.', options: ['a) listened', 'b) listen', 'c) are listening', 'd) were listening'], answer: 'd) were listening' },
+            { question: 'I _____ a wonderful film tomorrow.', options: ['a) will watch', 'b) watched', 'c) watch', 'd) have watched'], answer: 'a) will watch' },
+            { question: 'By this time next month, they _____ to a new city.', options: ['a) will move', 'b) will have moved', 'c) are moving', 'd) have moved'], answer: 'b) will have moved' },
+            { question: 'If it rains, the game _____.', options: ['a) cancels', 'b) will cancel', 'c) is cancelling', 'd) would cancel'], answer: 'b) will cancel' },
+            { question: 'The earth _____ around the sun.', options: ['a) revolves', 'b) is revolving', 'c) revolved', 'd) has revolved'], answer: 'a) revolves' },
+            { question: 'We _____ lunch at this moment.', options: ['a) eat', 'b) ate', 'c) are eating', 'd) have eaten'], answer: 'c) are eating' },
+            { question: 'She _____ to London for a vacation last year.', options: ['a) went', 'b) has gone', 'c) is going', 'd) will go'], answer: 'a) went' },
+            { question: 'They _____ their new house since July.', options: ['a) built', 'b) have been building', 'c) are building', 'd) will build'], answer: 'b) have been building' }
+        ],
+        'Round 4': [
+            { question: 'He _____ to the gym regularly.', options: ['a) go', 'b) goes', 'c) is going', 'd) went'], answer: 'b) goes' },
+            { question: 'Before she moved, she _____ her job.', options: ['a) quit', 'b) was quitting', 'c) had quit', 'd) has quit'], answer: 'c) had quit' },
+            { question: 'We _____ for over an hour when the bus finally arrived.', options: ['a) waited', 'b) have been waiting', 'c) had been waiting', 'd) will wait'], answer: 'c) had been waiting' },
+            { question: 'I _____ never _____ such a beautiful sunset before.', options: ['a) have ... seen', 'b) had ... seen', 'c) was ... seeing', 'd) will ... see'], answer: 'a) have ... seen' },
+            { question: 'By 2030, a robot _____ most of the household chores.', options: ['a) will do', 'b) will have been doing', 'c) is doing', 'd) will have done'], answer: 'd) will have done' },
+            { question: 'We _____ be late for the meeting.', options: ['a) can', 'b) should not', 'c) must not', 'd) may not'], answer: 'c) must not' },
+            { question: 'If I were you, I _____ that job.', options: ['a) will take', 'b) would take', 'c) take', 'd) have taken'], answer: 'b) would take' },
+            { question: 'They _____ to the radio when I came in.', options: ['a) listened', 'b) are listening', 'c) were listening', 'd) listen'], answer: 'c) were listening' }
+        ],
+        'Tie': [
+            { question: 'She _____ to her grandmother\'s house every weekend.', options: ['a) go', 'b) goes', 'c) is going', 'd) has gone'], answer: 'b) goes' },
+            { question: 'I _____ to finish this project by tomorrow.', options: ['a) must', 'b) can', 'c) should', 'd) may'], answer: 'a) must' },
+            { question: 'We _____ this movie three times.', options: ['a) see', 'b) saw', 'c) have seen', 'd) are seeing'], answer: 'c) have seen' },
+            { question: 'My brother _____ in New York for ten years before he moved here.', options: ['a) lived', 'b) has lived', 'c) had lived', 'd) was living'], answer: 'c) had lived' },
+            { question: 'If you had studied, you _____ the exam.', options: ['a) would pass', 'b) will pass', 'c) would have passed', 'd) passed'], answer: 'c) would have passed' },
+            { question: 'The plumber _____ the pipes all afternoon yesterday.', options: ['a) repairs', 'b) repaired', 'c) was repairing', 'd) has repaired'], answer: 'c) was repairing' },
+            { question: 'By the end of this month, I _____ on my new job for six months.', options: ['a) will be working', 'b) will have been working', 'c) have worked', 'd) worked'], answer: 'b) will have been working' },
+            { question: 'The team _____ the match and celebrated their victory.', options: ['a) win', 'b) won', 'c) have won', 'd) will win'], answer: 'b) won' }
+        ]
+    };
+    const scores = {
+        'Red': { right: 0, wrong: 0, answered: {} },
+        'Blue': { right: 0, wrong: 0, answered: {} },
+        'Green': { right: 0, wrong: 0, answered: {} },
+        'Yellow': { right: 0, wrong: 0, answered: {} },
+    };
+    // Global state variables
+    let currentHouse = null;
+    let currentRound = null;
+    let currentQuestionIndex = null;
+    let timerInterval = null;
+    let selectedAnswer = null;
+    let timerDuration = 30;
+    let soundEnabled = true;
+    let buzzerMode = false;
+    let scoreChart = null;
+    // **DOM Elements**
+    const homePage = document.getElementById('home-page');
+    const questionCard = document.getElementById('question-card');
+    const scoreboardPage = document.getElementById('scoreboard-page');
+    const messageBox = document.getElementById('message-box');
+    const tieButton = document.getElementById('tie-button');
+    const questionButtonsContainer = document.getElementById('question-buttons-container');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    const settingsPanel = document.getElementById('settings-panel');
+    const settingsToggle = document.getElementById('settings-toggle');
+    const timerSetting = document.getElementById('timer-setting');
+    const timerValue = document.getElementById('timer-value');
+    const soundToggle = document.getElementById('sound-toggle');
+    const buzzerToggle = document.getElementById('buzzer-toggle');
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const resetGameBtn = document.getElementById('reset-game-btn');
+    const saveGameBtn = document.getElementById('save-game-btn');
+    const exportResultsBtn = document.getElementById('export-results-btn');
+    const buzzerContainer = document.getElementById('buzzer-container');
+    const buzzerBtn = document.getElementById('buzzer-btn');
+    
+    // Initialize settings from localStorage
+    function initializeSettings() {
+        // Load saved settings
+        const savedSettings = localStorage.getItem('quizSettings');
+        if (savedSettings) {
+            const settings = JSON.parse(savedSettings);
+            timerDuration = settings.timerDuration || 30;
+            soundEnabled = settings.soundEnabled !== false;
+            buzzerMode = settings.buzzerMode || false;
+            
+            // Update UI
+            timerSetting.value = timerDuration;
+            timerValue.textContent = `${timerDuration}s`;
+            soundToggle.checked = soundEnabled;
+            buzzerToggle.checked = buzzerMode;
+            
+            if (settings.darkMode) {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.checked = true;
+            }
+        }
+        
+        // Load saved game state if exists
+        const savedGameState = localStorage.getItem('quizGameState');
+        if (savedGameState) {
+            const gameState = JSON.parse(savedGameState);
+            Object.assign(scores, gameState.scores);
+        }
+    }
+    
+    // Save game state to localStorage
+    function saveGameState() {
+        const gameState = {
+            scores: scores
+        };
+        localStorage.setItem('quizGameState', JSON.stringify(gameState));
+        showFeedback('Game Saved Successfully!', true);
+    }
+    
+    // Save settings to localStorage
+    function saveSettings() {
+        const settings = {
+            timerDuration: timerDuration,
+            soundEnabled: soundEnabled,
+            buzzerMode: buzzerMode,
+            darkMode: darkModeToggle.checked
+        };
+        localStorage.setItem('quizSettings', JSON.stringify(settings));
+    }
+    
+    // Play sound effect
+    function playSound(type) {
+        if (!soundEnabled) return;
+        
+        // Create audio context for sound effects
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        if (type === 'correct') {
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+            oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+            oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+        } else if (type === 'wrong') {
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.setValueAtTime(220, audioContext.currentTime); // A3
+            oscillator.frequency.setValueAtTime(110, audioContext.currentTime + 0.2); // A2
+        } else if (type === 'tick') {
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+        }
+        
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.5);
+    }
+    
+    // Create confetti effect
+    function createConfetti() {
+        const colors = ['#ef4444', '#3b82f6', '#22c55e', '#eab308', '#8b5cf6', '#ec4899'];
+        const confettiCount = 150;
+        
+        for (let i = 0; i < confettiCount; i++) {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = `${Math.random() * 100}%`;
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.width = `${Math.random() * 10 + 5}px`;
+            confetti.style.height = confetti.style.width;
+            confetti.style.opacity = Math.random();
+            confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            confetti.style.animationDelay = `${Math.random() * 2}s`;
+            document.body.appendChild(confetti);
+            
+            // Remove confetti after animation completes
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+    }
+    
+    // **UI Update Functions**
+    /**
+     * Navigates to a specific page by showing the target and hiding others.
+     * @param {string} pageId The ID of the page to show ('home-page', 'question-card', 'scoreboard-page').
+     */
+    function showPage(pageId) {
+        homePage.classList.add('hidden');
+        questionCard.classList.add('hidden');
+        scoreboardPage.classList.add('hidden');
+        document.getElementById(pageId).classList.remove('hidden');
+        
+        // Initialize chart when showing scoreboard
+        if (pageId === 'scoreboard-page' && !scoreChart) {
+            initializeScoreChart();
+        }
+    }
+    
+    /**
+     * Displays a feedback message to the user.
+     * @param {string} message The message to display.
+     * @param {boolean} isCorrect True if the answer is correct, false otherwise.
+     */
+    function showFeedback(message, isCorrect) {
+        messageBox.textContent = message;
+        messageBox.classList.remove('correct', 'wrong');
+        messageBox.classList.add(isCorrect ? 'correct' : 'wrong');
+        messageBox.style.display = 'block';
+        
+        // Play sound effect
+        playSound(isCorrect ? 'correct' : 'wrong');
+        
+        setTimeout(() => {
+            messageBox.style.display = 'none';
+        }, 1500);
+    }
+    
+    /**
+     * Starts the countdown timer after a 3-second delay.
+     */
+    function startTimer() {
+        const timerElement = document.getElementById('timer');
+        const timerProgress = document.getElementById('timer-progress');
+        const circumference = 2 * Math.PI * 45; // radius is 45
+        
+        timerElement.textContent = 'Ready...';
+        timerProgress.style.strokeDashoffset = circumference;
+        
+        setTimeout(() => {
+            let timeLeft = timerDuration;
+            timerElement.textContent = `${timeLeft}s`;
+            timerProgress.style.strokeDashoffset = 0;
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = `${timeLeft}s`;
+                
+                // Update timer ring
+                const offset = circumference - (timeLeft / timerDuration) * circumference;
+                timerProgress.style.strokeDashoffset = offset;
+                
+                // Play tick sound for last 5 seconds
+                if (timeLeft <= 5 && timeLeft > 0) {
+                    playSound('tick');
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    checkAnswer(true);
+                }
+            }, 1000);
+        }, 3000);
+    }
+    
+    /**
+     * Renders a question card with the provided question data.
+     * @param {object} questionData The object containing question text and options.
+     */
+    function renderQuestion(questionData) {
+        document.getElementById('question-header').textContent = `${currentHouse} - ${currentRound} - Question ${currentQuestionIndex + 1}`;
+        document.getElementById('question-text').textContent = questionData.question;
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+        selectedAnswer = null;
+        
+        // Show/hide buzzer based on mode
+        if (buzzerMode) {
+            buzzerContainer.classList.remove('hidden');
+        } else {
+            buzzerContainer.classList.add('hidden');
+        }
+        
+        questionData.options.forEach(option => {
+            const optionBtn = document.createElement('button');
+            optionBtn.textContent = option;
+            optionBtn.classList.add('button', 'w-full', 'bg-gray-200', 'text-gray-800', 'rounded-md', 'hover:bg-gray-300', 'text-left', 'px-4', 'option-text-custom');
+            optionBtn.dataset.answer = option;
+            
+            optionBtn.addEventListener('click', () => {
+                document.querySelectorAll('#options-container button').forEach(btn => {
+                    btn.classList.remove('bg-gray-400', 'ring-2', 'ring-blue-500');
+                    btn.classList.add('bg-gray-200');
+                });
+                optionBtn.classList.remove('bg-gray-200');
+                optionBtn.classList.add('bg-gray-400', 'ring-2', 'ring-blue-500');
+                selectedAnswer = option;
+            });
+            optionsContainer.appendChild(optionBtn);
+        });
+        
+        startTimer();
+        showPage('question-card');
+    }
+    
+    /**
+     * Renders the scoreboard table with current scores.
+     */
+    function renderScoreboard() {
+        const sortedGroups = Object.keys(scores).sort((a, b) => scores[b].right - scores[a].right);
+        
+        const highestScore = scores[sortedGroups[0]].right;
+        const hasTie = sortedGroups.filter(g => scores[g].right === highestScore).length > 1;
+        if (hasTie) {
+            tieButton.classList.remove('inactive');
+            tieButton.disabled = false;
+        } else {
+            tieButton.classList.add('inactive');
+            tieButton.disabled = true;
+        }
+        const tableBody = document.getElementById('score-table-body');
+        tableBody.innerHTML = '';
+        
+        let lastScore = -1;
+        let position = 0;
+        let rankOffset = 0;
+        sortedGroups.forEach((group, index) => {
+            if (scores[group].right !== lastScore) {
+                position = index + 1;
+                rankOffset = 0;
+            } else {
+                rankOffset++;
+            }
+            lastScore = scores[group].right;
+            const row = document.createElement('tr');
+            row.classList.add('text-center');
+            row.innerHTML = `
+                <td class="bg-gray-100 rounded-lg shadow-sm">
+                    <p class="text-lg font-bold">${group} House</p>
+                </td>
+                <td class="bg-blue-100 rounded-lg shadow-sm">
+                    <p class="text-sm font-medium text-gray-600">Right Answers</p>
+                    <p class="text-2xl font-extrabold text-blue-800">${scores[group].right}</p>
+                </td>
+                <td class="bg-red-100 rounded-lg shadow-sm">
+                    <p class="text-sm font-medium text-gray-600">Wrong Answers</p>
+                    <p class="text-2xl font-extrabold text-red-800">${scores[group].wrong}</p>
+                </td>
+                <td class="bg-green-100 rounded-lg shadow-sm">
+                    <p class="text-sm font-medium text-gray-600">Position</p>
+                    <p class="text-2xl font-extrabold text-green-800">${position}</p>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+        
+        // Update chart if it exists
+        if (scoreChart) {
+            updateScoreChart();
+        }
+        
+        showPage('scoreboard-page');
+    }
+    
+    /**
+     * Initialize the score chart
+     */
+    function initializeScoreChart() {
+        const ctx = document.getElementById('score-chart').getContext('2d');
+        const houseColors = {
+            'Red': '#ef4444',
+            'Blue': '#3b82f6',
+            'Green': '#22c55e',
+            'Yellow': '#eab308'
+        };
+        
+        scoreChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(scores),
+                datasets: [
+                    {
+                        label: 'Right Answers',
+                        data: Object.values(scores).map(score => score.right),
+                        backgroundColor: Object.keys(scores).map(house => houseColors[house]),
+                        borderColor: Object.keys(scores).map(house => houseColors[house]),
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Wrong Answers',
+                        data: Object.values(scores).map(score => score.wrong),
+                        backgroundColor: 'rgba(156, 163, 175, 0.5)',
+                        borderColor: 'rgba(156, 163, 175, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    /**
+     * Update the score chart with current data
+     */
+    function updateScoreChart() {
+        if (!scoreChart) return;
+        
+        scoreChart.data.datasets[0].data = Object.values(scores).map(score => score.right);
+        scoreChart.data.datasets[1].data = Object.values(scores).map(score => score.wrong);
+        scoreChart.update();
+    }
+    
+    /**
+     * Export results as CSV
+     */
+    function exportResults() {
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "House,Right Answers,Wrong Answers,Total Questions,Accuracy\n";
+        
+        Object.keys(scores).forEach(house => {
+            const right = scores[house].right;
+            const wrong = scores[house].wrong;
+            const total = right + wrong;
+            const accuracy = total > 0 ? ((right / total) * 100).toFixed(2) : 0;
+            
+            csvContent += `${house},${right},${wrong},${total},${accuracy}%\n`;
+        });
+        
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "quiz_results.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        showFeedback('Results Exported!', true);
+    }
+    
+    /**
+     * Update progress bar
+     */
+    function updateProgressBar() {
+        if (!currentRound) return;
+        
+        const answeredQuestions = Object.keys(scores['Red'].answered[currentRound] || {}).length;
+        const totalQuestions = quizData[currentRound].length;
+        const progressPercentage = (answeredQuestions / totalQuestions) * 100;
+        
+        progressBar.style.width = `${progressPercentage}%`;
+        progressText.textContent = `${answeredQuestions}/${totalQuestions}`;
+    }
+    
+    /**
+     * Checks the user's answer, updates scores, and provides feedback.
+     * @param {boolean} isTimedOut True if the user ran out of time.
+     */
+    function checkAnswer(isTimedOut) {
+        // Stop the timer immediately upon submission
+        clearInterval(timerInterval);
+        const currentQuestions = quizData[currentRound];
+        const questionObj = currentQuestions[currentQuestionIndex];
+        const correctAnswer = questionObj.answer;
+        
+        if (!isTimedOut && selectedAnswer === correctAnswer) {
+            scores[currentHouse].right++;
+            showFeedback('CORRECT ANSWER', true);
+            
+            // Check if this is the winning question
+            const sortedGroups = Object.keys(scores).sort((a, b) => scores[b].right - scores[a].right);
+            if (sortedGroups[0] === currentHouse && scores[currentHouse].right > scores[sortedGroups[1]].right + 1) {
+                setTimeout(() => {
+                    createConfetti();
+                }, 1500);
+            }
+        } else {
+            scores[currentHouse].wrong++;
+            showFeedback('WRONG ANSWER', false);
+        }
+        
+        // Mark the question as answered for the current round, for all houses
+        Object.keys(scores).forEach(house => {
+            scores[house].answered[currentRound] = scores[house].answered[currentRound] || {};
+            scores[house].answered[currentRound][currentQuestionIndex] = true;
+        });
+        
+        // Save game state after each answer
+        saveGameState();
+        
+        setTimeout(() => {
+            currentHouse = null;
+            document.querySelectorAll('.house-btn.selected').forEach(btn => btn.classList.remove('selected'));
+            updateQuestionButtonAppearance();
+            updateProgressBar();
+            showPage('home-page');
+        }, 2000);
+    }
+    
+    /**
+     * Updates the appearance of question buttons based on answered questions.
+     */
+    function updateQuestionButtonAppearance() {
+        const questionButtons = document.querySelectorAll('.question-btn');
+        questionButtons.forEach((btn, index) => {
+            const questionIndex = index;
+            if (currentRound && scores['Red'].answered[currentRound] && scores['Red'].answered[currentRound][questionIndex]) {
+                btn.classList.add('answered');
+                btn.disabled = true;
+            } else {
+                btn.classList.remove('answered');
+                btn.disabled = false;
+            }
+        });
+    }
+    
+    // **Event Listeners**
+    document.getElementById('home-page').addEventListener('click', (event) => {
+        const target = event.target;
+        if (target.classList.contains('house-btn')) {
+            document.querySelectorAll('.house-btn').forEach(btn => btn.classList.remove('selected'));
+            target.classList.add('selected');
+            currentHouse = target.dataset.house;
+            updateQuestionButtonAppearance();
+        } else if (target.classList.contains('round-btn') || target.id === 'tie-button') {
+            if (!target.disabled) {
+                document.querySelectorAll('.round-btn, #tie-button').forEach(btn => btn.classList.remove('selected'));
+                target.classList.add('selected');
+                // FIXED: Use data-round attribute instead of textContent
+                currentRound = target.dataset.round;
+                updateQuestionButtonAppearance();
+                updateProgressBar();
+            }
+        } else if (target.classList.contains('question-btn') && !target.disabled) {
+            const questionIndex = parseInt(target.dataset.question) - 1;
+            if (currentHouse && currentRound) {
+                // FIXED: Check if the round exists in quizData
+                if (quizData[currentRound] && quizData[currentRound][questionIndex]) {
+                    currentQuestionIndex = questionIndex;
+                    renderQuestion(quizData[currentRound][currentQuestionIndex]);
+                } else {
+                     showFeedback('Invalid question selection.', false);
+                }
+            } else {
+                showFeedback('Please select a House and a Round first.', false);
+            }
+        }
+    });
+    
+    document.getElementById('scoreboard-button').addEventListener('click', () => {
+        renderScoreboard();
+    });
+    
+    document.getElementById('submit-answer-btn').addEventListener('click', () => {
+        if (selectedAnswer) {
+            checkAnswer(false);
+        } else {
+            showFeedback('Please select an option first.', false);
+        }
+    });
+    
+    document.getElementById('return-home-btn').addEventListener('click', () => {
+        if (timerInterval) clearInterval(timerInterval);
+        showPage('home-page');
+        updateQuestionButtonAppearance();
+    });
+    
+    document.getElementById('scoreboard-return-home-btn').addEventListener('click', () => {
+        showPage('home-page');
+    });
+    
+    // Settings panel event listeners
+    settingsToggle.addEventListener('click', () => {
+        settingsPanel.classList.toggle('open');
+    });
+    
+    timerSetting.addEventListener('input', (e) => {
+        timerDuration = parseInt(e.target.value);
+        timerValue.textContent = `${timerDuration}s`;
+        saveSettings();
+    });
+    
+    soundToggle.addEventListener('change', (e) => {
+        soundEnabled = e.target.checked;
+        saveSettings();
+    });
+    
+    buzzerToggle.addEventListener('change', (e) => {
+        buzzerMode = e.target.checked;
+        saveSettings();
+    });
+    
+    darkModeToggle.addEventListener('change', (e) => {
+        if (e.target.checked) {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+        saveSettings();
+    });
+    
+    resetGameBtn.addEventListener('click', () => {
+        if (confirm('Are you sure you want to reset the game? All progress will be lost.')) {
+            // Reset scores
+            Object.keys(scores).forEach(house => {
+                scores[house].right = 0;
+                scores[house].wrong = 0;
+                scores[house].answered = {};
+            });
+            
+            // Reset UI
+            currentHouse = null;
+            currentRound = null;
+            document.querySelectorAll('.house-btn.selected, .round-btn.selected').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            updateQuestionButtonAppearance();
+            updateProgressBar();
+            
+            // Clear saved game state
+            localStorage.removeItem('quizGameState');
+            
+            showFeedback('Game Reset Successfully!', true);
+            settingsPanel.classList.remove('open');
+        }
+    });
+    
+    saveGameBtn.addEventListener('click', () => {
+        saveGameState();
+        settingsPanel.classList.remove('open');
+    });
+    
+    exportResultsBtn.addEventListener('click', () => {
+        exportResults();
+    });
+    
+    // Buzzer button event listener
+    buzzerBtn.addEventListener('click', () => {
+        buzzerBtn.classList.add('buzzer-active');
+        playSound('correct');
+        
+        setTimeout(() => {
+            buzzerBtn.classList.remove('buzzer-active');
+        }, 500);
+    });
+    
+    // Initialize the app
+    initializeSettings();
+    renderScoreboard();
+</script>
+</body>
+</html>
