@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>35 Prepositions – Interactive Slides</title>
+    <style>
+        /* ---------- GLOBAL RESET ---------- */
+        *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif}
+        html,body{height:100%;overflow:hidden}
+
+        /* ---------- SLIDE CONTAINER ---------- */
+        .deck{
+            width:100%;
+            height:100%;
+            position:relative;
+            background:#f0f4f8;
+        }
+        .slide{
+            position:absolute;
+            width:100%;
+            height:100%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:40px;
+            opacity:0;
+            transform:scale(.95);
+            transition:all .4s ease;
+            pointer-events:none;
+        }
+        .slide.active{
+            opacity:1;
+            transform:scale(1);
+            pointer-events:auto;
+        }
+
+        /* ---------- CARD ---------- */
+        .card{
+            background:#ffffff;
+            border-radius:20px;
+            box-shadow:0 15px 30px rgba(0,0,0,.15);
+            padding:50px 60px;
+            max-width:900px;
+            width:100%;
+            text-align:center;
+        }
+
+        /* ---------- TYPOGRAPHY ---------- */
+        h1{
+            font-size:3.2rem;
+            margin-bottom:25px;
+            color:#004c99;
+            font-weight:800;
+            letter-spacing:.5px;
+        }
+        h2{
+            font-size:2.4rem;
+            margin-bottom:20px;
+            color:#d35400;
+            font-weight:700;
+        }
+        h3{
+            font-size:1.8rem;
+            margin-bottom:15px;
+            color:#27ae60;
+            font-weight:600;
+        }
+        p,li{
+            font-size:1.35rem;
+            color:#2c3e50;
+            font-weight:500;
+            line-height:1.5;
+        }
+        ul{
+            list-style:none;
+            padding-left:0;
+            margin-top:10px;
+        }
+        li{
+            margin:8px 0;
+            padding-left:24px;
+            position:relative;
+        }
+        li::before{
+            content:"➤";
+            position:absolute;
+            left:0;
+            color:#e67e22;
+            font-weight:bold;
+        }
+
+        /* ---------- NAV BUTTONS ---------- */
+        .nav{
+            position:fixed;
+            bottom:30px;
+            width:100%;
+            display:flex;
+            justify-content:space-between;
+            padding:0 40px;
+            z-index:999;
+        }
+        .nav button{
+            background:#004c99;
+            color:#fff;
+            border:none;
+            border-radius:50%;
+            width:60px;
+            height:60px;
+            font-size:28px;
+            cursor:pointer;
+            box-shadow:0 5px 15px rgba(0,0,0,.25);
+            transition:background .3s;
+        }
+        .nav button:hover{background:#003366}
+        .nav button:disabled{background:#95a5a6;cursor:not-allowed}
+
+        /* ---------- RESPONSIVE ---------- */
+        @media(max-width:800px){
+            h1{font-size:2.5rem}
+            h2{font-size:2rem}
+            h3{font-size:1.5rem}
+            p,li{font-size:1.1rem}
+            .card{padding:30px 20px}
+        }
+    </style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+    <!-- Slide 1 -->
+    <div class="slide active">
+        <div class="card">
+            <h1>35 Frequently Used Prepositions</h1>
+            <h2>Rules & Exercises</h2>
+            <p>What are Prepositions?<br>
+            Words that show relationships between nouns/pronouns and other words in sentences<br>
+            Indicate time, place, direction, manner, and other relationships</p>
+            <p><strong>Example:</strong> The book is <strong>on</strong> the table. (shows location)</p>
+        </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide">
+        <div class="card">
+            <h1>The 35 Most Common Prepositions</h1>
+            <ul>
+                <li><strong>about • above • across • after • against</strong></li>
+                <li><strong>along • among • around • at • before</strong></li>
+                <li><strong>behind • below • beneath • beside • between</strong></li>
+                <li><strong>beyond • by • despite • down • during</strong></li>
+                <li><strong>except • for • from • in • inside</strong></li>
+                <li><strong>into • near • of • off • on</strong></li>
+                <li><strong>out • outside • over • through • with</strong></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Prepositions of Time – Rules</h1>
+            <h2>AT – Specific times</h2>
+            <p>Clock times: <strong>at 5 o'clock, at noon, at midnight</strong><br>
+            Special times: <strong>at Christmas, at the weekend</strong><br>
+            <strong>Example:</strong> I'll meet you <strong>at</strong> 3 PM.</p>
+
+            <h2>ON – Days & dates</h2>
+            <p>Days: <strong>on Monday, on Christmas Day</strong><br>
+            Dates: <strong>on July 4th, on my birthday</strong><br>
+            <strong>Example:</strong> The party is <strong>on</strong> Friday.</p>
+
+            <h2>IN – Longer periods</h2>
+            <p>Months: <strong>in January</strong><br>
+            Years: <strong>in 2023</strong><br>
+            Seasons: <strong>in summer</strong><br>
+            <strong>Example:</strong> I was born <strong>in</strong> December.</p>
+        </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Prepositions of Place – Rules</h1>
+            <h2>AT – Specific points</h2>
+            <p><strong>at the door, at the bus stop, at school</strong><br>
+            <strong>Example:</strong> She's <strong>at</strong> the entrance.</p>
+
+            <h2>ON – Surfaces</h2>
+            <p><strong>on the table, on the wall, on the floor</strong><br>
+            <strong>Example:</strong> The book is <strong>on</strong> the desk.</p>
+
+            <h2>IN – Enclosed spaces</h2>
+            <p><strong>in the room, in the box, in the car</strong><br>
+            <strong>Example:</strong> The keys are <strong>in</strong> my pocket.</p>
+        </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Direction & Movement Prepositions</h1>
+            <h2>TO – Movement toward</h2>
+            <p><strong>go to school, walk to the park</strong><br>
+            <strong>Example:</strong> She's going <strong>to</strong> the store.</p>
+
+            <h2>INTO – Movement inside</h2>
+            <p><strong>walk into the room, jump into the pool</strong><br>
+            <strong>Example:</strong> He came <strong>into</strong> the house.</p>
+
+            <h2>FROM – Origin/Source</h2>
+            <p><strong>come from work, a gift from friend</strong><br>
+            <strong>Example:</strong> I received a letter <strong>from</strong> my cousin.</p>
+
+            <h2>THROUGH – Passing</h2>
+            <p><strong>walk through the park, look through window</strong><br>
+            <strong>Example:</strong> We drove <strong>through</strong> the tunnel.</p>
+        </div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Position & Relationship Prepositions</h1>
+            <h2>BETWEEN – Two items</h2>
+            <p><strong>between the chairs, between you and me</strong><br>
+            <strong>Example:</strong> The ball is <strong>between</strong> the two boxes.</p>
+
+            <h2>AMONG – Three or more</h2>
+            <p><strong>among the crowd, among friends</strong><br>
+            <strong>Example:</strong> She felt comfortable <strong>among</strong> her classmates.</p>
+
+            <h2>BESIDE – Next to</h2>
+            <p><strong>beside the table, beside me</strong><br>
+            <strong>Example:</strong> He sat <strong>beside</strong> his friend.</p>
+
+            <h2>BEHIND – At the back</h2>
+            <p><strong>behind the door, behind the house</strong><br>
+            <strong>Example:</strong> The garden is <strong>behind</strong> the house.</p>
+        </div>
+    </div>
+
+    <!-- Slide 7 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Common Usage Prepositions</h1>
+            <h2>FOR – Purpose/Duration</h2>
+            <p><strong>for you, for a week, for studying</strong><br>
+            <strong>Example:</strong> This gift is <strong>for</strong> you.</p>
+
+            <h2>WITH – Accompaniment</h2>
+            <p><strong>with friends, with a pen</strong><br>
+            <strong>Example:</strong> I went shopping <strong>with</strong> my mother.</p>
+
+            <h2>BY – Agent/Means</h2>
+            <p><strong>by the author, by car, by 5 PM</strong><br>
+            <strong>Example:</strong> The book was written <strong>by</strong> Smith.</p>
+
+            <h2>ABOUT – Concerning</h2>
+            <p><strong>about history, about you</strong><br>
+            <strong>Example:</strong> We talked <strong>about</strong> the project.</p>
+        </div>
+    </div>
+
+    <!-- Slide 8 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Exercise 1 – Fill in the Blanks</h1>
+            <p>Complete with correct prepositions:</p>
+            <ol style="text-align:left;display:inline-block;margin-top:10px;">
+                <li>The meeting is ___ 2 PM ___ Tuesday.</li>
+                <li>She lives ___ 123 Main Street ___ Boston.</li>
+                <li>The cat is sleeping ___ the sofa ___ the living room.</li>
+                <li>I'll meet you ___ the library ___ noon.</li>
+                <li>He jumped ___ the pool ___ the hot day.</li>
+                <li>The store is ___ the bank and the post office.</li>
+                <li>We walked ___ the park ___ our way home.</li>
+                <li>She's been working here ___ 2019.</li>
+                <li>The picture is hanging ___ the wall ___ the fireplace.</li>
+                <li>They traveled ___ Paris ___ London ___ train.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Slide 9 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Exercise 1 – Answers</h1>
+            <ol style="text-align:left;display:inline-block;">
+                <li><strong>at</strong> 2 PM <strong>on</strong> Tuesday</li>
+                <li><strong>at</strong> 123 Main Street <strong>in</strong> Boston</li>
+                <li><strong>on</strong> the sofa <strong>in</strong> the living room</li>
+                <li><strong>at</strong> the library <strong>at</strong> noon</li>
+                <li><strong>into</strong> the pool <strong>on</strong> the hot day</li>
+                <li><strong>between</strong> the bank and the post office</li>
+                <li><strong>through</strong> the park <strong>on</strong> our way home</li>
+                <li><strong>since</strong> 2019</li>
+                <li><strong>on</strong> the wall <strong>above</strong> the fireplace</li>
+                <li><strong>from</strong> Paris <strong>to</strong> London <strong>by</strong> train</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Slide 10 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Exercise 2 – Choose the Correct Preposition</h1>
+            <p>Select the correct option:</p>
+            <ol style="text-align:left;display:inline-block;">
+                <li>She's good ___ (at/in) mathematics.</li>
+                <li>I'm angry ___ (with/about) the situation.</li>
+                <li>He's afraid ___ (of/from) spiders.</li>
+                <li>She's married ___ (with/to) a doctor.</li>
+                <li>I'm interested ___ (in/about) learning French.</li>
+                <li>He's responsible ___ (for/of) the project.</li>
+                <li>She's proud ___ (of/about) her achievement.</li>
+                <li>I'm tired ___ (of/from) working late.</li>
+                <li>He's similar ___ (with/to) his father.</li>
+                <li>She's capable ___ (of/for) doing the job.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Slide 11 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Exercise 2 – Answers</h1>
+            <ol style="text-align:left;display:inline-block;">
+                <li><strong>at</strong> mathematics</li>
+                <li><strong>about</strong> the situation</li>
+                <li><strong>of</strong> spiders</li>
+                <li><strong>to</strong> a doctor</li>
+                <li><strong>in</strong> learning French</li>
+                <li><strong>for</strong> the project</li>
+                <li><strong>of</strong> her achievement</li>
+                <li><strong>of</strong> working late</li>
+                <li><strong>to</strong> his father</li>
+                <li><strong>of</strong> doing the job</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Slide 12 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Exercise 3 – Error Correction</h1>
+            <p>Find and correct the preposition errors:</p>
+            <ol style="text-align:left;display:inline-block;">
+                <li>She's waiting on the bus stop.</li>
+                <li>The keys are at my pocket.</li>
+                <li>I live on 123 Main Street.</li>
+                <li>He's good in playing tennis.</li>
+                <li>The meeting is in Monday.</li>
+                <li>She's married with John.</li>
+                <li>I'm afraid from dogs.</li>
+                <li>The book is about Shakespeare by tragedies.</li>
+                <li>We arrived to the airport late.</li>
+                <li>She's similar with her mother.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Slide 13 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Exercise 3 – Corrected Sentences</h1>
+            <ol style="text-align:left;display:inline-block;">
+                <li>She's waiting <strong>at</strong> the bus stop.</li>
+                <li>The keys are <strong>in</strong> my pocket.</li>
+                <li>I live <strong>at</strong> 123 Main Street.</li>
+                <li>He's good <strong>at</strong> playing tennis.</li>
+                <li>The meeting is <strong>on</strong> Monday.</li>
+                <li>She's married <strong>to</strong> John.</li>
+                <li>I'm afraid <strong>of</strong> dogs.</li>
+                <li>The book is <strong>by</strong> Shakespeare <strong>about</strong> tragedies.</li>
+                <li>We arrived <strong>at</strong> the airport late.</li>
+                <li>She's similar <strong>to</strong> her mother.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Slide 14 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Common Preposition Combinations</h1>
+            <h2>Adjective + Preposition</h2>
+            <p>afraid <strong>of</strong> • good <strong>at</strong> • interested <strong>in</strong> • proud <strong>of</strong> • tired <strong>of</strong></p>
+
+            <h2>Verb + Preposition</h2>
+            <p>depend <strong>on</strong> • laugh <strong>at</strong> • listen <strong>to</strong> • look <strong>at</strong> • wait <strong>for</strong></p>
+
+            <h2>Noun + Preposition</h2>
+            <p>reason <strong>for</strong> • solution <strong>to</strong> • increase <strong>in</strong> • difference <strong>between</strong></p>
+        </div>
+    </div>
+
+    <!-- Slide 15 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Advanced Usage Tips</h1>
+            <h2>Distinguishing Similar Prepositions</h2>
+            <p><strong>IN vs INTO:</strong> "in" = location, "into" = movement<br>
+            She's <strong>in</strong> the room. vs. She walked <strong>into</strong> the room.</p>
+
+            <p><strong>ON vs OVER:</strong> "on" = contact, "over" = above<br>
+            The book is <strong>on</strong> the table. vs. The lamp is <strong>over</strong> the table.</p>
+
+            <p><strong>BETWEEN vs AMONG:</strong> "between" = two, "among" = three+<br>
+            The treaty <strong>between</strong> two countries. vs. She felt comfortable <strong>among</strong> friends.</p>
+        </div>
+    </div>
+
+    <!-- Slide 16 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Practice Exercise 4 – Rewrite Sentences</h1>
+            <p>Rewrite using appropriate prepositions:</p>
+            <ol style="text-align:left;display:inline-block;">
+                <li>The bird flew the window and landed the table.</li>
+                <li>She's been here 8 AM and hasn't left the office.</li>
+                <li>The children played the park while their parents sat a bench.</li>
+                <li>We drove the city and parked the museum.</li>
+                <li>The letter was written pen and sent mail.</li>
+                <li>He's responsible taking care the elderly patients.</li>
+                <li>The difference these two products lies their quality.</li>
+                <li>She's good solving problems and finding solutions difficult situations.</li>
+                <li>The book the table belongs me, not you.</li>
+                <li>We walked the beach and collected shells the shore.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Slide 17 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Practice Exercise 4 – Answers</h1>
+            <ol style="text-align:left;display:inline-block;">
+                <li>The bird flew <strong>through</strong> the window and landed <strong>on</strong> the table.</li>
+                <li>She's been here <strong>since</strong> 8 AM and hasn't left the office.</li>
+                <li>The children played <strong>in</strong> the park while their parents sat <strong>on</strong> a bench.</li>
+                <li>We drove <strong>through</strong> the city and parked <strong>near</strong> the museum.</li>
+                <li>The letter was written <strong>with</strong> pen and sent <strong>by</strong> mail.</li>
+                <li>He's responsible <strong>for</strong> taking care <strong>of</strong> the elderly patients.</li>
+                <li>The difference <strong>between</strong> these two products lies <strong>in</strong> their quality.</li>
+                <li>She's good <strong>at</strong> solving problems and finding solutions <strong>to</strong> difficult situations.</li>
+                <li>The book <strong>on</strong> the table belongs <strong>to</strong> me, not you.</li>
+                <li>We walked <strong>along</strong> the beach and collected shells <strong>on</strong> the shore.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Slide 18 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Memory Tips & Tricks</h1>
+            <h2>Visual Memory Aids</h2>
+            <p><strong>AT</strong> = point (think of a dot •)<br>
+            <strong>ON</strong> = surface (think of a line ___)<br>
+            <strong>IN</strong> = enclosed (think of a box □)</p>
+
+            <h2>Time Prepositions Song</h2>
+            <p>"AT for clock time, ON for days,<br>
+            IN for months and years and ways!"</p>
+
+            <h2>Common Mistakes to Avoid</h2>
+            <p>✗ "in the weekend" → ✓ "at the weekend"<br>
+            ✗ "on 2023" → ✓ "in 2023"<br>
+            ✗ "married with" → ✓ "married to"</p>
+        </div>
+    </div>
+
+    <!-- Slide 19 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Final Assessment Test</h1>
+            <p>Choose the correct preposition for each blank:</p>
+            <ol style="text-align:left;display:inline-block;">
+                <li>I'll see you ___ Monday ___ 3 o'clock.</li>
+                <li>The cat jumped ___ the table and knocked ___ the vase.</li>
+                <li>She's been living here ___ 2018.</li>
+                <li>The school is located ___ the corner ___ Main Street and Oak Avenue.</li>
+                <li>I'm interested ___ learning more ___ your culture.</li>
+                <li>He's responsible ___ taking care ___ his younger brother.</li>
+                <li>The plane flew ___ the clouds and disappeared ___ view.</li>
+                <li>She's good ___ mathematics but struggles ___ history.</li>
+                <li>The difference ___ these two phones lies ___ their camera quality.</li>
+                <li>We walked ___ the forest and arrived ___ a beautiful lake.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Slide 20 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Final Assessment – Answers</h1>
+            <ol style="text-align:left;display:inline-block;">
+                <li><strong>on</strong> Monday <strong>at</strong> 3 o'clock</li>
+                <li><strong>onto</strong> the table and knocked <strong>off</strong> the vase</li>
+                <li><strong>since</strong> 2018</li>
+                <li><strong>at</strong> the corner <strong>of</strong> Main Street and Oak Avenue</li>
+                <li><strong>in</strong> learning more <strong>about</strong> your culture</li>
+                <li><strong>for</strong> taking care <strong>of</strong> his younger brother</li>
+                <li><strong>through</strong> the clouds and disappeared <strong>from</strong> view</li>
+                <li><strong>at</strong> mathematics but struggles <strong>with</strong> history</li>
+                <li><strong>between</strong> these two phones lies <strong>in</strong> their camera quality</li>
+                <li><strong>through</strong> the forest and arrived <strong>at</strong> a beautiful lake</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Slide 21 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Review & Key Points</h1>
+            <h2>Remember These Rules:</h2>
+            <ol>
+                <li><strong>AT</strong> = specific points (time/place)</li>
+                <li><strong>ON</strong> = surfaces & days</li>
+                <li><strong>IN</strong> = enclosed spaces & longer periods</li>
+                <li><strong>TO</strong> = movement/direction</li>
+                <li><strong>FOR</strong> = purpose/duration</li>
+                <li><strong>WITH</strong> = accompaniment</li>
+                <li><strong>OF</strong> = possession/relationship</li>
+                <li><strong>FROM</strong> = origin/source</li>
+            </ol>
+            <h3>Practice Makes Perfect!</h3>
+            <p>Use prepositions in daily conversation, read English texts and notice preposition usage, complete additional exercises regularly!</p>
+        </div>
+    </div>
+
+    <!-- Slide 22 -->
+    <div class="slide">
+        <div class="card">
+            <h1>Additional Practice Resources</h1>
+            <h2>Online Resources:</h2>
+            <p>EnglishPage.com – Preposition exercises<br>
+            PerfectEnglishGrammar.com – Practice tests<br>
+            Test-English.com – Time preposition quizzes</p>
+
+            <h2>Study Tips:</h2>
+            <p>Create flashcards with preposition combinations<br>
+            Practice with native speakers<br>
+            Write sentences using new prepositions daily<br>
+            Keep a preposition journal</p>
+
+            <h3>Remember: Mastering prepositions takes time and consistent practice!</h3>
+        </div>
+    </div>
+</div>
+
+<!-- Navigation -->
+<div class="nav">
+    <button id="prevBtn" onclick="move(-1)">&#10094;</button>
+    <button id="nextBtn" onclick="move(1)">&#10095;</button>
+</div>
+
+<script>
+    let current = 0;
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function showSlide(n) {
+        slides[current].classList.remove('active');
+        current = (n + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        prevBtn.disabled = current === 0;
+        nextBtn.disabled = current === slides.length - 1;
+    }
+
+    function move(direction) {
+        showSlide(current + direction);
+    }
+
+    // Keyboard support
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight') move(1);
+        if (e.key === 'ArrowLeft') move(-1);
+    });
+
+    // Initialize
+    showSlide(0);
+</script>
+
+</body>
+</html>
