@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Articles Quiz - Set 4</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .quiz-container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 1000px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, #00b4db 0%, #0083b0 100%);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .header h1 {
+            font-size: 2.8rem;
+            color: #333;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        .timer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #00b4db;
+        }
+        
+        .timer {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00b4db;
+        }
+        
+        .timer-icon {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .timer.warning {
+            color: #ff6b6b;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00b4db, #0083b0);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .set-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #00b4db;
+        }
+        
+        .set-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00b4db;
+        }
+        
+        .set-progress {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .set-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ddd;
+            transition: background-color 0.3s;
+        }
+        
+        .set-dot.active {
+            background-color: #00b4db;
+        }
+        
+        .question-container {
+            margin-bottom: 25px;
+            padding: 25px;
+            border-radius: 15px;
+            background-color: #f8f9fa;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .question-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        .question {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .option {
+            padding: 12px 20px;
+            background-color: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option:hover {
+            background-color: #e6f7ff;
+            border-color: #00b4db;
+        }
+        
+        .option-letter {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+            background-color: #00b4db;
+            color: white;
+            border-radius: 50%;
+            margin-right: 12px;
+            font-weight: 700;
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 5px solid #28a745;
+        }
+        
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: #00b4db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0099c4;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn:disabled:hover {
+            transform: none;
+        }
+        
+        .set-summary {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .set-summary h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .set-score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #00b4db;
+            margin-bottom: 15px;
+        }
+        
+        .set-time {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .results {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .results h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #00b4db;
+            margin-bottom: 20px;
+        }
+        
+        .results p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .progress-summary {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+        }
+        
+        .progress-item {
+            text-align: center;
+        }
+        
+        .progress-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00b4db;
+        }
+        
+        .progress-label {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .question {
+                font-size: 1.5rem;
+            }
+            
+            .timer-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .progress-summary {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="header">
+            <h1>Advanced Articles Quiz - Set 4</h1>
+            <p>Test your knowledge of advanced English articles</p>
+        </div>
+        
+        <div id="quiz-content">
+            <div class="timer-container">
+                <div class="timer">
+                    <span class="timer-icon">⏱️</span>
+                    <span id="timer-display">2:00</span>
+                </div>
+                <div>
+                    <div>Overall Progress</div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="overall-progress"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="set-info">
+                <div class="set-number">Set <span id="current-set">1</span> of 6</div>
+                <div class="set-progress">
+                    <div class="set-dot active"></div>
+                    <div class="set-dot"></div>
+                    <div class="set-dot"></div>
+                    <div class="set-dot"></div>
+                    <div class="set-dot"></div>
+                    <div class="set-dot"></div>
+                </div>
+            </div>
+            
+            <div id="set-summary" class="set-summary">
+                <h2>Set <span id="completed-set">1</span> Completed!</h2>
+                <div class="set-score" id="set-score">0/5</div>
+                <div class="set-time">Time taken: <span id="set-time">0:00</span></div>
+                <button id="continue-btn" class="btn btn-primary">Continue to Next Set</button>
+            </div>
+            
+            <div id="questions-container">
+                <!-- Questions will be inserted here by JavaScript -->
+            </div>
+            
+            <div class="controls">
+                <button id="prev-set" class="btn btn-secondary hidden">Previous Set</button>
+                <button id="next-set" class="btn btn-primary">Next Set</button>
+            </div>
+        </div>
+        
+        <div id="results" class="results">
+            <h2>Quiz Completed!</h2>
+            <div class="score" id="score">0/30</div>
+            <p id="score-message">Great job!</p>
+            
+            <div class="progress-summary">
+                <div class="progress-item">
+                    <div class="progress-value" id="correct-answers">0</div>
+                    <div class="progress-label">Correct Answers</div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-value" id="total-time">0:00</div>
+                    <div class="progress-label">Total Time</div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-value" id="accuracy">0%</div>
+                    <div class="progress-label">Accuracy</div>
+                </div>
+            </div>
+            
+            <button id="restart-quiz" class="btn btn-primary">Retry Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        // Quiz data for Advanced Articles Set 4
+        const quizData = [
+            // Set 1
+            [
+                {
+                    question: "She has _____ unique way of solving problems.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 0,
+                    explanation: "Unique starts with a consonant sound /juːˈniːk/ (like you), so we use a."
+                },
+                {
+                    question: "_____ experience changed her life forever.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 2,
+                    explanation: "The experience is specified (changed her life), so definite article the is used."
+                },
+                {
+                    question: "He works as _____ interpreter for the UN.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 1,
+                    explanation: "Interpreter starts with a vowel sound /ɪnˈtɜːprətə/, so an is used."
+                },
+                {
+                    question: "I need to buy _____ furniture for my office.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 3,
+                    explanation: "Furniture is uncountable and used in a general sense, so no article is needed."
+                },
+                {
+                    question: "She is _____ only person who understands me.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 2,
+                    explanation: "Only is a limiting adjective that requires the."
+                }
+            ],
+            // Set 2
+            [
+                {
+                    question: "_____ information you shared was confidential.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 2,
+                    explanation: "Information is specified (you shared), so the is used."
+                },
+                {
+                    question: "He made _____ honest mistake.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 1,
+                    explanation: "Honest starts with a vowel sound /ˈɒnɪst/, so an is used."
+                },
+                {
+                    question: "I visited _____ Alps last winter.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 2,
+                    explanation: "Mountain ranges require the (the Alps, the Rockies)."
+                },
+                {
+                    question: "She has _____ PhD and _____ MS in Biology.",
+                    options: ["an, a", "a, an", "an, an", "a, a"],
+                    correct: 0,
+                    explanation: "PhD starts with vowel sound /piːeɪtʃ/, so an. MS starts with consonant sound /em/, so a."
+                },
+                {
+                    question: "_____ tea from China is very popular.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 3,
+                    explanation: "When referring to products from a country in a general sense, no article is used."
+                }
+            ],
+            // Set 3
+            [
+                {
+                    question: "She is _____ fastest runner in the competition.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 2,
+                    explanation: "Superlatives require the."
+                },
+                {
+                    question: "I have _____ eight-hour flight tomorrow.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 0,
+                    explanation: "Eight starts with a consonant sound /eɪt/, so a is used."
+                },
+                {
+                    question: "_____ weather is terrible today.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 2,
+                    explanation: "When referring to weather conditions at a specific time, the is used."
+                },
+                {
+                    question: "He is _____ Irishman with _____ Scottish accent.",
+                    options: ["an, a", "a, an", "the, the", "-, -"],
+                    correct: 1,
+                    explanation: "Irishman starts with vowel sound /ˈaɪərɪʃmən/, so an. Scottish starts with consonant sound /ˈskɒtɪʃ/, so a."
+                },
+                {
+                    question: "She gave me _____ valuable piece of _____ advice.",
+                    options: ["a, -", "an, -", "the, the", "a, a"],
+                    correct: 0,
+                    explanation: "Valuable starts with consonant sound /ˈvæljuəbl̩/, so a. Advice is uncountable, so no article."
+                }
+            ],
+            // Set 4
+            [
+                {
+                    question: "_____ history of _____ France is fascinating.",
+                    options: ["-, the", "the, -", "the, the", "-, -"],
+                    correct: 2,
+                    explanation: "History is specified (of France), so the. France as a country doesn't take an article, but when specified with 'of', the is used."
+                },
+                {
+                    question: "I need to buy _____ new pair of _____ glasses.",
+                    options: ["a, -", "an, -", "the, the", "a, a"],
+                    correct: 0,
+                    explanation: "Pair is singular and starts with consonant sound, so a. Glasses is plural and general, so no article."
+                },
+                {
+                    question: "She has _____ extraordinary gift for music.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 1,
+                    explanation: "Extraordinary starts with vowel sound /ɪkˈstrɔːdənri/, so an is used."
+                },
+                {
+                    question: "_____ wisdom she gained from her travels was invaluable.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 2,
+                    explanation: "Wisdom is specified (she gained from her travels), so the is used."
+                },
+                {
+                    question: "He is _____ honorable man with _____ integrity.",
+                    options: ["an, -", "a, -", "the, the", "an, an"],
+                    correct: 0,
+                    explanation: "Honorable starts with vowel sound /ˈɒnərəbl̩/, so an. Integrity is uncountable and abstract, so no article."
+                }
+            ],
+            // Set 5
+            [
+                {
+                    question: "I visited _____ Netherlands last summer.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 2,
+                    explanation: "Netherlands is a country name with plural form, so it requires the."
+                },
+                {
+                    question: "She has _____ MA in _____ Computer Science.",
+                    options: ["an, -", "a, -", "the, the", "an, the"],
+                    correct: 0,
+                    explanation: "MA starts with vowel sound /em/, so an. Computer Science as a field of study takes no article."
+                },
+                {
+                    question: "_____ beauty of _____ art is timeless.",
+                    options: ["-, -", "the, -", "the, the", "-, the"],
+                    correct: 2,
+                    explanation: "Beauty is specified (of art), so the. Art as a general concept takes the."
+                },
+                {
+                    question: "He is _____ university professor who specializes in _____ artificial intelligence.",
+                    options: ["a, -", "an, -", "the, the", "a, the"],
+                    correct: 0,
+                    explanation: "University starts with consonant sound /juːnɪˈvɜːsəti/, so a. Artificial intelligence as a field takes no article."
+                },
+                {
+                    question: "I have _____ cousin who lives in _____ Philippines.",
+                    options: ["a, the", "an, the", "the, -", "an, -"],
+                    correct: 0,
+                    explanation: "Cousin starts with consonant sound /ˈkʌzn̩/, so a. Philippines is a country name with plural form, so the."
+                }
+            ],
+            // Set 6
+            [
+                {
+                    question: "_____ joy she felt was overwhelming.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 2,
+                    explanation: "Joy is specified (she felt), so the is used."
+                },
+                {
+                    question: "She is _____ eldest daughter in _____ family.",
+                    options: ["an, the", "a, the", "the, the", "the, a"],
+                    correct: 1,
+                    explanation: "Eldest is a superlative, so the. Family is specified (in the family), so the."
+                },
+                {
+                    question: "I need to buy _____ new equipment for _____ gym.",
+                    options: ["a, the", "an, the", "the, -", "-, the"],
+                    correct: 0,
+                    explanation: "Equipment is uncountable but can be used with a when meaning a set of. Gym is specified, so the."
+                },
+                {
+                    question: "He has _____ one-track mind when it comes to business.",
+                    options: ["a", "an", "the", "-"],
+                    correct: 0,
+                    explanation: "One-track is a compound adjective starting with consonant sound /wʌn/, so a is used."
+                },
+                {
+                    question: "_____ young should respect _____ elderly.",
+                    options: ["the, the", "-, -", "a, a", "an, an"],
+                    correct: 0,
+                    explanation: "The is used with adjectives to refer to groups of people (the young = young people, the elderly = elderly people)."
+                }
+            ]
+        ];
+
+        // Quiz state
+        let currentSet = 0;
+        let score = 0;
+        let answeredQuestions = [];
+        let setScores = [];
+        let setTimes = [];
+        let startTime = null;
+        let timerInterval = null;
+        let timeRemaining = 120; // 2 minutes per set
+
+        // DOM elements
+        const questionsContainer = document.getElementById('questions-container');
+        const currentSetElement = document.getElementById('current-set');
+        const prevSetButton = document.getElementById('prev-set');
+        const nextSetButton = document.getElementById('next-set');
+        const quizContent = document.getElementById('quiz-content');
+        const resultsContainer = document.getElementById('results');
+        const scoreElement = document.getElementById('score');
+        const scoreMessageElement = document.getElementById('score-message');
+        const restartButton = document.getElementById('restart-quiz');
+        const setDots = document.querySelectorAll('.set-dot');
+        const timerDisplay = document.getElementById('timer-display');
+        const overallProgressBar = document.getElementById('overall-progress');
+        const setSummary = document.getElementById('set-summary');
+        const continueBtn = document.getElementById('continue-btn');
+        const completedSetElement = document.getElementById('completed-set');
+        const setScoreElement = document.getElementById('set-score');
+        const setTimeElement = document.getElementById('set-time');
+        const correctAnswersElement = document.getElementById('correct-answers');
+        const totalTimeElement = document.getElementById('total-time');
+        const accuracyElement = document.getElementById('accuracy');
+
+        // Initialize the quiz
+        function initQuiz() {
+            currentSet = 0;
+            score = 0;
+            answeredQuestions = [];
+            setScores = [];
+            setTimes = [];
+            
+            quizContent.style.display = 'block';
+            resultsContainer.style.display = 'none';
+            setSummary.style.display = 'none';
+            questionsContainer.style.display = 'block';
+            
+            renderSet(currentSet);
+            updateProgressDots();
+            updateButtons();
+            startTimer();
+        }
+
+        // Render a set of questions
+        function renderSet(setIndex) {
+            questionsContainer.innerHTML = '';
+            currentSetElement.textContent = setIndex + 1;
+            
+            const set = quizData[setIndex];
+            
+            set.forEach((question, qIndex) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                
+                const questionText = document.createElement('div');
+                questionText.className = 'question';
+                questionText.textContent = `${(setIndex * 5) + qIndex + 1}. ${question.question}`;
+                
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+                
+                question.options.forEach((option, oIndex) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'option';
+                    optionDiv.dataset.questionIndex = qIndex;
+                    optionDiv.dataset.optionIndex = oIndex;
+                    
+                    const optionLetter = document.createElement('div');
+                    optionLetter.className = 'option-letter';
+                    optionLetter.textContent = String.fromCharCode(65 + oIndex); // A, B, C, D
+                    
+                    const optionText = document.createElement('span');
+                    optionText.textContent = option;
+                    
+                    optionDiv.appendChild(optionLetter);
+                    optionDiv.appendChild(optionText);
+                    
+                    optionDiv.addEventListener('click', () => selectOption(setIndex, qIndex, oIndex));
+                    
+                    optionsDiv.appendChild(optionDiv);
+                });
+                
+                const feedbackDiv = document.createElement('div');
+                feedbackDiv.className = 'feedback';
+                feedbackDiv.id = `feedback-${setIndex}-${qIndex}`;
+                
+                questionDiv.appendChild(questionText);
+                questionDiv.appendChild(optionsDiv);
+                questionDiv.appendChild(feedbackDiv);
+                
+                questionsContainer.appendChild(questionDiv);
+            });
+        }
+
+        // Handle option selection
+        function selectOption(setIndex, questionIndex, optionIndex) {
+            const question = quizData[setIndex][questionIndex];
+            const feedbackElement = document.getElementById(`feedback-${setIndex}-${questionIndex}`);
+            const options = document.querySelectorAll(`[data-question-index="${questionIndex}"]`);
+            
+            // Check if already answered
+            if (answeredQuestions.some(q => q.set === setIndex && q.question === questionIndex)) {
+                return;
+            }
+            
+            // Mark as answered
+            answeredQuestions.push({
+                set: setIndex,
+                question: questionIndex,
+                correct: optionIndex === question.correct
+            });
+            
+            // Update score if correct
+            if (optionIndex === question.correct) {
+                score++;
+                feedbackElement.className = 'feedback correct';
+                feedbackElement.textContent = `✓ Correct! ${question.explanation}`;
+            } else {
+                feedbackElement.className = 'feedback incorrect';
+                feedbackElement.textContent = `✗ Incorrect. ${question.explanation}`;
+            }
+            
+            // Disable all options for this question
+            options.forEach(option => {
+                option.style.pointerEvents = 'none';
+                if (parseInt(option.dataset.optionIndex) === question.correct) {
+                    option.style.backgroundColor = '#d4edda';
+                    option.style.borderColor = '#28a745';
+                } else if (parseInt(option.dataset.optionIndex) === optionIndex) {
+                    option.style.backgroundColor = '#f8d7da';
+                    option.style.borderColor = '#dc3545';
+                }
+            });
+            
+            // Show feedback
+            feedbackElement.style.display = 'block';
+            
+            // Check if all questions in the set are answered
+            const allAnswered = answeredQuestions.filter(q => q.set === setIndex).length === 5;
+            if (allAnswered) {
+                nextSetButton.disabled = false;
+            }
+        }
+
+        // Timer functions
+        function startTimer() {
+            clearInterval(timerInterval);
+            timeRemaining = 120; // Reset to 2 minutes
+            startTime = Date.now();
+            updateTimerDisplay();
+            
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeUp();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            
+            // Add warning class when time is running out
+            if (timeRemaining <= 30) {
+                timerDisplay.parentElement.classList.add('warning');
+            } else {
+                timerDisplay.parentElement.classList.remove('warning');
+            }
+        }
+
+        function handleTimeUp() {
+            // Submit the current set with whatever answers were given
+            submitSet();
+        }
+
+        // Update progress dots
+        function updateProgressDots() {
+            setDots.forEach((dot, index) => {
+                if (index === currentSet) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+            
+            // Update overall progress bar
+            const progress = ((currentSet + 1) / 6) * 100;
+            overallProgressBar.style.width = `${progress}%`;
+        }
+
+        // Update navigation buttons
+        function updateButtons() {
+            prevSetButton.classList.toggle('hidden', currentSet === 0);
+            
+            const allAnswered = answeredQuestions.filter(q => q.set === currentSet).length === 5;
+            nextSetButton.disabled = !allAnswered;
+            
+            if (currentSet === 5) {
+                nextSetButton.textContent = 'Finish Quiz';
+            } else {
+                nextSetButton.textContent = 'Next Set';
+            }
+        }
+
+        // Submit the current set
+        function submitSet() {
+            clearInterval(timerInterval);
+            
+            // Calculate set score
+            const setAnswered = answeredQuestions.filter(q => q.set === currentSet);
+            const setScore = setAnswered.filter(q => q.correct).length;
+            setScores.push(setScore);
+            
+            // Calculate time taken
+            const timeTaken = Math.floor((Date.now() - startTime) / 1000);
+            setTimes.push(timeTaken);
+            
+            // Show set summary
+            questionsContainer.style.display = 'none';
+            setSummary.style.display = 'block';
+            completedSetElement.textContent = currentSet + 1;
+            setScoreElement.textContent = `${setScore}/5`;
+            
+            const minutes = Math.floor(timeTaken / 60);
+            const seconds = timeTaken % 60;
+            setTimeElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        // Navigate to previous set
+        prevSetButton.addEventListener('click', () => {
+            if (currentSet > 0) {
+                currentSet--;
+                renderSet(currentSet);
+                updateProgressDots();
+                updateButtons();
+                startTimer();
+            }
+        });
+
+        // Navigate to next set
+        nextSetButton.addEventListener('click', () => {
+            if (currentSet < 5) {
+                submitSet();
+            } else {
+                showResults();
+            }
+        });
+
+        // Continue to next set after summary
+        continueBtn.addEventListener('click', () => {
+            currentSet++;
+            setSummary.style.display = 'none';
+            questionsContainer.style.display = 'block';
+            renderSet(currentSet);
+            updateProgressDots();
+            updateButtons();
+            startTimer();
+        });
+
+        // Show quiz results
+        function showResults() {
+            clearInterval(timerInterval);
+            
+            quizContent.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            
+            scoreElement.textContent = `${score}/30`;
+            
+            // Calculate total time
+            const totalTimeSeconds = setTimes.reduce((sum, time) => sum + time, 0);
+            const totalMinutes = Math.floor(totalTimeSeconds / 60);
+            const totalSeconds = totalTimeSeconds % 60;
+            totalTimeElement.textContent = `${totalMinutes}:${totalSeconds < 10 ? '0' : ''}${totalSeconds}`;
+            
+            // Calculate accuracy
+            const accuracy = Math.round((score / 30) * 100);
+            accuracyElement.textContent = `${accuracy}%`;
+            
+            // Set other stats
+            correctAnswersElement.textContent = score;
+            
+            let message = '';
+            if (score >= 25) {
+                message = 'Outstanding! You have mastered advanced article usage!';
+            } else if (score >= 20) {
+                message = 'Excellent! You understand most complex article rules!';
+            } else if (score >= 15) {
+                message = 'Good effort! Review the explanations to strengthen your understanding.';
+            } else {
+                message = 'Keep learning! Advanced articles can be challenging, but practice makes perfect.';
+            }
+            
+            scoreMessageElement.textContent = message;
+        }
+
+        // Restart the quiz
+        restartButton.addEventListener('click', () => {
+            initQuiz();
+        });
+
+        // Initialize the quiz when the page loads
+        window.addEventListener('load', initQuiz);
+    </script>
+</body>
+</html>
