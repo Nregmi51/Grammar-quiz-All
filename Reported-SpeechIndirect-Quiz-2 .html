@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reported Speech Quiz</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #FFD700;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .quiz-container {
+            max-width: 1100px;
+            width: 100%;
+            background-color: #f0f8ff;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
+        }
+
+        h1, h2 {
+            color: #006699;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .progress-bar {
+            text-align: center;
+            font-weight: bold;
+            color: #40E0D0;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        #question-card {
+            background-color: #f0f8ff;
+            padding: 16px;
+            border-radius: 14px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: all 0.3s ease-in-out;
+            border: 2px solid #b3e0ff;
+        }
+
+        #question-text {
+            font-size: 1.9rem;
+            font-weight: bold;
+            color: #CD5C5C;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 16px;
+            border-radius: 14px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            border: 2px solid transparent;
+        }
+        
+        .option-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .option-item:hover {
+            border-color: #006699;
+            transform: translateY(-2px);
+        }
+
+        .option-item.selected {
+            border-color: #66b3ff;
+            background-color: #e6f7ff;
+        }
+
+        .option-item.correct {
+            border-color: #4caf50;
+            background-color: #e8f5e9;
+        }
+
+        .option-item.wrong {
+            border-color: #f44336;
+            background-color: #fde8e8;
+        }
+
+        .option-item span {
+            font-weight: bold;
+            font-size: 1.6rem;
+            margin-right: 15px;
+            color: #006699;
+        }
+
+        .option-item p {
+            margin: 0;
+            font-size: 1.6rem;
+            color: #333;
+        }
+
+        .navigation-buttons, .result-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .navigation-buttons button, .result-buttons button, #final-summary button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .primary-btn {
+            background-color: #006699;
+            color: #fff;
+        }
+
+        .primary-btn:hover:enabled {
+            background-color: #004d73;
+        }
+
+        .secondary-btn {
+            background-color: #66b3ff;
+            color: #fff;
+        }
+        
+        .secondary-btn:hover:enabled {
+            background-color: #4da6ff;
+        }
+
+        .ghost-btn {
+            background-color: #f0f8ff;
+            color: #006699;
+        }
+        
+        .ghost-btn:hover:enabled {
+            background-color: #e0f0ff;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .set-results-container {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .set-results-container h2 {
+            margin-bottom: 10px;
+        }
+
+        .set-results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .result-item {
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .result-item.correct {
+            border-color: #4caf50;
+        }
+
+        .result-item.wrong {
+            border-color: #f44336;
+        }
+
+        #final-summary {
+            text-align: center;
+        }
+
+        #final-summary .score-box {
+            display: inline-block;
+            background-color: #f0f8ff;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            color: #006699;
+        }
+        
+        #final-summary h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        #final-summary p {
+            font-size: 1.2rem;
+        }
+        
+        @media print {
+            body {
+                background-color: #fff;
+                display: block;
+                height: auto;
+                min-height: auto;
+            }
+            .quiz-container {
+                box-shadow: none;
+                padding: 0;
+            }
+            #final-summary-page {
+                display: block !important;
+            }
+            button, .progress-bar, #question-view, #result-view {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div class="progress-bar" id="progress-bar">Set 1 of 4</div>
+
+    <!-- Question View -->
+    <div id="question-view">
+        <div id="question-card">
+            <h2 id="question-text"></h2>
+            <div id="options-container"></div>
+        </div>
+        <div class="navigation-buttons">
+            <button id="prev-btn" class="ghost-btn" disabled>Previous Question</button>
+            <button id="next-btn" class="primary-btn" disabled>Next Question</button>
+        </div>
+    </div>
+
+    <!-- Set Result View -->
+    <div id="result-view" class="hidden">
+        <div class="set-results-container">
+            <h2 id="set-result-heading">Set 1 Result: 0/10</h2>
+            <div id="set-results-grid" class="set-results-grid"></div>
+        </div>
+        <div class="result-buttons">
+            <button id="retry-btn" class="secondary-btn">Retry This Set</button>
+            <button id="next-set-btn" class="primary-btn">Next Set</button>
+        </div>
+    </div>
+    
+    <!-- Final Summary View -->
+    <div id="final-summary-page" class="hidden">
+        <div id="final-summary">
+            <h1>Quiz Complete!</h1>
+            <div class="score-box">
+                <h3 id="final-summary-set1">Set 1 Score: </h3>
+                <h3 id="final-summary-set2">Set 2 Score: </h3>
+                <h3 id="final-summary-set3">Set 3 Score: </h3>
+                <h3 id="final-summary-set4">Set 4 Score: </h3>
+                <h3>---</h3>
+                <h3 id="final-summary-total">Total Score: </h3>
+                <p id="final-summary-percentage">Percentage: </p>
+            </div>
+            <div class="result-buttons">
+                <button id="restart-btn" class="secondary-btn">Restart Quiz</button>
+                <button id="print-btn" class="ghost-btn">Print Results</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Quiz data based on the provided worksheets
+    const quizSets = [
+        // Set 1: Reported Speech Imperatives
+        [
+            { q: "The teacher said, 'Open your books to page 10.'", options: ["The teacher asked to open books to page 10.", "The teacher requested us opening our books to page 10.", "The teacher told us to open our books to page 10.", "The teacher said us to open our books to page 10."], answer: "The teacher told us to open our books to page 10." },
+            { q: "My mother said, 'Please clean your room.'", options: ["My mother said me to clean my room.", "My mother requested me to clean my room.", "My mother told me cleaning my room.", "My mother suggested to clean my room."], answer: "My mother requested me to clean my room." },
+            { q: "The doctor said, 'Take your medicine on time.'", options: ["The doctor suggested to take medicine on time.", "The doctor advised me to take my medicine on time.", "The doctor said take my medicine on time.", "The doctor commanded me to take my medicine on time."], answer: "The doctor advised me to take my medicine on time." },
+            { q: "The officer said, 'Stand in a queue.'", options: ["The officer told standing in a queue.", "The officer ordered us to stand in a queue.", "The officer said us to stand in a queue.", "The officer requested to stand in a queue."], answer: "The officer ordered us to stand in a queue." },
+            { q: "The father said, 'Don't play in the rain.'", options: ["The father told me to not play in the rain.", "The father suggested to not play in the rain.", "The father told me not to play in the rain.", "The father forbade me to not play in the rain."], answer: "The father told me not to play in the rain." },
+            { q: "The manager said, 'Submit the report by tomorrow.'", options: ["The manager told us to submit the report by the next day.", "The manager said to submit the report by tomorrow.", "The manager asked to submit the report by tomorrow.", "The manager requested submitting the report by the next day."], answer: "The manager told us to submit the report by the next day." },
+            { q: "The policeman said, 'Show me your ID card.'", options: ["The policeman asked to see my ID card.", "The policeman told me showing him my ID card.", "The policeman told me to show him my ID card.", "The policeman requested me to show him my ID card."], answer: "The policeman told me to show him my ID card." },
+            { q: "The coach said, 'Practice harder for the match.'", options: ["The coach advised us to practice harder for the match.", "The coach suggested we practice harder.", "The coach asked us if we wanted to practice harder for the match.", "The coach ordered us to practice harder for the match."], answer: "The coach advised us to practice harder for the match." },
+            { q: "The waiter said, 'Please wait here for a moment.'", options: ["The waiter requested us to wait there for a moment.", "The waiter asked us to wait here.", "The waiter said to wait here for a moment.", "The waiter ordered us to wait there for a moment."], answer: "The waiter requested us to wait there for a moment." },
+            { q: "The teacher said, 'Don't talk during the exam.'", options: ["The teacher told us to not talk during the exam.", "The teacher forbade us to talk during the exam.", "The teacher asked not to talk during the exam.", "The teacher ordered us not to talk during the exam."], answer: "The teacher ordered us not to talk during the exam." }
+        ],
+        // Set 2: Reported Speech Yes/No Questions
+        [
+            { q: "She asked, 'Do you like to read books?'", options: ["She asked did I like to read books.", "She asked if I liked to read books.", "She asked if I like to read books.", "She asked if I had liked to read books."], answer: "She asked if I liked to read books." },
+            { q: "He asked, 'Are you coming to the party tonight?'", options: ["He asked if I was coming to the party tonight.", "He asked if I am coming to the party that night.", "He asked if I was coming to the party that night.", "He asked whether I would come to the party tonight."], answer: "He asked if I was coming to the party that night." },
+            { q: "The teacher asked, 'Did you complete your homework?'", options: ["The teacher asked if I had completed my homework.", "The teacher asked if I completed my homework.", "The teacher asked whether I completed my homework.", "The teacher asked if I was completing my homework."], answer: "The teacher asked if I had completed my homework." },
+            { q: "Ram asked, 'Is it raining outside?'", options: ["Ram asked if it was raining outside.", "Ram asked was it raining outside.", "Ram asked if it is raining outside.", "Ram asked whether it had been raining outside."], answer: "Ram asked if it was raining outside." },
+            { q: "Sita asked, 'Have you finished your lunch?'", options: ["Sita asked if I finished my lunch.", "Sita asked if I had finished my lunch.", "Sita asked if I have finished my lunch.", "Sita asked whether I finished my lunch."], answer: "Sita asked if I had finished my lunch." },
+            { q: "The doctor asked, 'Do you feel any pain?'", options: ["The doctor asked if I felt any pain.", "The doctor asked if I had felt any pain.", "The doctor asked did I feel any pain.", "The doctor asked if I was feeling any pain."], answer: "The doctor asked if I felt any pain." },
+            { q: "My friend asked, 'Is she going to the concert tomorrow?'", options: ["My friend asked if she was going to the concert tomorrow.", "My friend asked if she had gone to the concert tomorrow.", "My friend asked if she was going to the concert the next day.", "My friend asked whether she is going to the concert tomorrow."], answer: "My friend asked if she was going to the concert the next day." },
+            { q: "The police officer asked, 'Were you at the scene of the accident?'", options: ["The police officer asked if I was at the scene of the accident.", "The police officer asked if I had been at the scene of the accident.", "The police officer asked if I were at the scene of the accident.", "The police officer asked was I at the scene of the accident."], answer: "The police officer asked if I had been at the scene of the accident." },
+            { q: "The teacher asked, 'Have you understood the lesson?'", options: ["The teacher asked if I had understood the lesson.", "The teacher asked if I understood the lesson.", "The teacher asked if I have understood the lesson.", "The teacher asked whether I understood the lesson."], answer: "The teacher asked if I had understood the lesson." },
+            { q: "The manager asked, 'Did you receive the email I sent?'", options: ["The manager asked if I received the email he had sent.", "The manager asked whether I had received the email he sent.", "The manager asked if I had received the email he had sent.", "The manager asked if I have received the email he sent."], answer: "The manager asked if I had received the email he had sent." }
+        ],
+        // Set 3: Indirect to Direct (Statements)
+        [
+            { q: "Ram said that he had finished his homework.", options: ["Ram said, 'He finished his homework.'", "Ram said, 'I finished my homework.'", "Ram said, 'I have finished my homework.'", "Ram said, 'He has finished his homework.'"], answer: "Ram said, 'I have finished my homework.'" },
+            { q: "Sita said that she was going to the market.", options: ["Sita said, 'I am going to the market.'", "Sita said, 'She is going to the market.'", "Sita said, 'I went to the market.'", "Sita said, 'I will go to the market.'"], answer: "Sita said, 'I am going to the market.'" },
+            { q: "The teacher said that we had done a great job.", options: ["The teacher said, 'We did a great job.'", "The teacher said, 'You have done a great job.'", "The teacher said, 'You had done a great job.'", "The teacher said, 'They have done a great job.'"], answer: "The teacher said, 'You have done a great job.'" },
+            { q: "My father said that we would go on a trip tomorrow.", options: ["My father said, 'We will go on a trip tomorrow.'", "My father said, 'We would go on a trip tomorrow.'", "My father said, 'We will go on a trip the next day.'", "My father said, 'We are going on a trip tomorrow.'"], answer: "My father said, 'We will go on a trip tomorrow.'" },
+            { q: "Hari said that he could solve the problem easily.", options: ["Hari said, 'He can solve the problem easily.'", "Hari said, 'I can solve the problem easily.'", "Hari said, 'I could solve the problem easily.'", "Hari said, 'He could solve the problem easily.'"], answer: "Hari said, 'I can solve the problem easily.'" },
+            { q: "The student said that he had completed the project.", options: ["The student said, 'I completed the project.'", "The student said, 'He has completed the project.'", "The student said, 'I have completed the project.'", "The student said, 'I had completed the project.'"], answer: "The student said, 'I have completed the project.'" },
+            { q: "The doctor said that I needed to take the medicine regularly.", options: ["The doctor said, 'I need to take the medicine regularly.'", "The doctor said, 'You needed to take the medicine regularly.'", "The doctor said, 'You need to take the medicine regularly.'", "The doctor said, 'I need to take medicine regularly.'"], answer: "The doctor said, 'You need to take the medicine regularly.'" },
+            { q: "My mother said that I should clean my room.", options: ["My mother said, 'You should clean your room.'", "My mother said, 'I should clean my room.'", "My mother said, 'You have to clean your room.'", "My mother said, 'You must clean your room.'"], answer: "My mother said, 'You should clean your room.'" },
+            { q: "The librarian said that the books were due tomorrow.", options: ["The librarian said, 'The books are due tomorrow.'", "The librarian said, 'The books were due tomorrow.'", "The librarian said, 'The books were due the next day.'", "The librarian said, 'The books are due the next day.'"], answer: "The librarian said, 'The books are due tomorrow.'" },
+            { q: "The coach said that we would have practice in the evening.", options: ["The coach said, 'We will have practice in the evening.'", "The coach said, 'We would have practice in the evening.'", "The coach said, 'You will have practice in the evening.'", "The coach said, 'They would have practice in the evening.'"], answer: "The coach said, 'We will have practice in the evening.'" }
+        ],
+        // Set 4: Indirect to Direct (Imperatives)
+        [
+            { q: "The teacher told us not to forget to submit our homework tomorrow.", options: ["The teacher said, 'Don't forget to submit your homework tomorrow.'", "The teacher said, 'You should not forget to submit your homework tomorrow.'", "The teacher said, 'Don't forget to submit our homework tomorrow.'", "The teacher said, 'Do not forget to submit our homework the next day.'"], answer: "The teacher said, 'Don't forget to submit your homework tomorrow.'" },
+            { q: "The coach told us to run faster if we wanted to win the race.", options: ["The coach said, 'Run faster if you want to win the race.'", "The coach said, 'You should run faster if you want to win the race.'", "The coach said, 'Run faster if you wanted to win the race.'", "The coach said, 'Run faster to win the race.'"], answer: "The coach said, 'Run faster if you want to win the race.'" },
+            { q: "The doctor advised us to avoid eating junk food for a healthier life.", options: ["The doctor said, 'Avoid eating junk food for a healthier life.'", "The doctor said, 'You should avoid eating junk food.'", "The doctor said, 'You must avoid eating junk food for a healthier life.'", "The doctor said, 'Please avoid eating junk food for a healthier life.'"], answer: "The doctor said, 'Avoid eating junk food for a healthier life.'" },
+            { q: "My father told me to turn off the lights before leaving the room.", options: ["My father said, 'Turn off the lights before leaving the room.'", "My father said, 'Please turn off the lights before leaving the room.'", "My father said, 'You have to turn off the lights before leaving the room.'", "My father said, 'I told you to turn off the lights.'"], answer: "My father said, 'Turn off the lights before leaving the room.'" },
+            { q: "The librarian told me to return the books within a week.", options: ["The librarian said, 'You must return the books within a week.'", "The librarian said, 'Please return the books within a week.'", "The librarian said, 'Return the books within a week.'", "The librarian said, 'Return the books.'"], answer: "The librarian said, 'Return the books within a week.'" },
+            { q: "The officer warned us not to enter the restricted area.", options: ["The officer said, 'You should not enter the restricted area.'", "The officer said, 'Do not enter the restricted area.'", "The officer said, 'Don't enter the restricted area.'", "The officer said, 'I warn you not to enter the restricted area.'"], answer: "The officer said, 'Don't enter the restricted area.'" },
+            { q: "The mother told me to be careful while crossing the road.", options: ["The mother said, 'Be careful while crossing the road.'", "The mother said, 'You should be careful while crossing the road.'", "The mother said, 'You must be careful while crossing the road.'", "The mother said, 'Be careful while you cross the road.'"], answer: "The mother said, 'Be careful while crossing the road.'" },
+            { q: "The gardener told me to water the plants every morning.", options: ["The gardener said, 'Water the plants every morning.'", "The gardener said, 'You must water the plants every morning.'", "The gardener said, 'Please water the plants every morning.'", "The gardener said, 'I told you to water the plants.'"], answer: "The gardener said, 'Water the plants every morning.'" },
+            { q: "The tour guide told us to stay with the group at all times.", options: ["The tour guide said, 'Stay with the group at all times.'", "The tour guide said, 'You should stay with the group.'", "The tour guide said, 'Please stay with the group.'", "The tour guide said, 'Stay with your group at all times.'"], answer: "The tour guide said, 'Stay with the group at all times.'" },
+            { q: "The judge ordered me to speak the truth in the courtroom.", options: ["The judge said, 'You must speak the truth in the courtroom.'", "The judge said, 'I order you to speak the truth in the courtroom.'", "The judge said, 'Speak the truth in the courtroom.'", "The judge said, 'You should speak the truth in the courtroom.'"], answer: "The judge said, 'Speak the truth in the courtroom.'" }
+        ]
+    ];
+
+    // DOM Elements
+    const progressBar = document.getElementById('progress-bar');
+    const questionView = document.getElementById('question-view');
+    const questionText = document.getElementById('question-text');
+    const optionsContainer = document.getElementById('options-container');
+    const nextBtn = document.getElementById('next-btn');
+    const prevBtn = document.getElementById('prev-btn');
+
+    const resultView = document.getElementById('result-view');
+    const setResultHeading = document.getElementById('set-result-heading');
+    const setResultsGrid = document.getElementById('set-results-grid');
+    const retryBtn = document.getElementById('retry-btn');
+    const nextSetBtn = document.getElementById('next-set-btn');
+
+    const finalSummaryPage = document.getElementById('final-summary-page');
+    const finalSummarySet1 = document.getElementById('final-summary-set1');
+    const finalSummarySet2 = document.getElementById('final-summary-set2');
+    const finalSummarySet3 = document.getElementById('final-summary-set3');
+    const finalSummarySet4 = document.getElementById('final-summary-set4');
+    const finalSummaryTotal = document.getElementById('final-summary-total');
+    const finalSummaryPercentage = document.getElementById('final-summary-percentage');
+    const restartBtn = document.getElementById('restart-btn');
+    const printBtn = document.getElementById('print-btn');
+
+    // State Variables
+    let currentSet = 0;
+    let currentQuestionIndex = 0;
+    let userAnswers = [[], [], [], []];
+    let scores = [0, 0, 0, 0];
+    const TOTAL_QUESTIONS = 40;
+
+    const loadQuestion = () => {
+        const currentQuizSet = quizSets[currentSet];
+        const currentQuestion = currentQuizSet[currentQuestionIndex];
+        
+        questionText.textContent = `${(currentSet * 10) + currentQuestionIndex + 1}) ${currentQuestion.q}`;
+        optionsContainer.innerHTML = '';
+        
+        const answerLetters = ['a', 'b', 'c', 'd'];
+        currentQuestion.options.forEach((option, index) => {
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'option-item';
+            optionDiv.innerHTML = `<span>${answerLetters[index]})</span> <p>${option}</p>`;
+            optionDiv.dataset.index = index;
+            optionsContainer.appendChild(optionDiv);
+
+            optionDiv.addEventListener('click', () => selectOption(index));
+
+            // Set selected class if already answered
+            if (userAnswers[currentSet][currentQuestionIndex] === option) {
+                optionDiv.classList.add('selected');
+            }
+        });
+
+        // Update button states
+        prevBtn.disabled = currentQuestionIndex === 0;
+        nextBtn.textContent = currentQuestionIndex === currentQuizSet.length - 1 ? 'Submit This Set' : 'Next Question';
+        nextBtn.disabled = userAnswers[currentSet][currentQuestionIndex] === undefined;
+
+        // Hide other views
+        resultView.classList.add('hidden');
+        questionView.classList.remove('hidden');
+        finalSummaryPage.classList.add('hidden');
+    };
+
+    const selectOption = (selectedIndex) => {
+        const currentQuizSet = quizSets[currentSet];
+        const selectedOption = currentQuizSet[currentQuestionIndex].options[selectedIndex];
+        userAnswers[currentSet][currentQuestionIndex] = selectedOption;
+
+        document.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
+        document.querySelector(`.option-item[data-index='${selectedIndex}']`).classList.add('selected');
+
+        nextBtn.disabled = false;
+    };
+
+    const showSetResults = () => {
+        let correctCount = 0;
+        const currentQuizSet = quizSets[currentSet];
+        setResultsGrid.innerHTML = '';
+
+        currentQuizSet.forEach((q, index) => {
+            const userAnswer = userAnswers[currentSet][index];
+            const isCorrect = userAnswer === q.answer;
+            if (isCorrect) {
+                correctCount++;
+            }
+
+            const resultItem = document.createElement('div');
+            resultItem.className = `result-item ${isCorrect ? 'correct' : 'wrong'}`;
+            resultItem.innerHTML = `
+                <p><strong>${(currentSet * 10) + index + 1}) ${q.q}</strong></p>
+                <p>Your Answer: <strong>${userAnswer}</strong></p>
+                <p>Correct Answer: <strong>${q.answer}</strong></p>
+            `;
+            setResultsGrid.appendChild(resultItem);
+        });
+
+        scores[currentSet] = correctCount;
+        setResultHeading.textContent = `Set ${currentSet + 1} Result: ${correctCount}/10`;
+        
+        questionView.classList.add('hidden');
+        resultView.classList.remove('hidden');
+        
+        if (currentSet === quizSets.length - 1) {
+            nextSetBtn.textContent = 'Finish Quiz';
+        } else {
+            nextSetBtn.textContent = 'Next Set';
+        }
+    };
+
+    const showFinalSummary = () => {
+        const totalScore = scores.reduce((sum, score) => sum + score, 0);
+        const percentage = (totalScore / TOTAL_QUESTIONS) * 100;
+
+        finalSummarySet1.textContent = `Set 1 Score: ${scores[0]}/10`;
+        finalSummarySet2.textContent = `Set 2 Score: ${scores[1]}/10`;
+        finalSummarySet3.textContent = `Set 3 Score: ${scores[2]}/10`;
+        finalSummarySet4.textContent = `Set 4 Score: ${scores[3]}/10`;
+        finalSummaryTotal.textContent = `Total Score: ${totalScore}/${TOTAL_QUESTIONS}`;
+        finalSummaryPercentage.textContent = `Percentage: ${percentage.toFixed(0)}%`;
+        
+        resultView.classList.add('hidden');
+        finalSummaryPage.classList.remove('hidden');
+    };
+
+    const updateProgressBar = () => {
+        progressBar.textContent = `Set ${currentSet + 1} of ${quizSets.length}`;
+    };
+
+    const restartQuiz = () => {
+        currentSet = 0;
+        currentQuestionIndex = 0;
+        userAnswers = [[], [], [], []];
+        scores = [0, 0, 0, 0];
+        updateProgressBar();
+        loadQuestion();
+    };
+    
+    // Event listeners
+    nextBtn.addEventListener('click', () => {
+        if (currentQuestionIndex < quizSets[currentSet].length - 1) {
+            currentQuestionIndex++;
+            loadQuestion();
+        } else {
+            // Submit set
+            showSetResults();
+        }
+    });
+
+    prevBtn.addEventListener('click', () => {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            loadQuestion();
+        }
+    });
+
+    retryBtn.addEventListener('click', () => {
+        userAnswers[currentSet] = [];
+        currentQuestionIndex = 0;
+        loadQuestion();
+    });
+
+    nextSetBtn.addEventListener('click', () => {
+        if (currentSet < quizSets.length - 1) {
+            currentSet++;
+            currentQuestionIndex = 0;
+            updateProgressBar();
+            loadQuestion();
+        } else {
+            // Finish quiz
+            showFinalSummary();
+        }
+    });
+
+    restartBtn.addEventListener('click', restartQuiz);
+    printBtn.addEventListener('click', () => window.print());
+
+    // Initial call
+    document.addEventListener('DOMContentLoaded', () => {
+        updateProgressBar();
+        loadQuestion();
+    });
+</script>
+
+</body>
+</html>
