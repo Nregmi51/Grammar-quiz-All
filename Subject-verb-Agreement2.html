@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N.Regmi's Subject-Verb Agreement uiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffe6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #0044cc;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .progress-bar-container {
+            background: rgba(255, 255, 255, 0.2);
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+
+        .progress-bar {
+            background: #66aaff;
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .set-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .set-header h2 {
+            color: #0044cc;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .question-counter {
+            color: #666;
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+
+        .question-container {
+            background: #e6ffe6;
+            padding: 16px;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 1.9rem;
+            font-weight: bold;
+            color: #0044cc;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 14px;
+            padding: 15px 20px;
+            font-size: 1.6rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            border-color: #0044cc;
+        }
+
+        .option.selected {
+            border-color: #0044cc;
+            background: #f0f8ff;
+        }
+
+        .option.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .option.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 140px;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: #0044cc;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #003399;
+        }
+
+        .btn-secondary {
+            background: #66aaff;
+            color: white;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #4488dd;
+        }
+
+        .btn-ghost {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-ghost:hover:not(:disabled) {
+            background: #e0e0e0;
+        }
+
+        .results-container {
+            text-align: center;
+        }
+
+        .results-container h2 {
+            color: #0044cc;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .score-display {
+            font-size: 1.5rem;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #0044cc;
+        }
+
+        .final-summary {
+            background: #e6ffe6;
+            padding: 30px;
+            border-radius: 14px;
+            margin-bottom: 30px;
+        }
+
+        .final-summary h2 {
+            color: #0044cc;
+            margin-bottom: 20px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .review-question {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .review-question .question-text {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .question-text {
+                font-size: 1.5rem;
+            }
+            
+            .option {
+                font-size: 1.3rem;
+                padding: 12px 15px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .container {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+            
+            .btn, .navigation, .header {
+                display: none !important;
+            }
+            
+            .question-container, .results-container {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>N.Regmi's Subject-Verb Agreement Quiz</h1>
+            <p>Test your knowledge of subject-verb agreement rules</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Quiz Screen -->
+            <div id="quizScreen">
+                <div class="set-header">
+                    <h2 id="setTitle">Set 1 of 2</h2>
+                    <div class="question-counter" id="questionCounter">Question 1 of 10</div>
+                </div>
+
+                <div class="question-container">
+                    <div class="question-text" id="questionText"></div>
+                    <div class="options" id="optionsContainer"></div>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-ghost" id="prevBtn" onclick="previousQuestion()">Previous Question</button>
+                    <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
+                    <button class="btn btn-primary hidden" id="submitSetBtn" onclick="submitSet()">Submit This Set</button>
+                </div>
+            </div>
+
+            <!-- Set Results Screen -->
+            <div id="setResultsScreen" class="hidden results-container">
+                <h2 id="setResultTitle">Set 1 Results</h2>
+                <div class="score-display" id="setScoreDisplay"></div>
+                <div id="setQuestionsReview"></div>
+                <div class="buttons-container">
+                    <button class="btn btn-secondary" onclick="retrySet()">Retry This Set</button>
+                    <button class="btn btn-primary" id="nextSetBtn" onclick="nextSet()">Next Set</button>
+                    <button class="btn btn-primary hidden" id="showFinalBtn" onclick="showFinalResults()">View Final Results</button>
+                </div>
+            </div>
+
+            <!-- Final Results Screen -->
+            <div id="finalResultsScreen" class="hidden results-container">
+                <div class="final-summary">
+                    <h2>Quiz Complete!</h2>
+                    <div class="summary-item">
+                        <span>Set 1 Score:</span>
+                        <span id="finalSet1Score"></span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Set 2 Score:</span>
+                        <span id="finalSet2Score"></span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Total Score:</span>
+                        <span id="finalTotalScore"></span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Percentage:</span>
+                        <span id="finalPercentage"></span>
+                    </div>
+                </div>
+                <div class="buttons-container">
+                    <button class="btn btn-primary" onclick="restartQuiz()">Restart Quiz</button>
+                    <button class="btn btn-secondary" onclick="window.print()">Print Results</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz data with the exact 20 questions provided
+        const quizData = [
+            // Set 1 (Questions 1-10)
+            [
+                {
+                    q: "Everything _____ ready for the presentation.",
+                    options: ["are", "is", "were", "have"],
+                    answer: 1
+                },
+                {
+                    q: "The orchestra _____ performing beautifully tonight.",
+                    options: ["are", "is", "were", "have"],
+                    answer: 1
+                },
+                {
+                    q: "Both the movie and the book _____ interesting.",
+                    options: ["is", "are", "was", "has"],
+                    answer: 1
+                },
+                {
+                    q: "Anyone _____ welcome to join our club.",
+                    options: ["are", "is", "were", "have"],
+                    answer: 1
+                },
+                {
+                    q: "Either the students or the teacher _____ wrong about the date.",
+                    options: ["are", "is", "were", "have"],
+                    answer: 1
+                },
+                {
+                    q: "The scissors _____ on the table.",
+                    options: ["is", "are", "was", "has"],
+                    answer: 1
+                },
+                {
+                    q: "Each of the players _____ their own equipment.",
+                    options: ["bring", "brings", "are bringing", "were bringing"],
+                    answer: 1
+                },
+                {
+                    q: "The family _____ planning their vacation.",
+                    options: ["are", "is", "were", "have"],
+                    answer: 1
+                },
+                {
+                    q: "Neither the cake nor the cookies _____ ready yet.",
+                    options: ["is", "are", "was", "has"],
+                    answer: 1
+                },
+                {
+                    q: "Something _____ wrong with the computer.",
+                    options: ["are", "is", "were", "have"],
+                    answer: 1
+                }
+            ],
+            // Set 2 (Questions 11-20)
+            [
+                {
+                    q: "Both the teacher and the students _____ excited about the field trip.",
+                    options: ["is", "are", "was", "has"],
+                    answer: 1
+                },
+                {
+                    q: "The crowd _____ cheering loudly.",
+                    options: ["are", "is", "were", "have"],
+                    answer: 1
+                },
+                {
+                    q: "None of the homework _____ completed.",
+                    options: ["are", "is", "were", "have"],
+                    answer: 1
+                },
+                {
+                    q: "Either the coach or the players _____ responsible for the victory.",
+                    options: ["is", "are", "was", "has"],
+                    answer: 1
+                },
+                {
+                    q: "Everybody _____ their best effort.",
+                    options: ["give", "gives", "are giving", "were giving"],
+                    answer: 1
+                },
+                {
+                    q: "The staff _____ working overtime this week.",
+                    options: ["are", "is", "were", "has"],
+                    answer: 1
+                },
+                {
+                    q: "Neither the manager nor I _____ available tomorrow.",
+                    options: ["is", "are", "am", "were"],
+                    answer: 2
+                },
+                {
+                    q: "Both the coffee and the tea _____ cold.",
+                    options: ["is", "are", "was", "has"],
+                    answer: 1
+                },
+                {
+                    q: "Someone _____ knocking at the door.",
+                    options: ["are", "is", "were", "have"],
+                    answer: 1
+                },
+                {
+                    q: "The audience _____ enjoying the performance.",
+                    options: ["are", "is", "were", "have"],
+                    answer: 1
+                }
+            ]
+        ];
+
+        // Quiz state
+        let currentSet = 0;
+        let currentQuestion = 0;
+        let userAnswers = [[], []];
+        let setScores = [0, 0];
+
+        // Initialize quiz
+        function initQuiz() {
+            updateProgressBar();
+            displayQuestion();
+            updateNavigation();
+        }
+
+        // Display current question
+        function displayQuestion() {
+            const question = quizData[currentSet][currentQuestion];
+            document.getElementById('questionText').textContent = question.q;
+            document.getElementById('setTitle').textContent = `Set ${currentSet + 1} of 2`;
+            document.getElementById('questionCounter').textContent = `Question ${currentQuestion + 1} of 10`;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.textContent = `${String.fromCharCode(97 + index)}) ${option}`;
+                optionDiv.onclick = () => selectOption(index);
+                
+                if (userAnswers[currentSet][currentQuestion] === index) {
+                    optionDiv.classList.add('selected');
+                }
+                
+                optionsContainer.appendChild(optionDiv);
+            });
+
+            updateNavigation();
+        }
+
+        // Select option
+        function selectOption(index) {
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            options[index].classList.add('selected');
+
+            userAnswers[currentSet][currentQuestion] = index;
+            document.getElementById('nextBtn').disabled = false;
+            
+            if (currentQuestion === 9) {
+                document.getElementById('submitSetBtn').disabled = false;
+            }
+        }
+
+        // Navigation functions
+        function nextQuestion() {
+            if (currentQuestion < 9) {
+                currentQuestion++;
+                displayQuestion();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion();
+            }
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitSetBtn');
+
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === 9) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+                submitBtn.disabled = !allQuestionsAnswered();
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+                nextBtn.disabled = userAnswers[currentSet][currentQuestion] === undefined;
+            }
+        }
+
+        function allQuestionsAnswered() {
+            for (let i = 0; i < 10; i++) {
+                if (userAnswers[currentSet][i] === undefined) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Submit set and show results
+        function submitSet() {
+            let score = 0;
+            const questions = quizData[currentSet];
+            
+            questions.forEach((q, index) => {
+                if (userAnswers[currentSet][index] === q.answer) {
+                    score++;
+                }
+            });
+            
+            setScores[currentSet] = score;
+            showSetResults(score);
+        }
+
+        function showSetResults(score) {
+            document.getElementById('quizScreen').classList.add('hidden');
+            document.getElementById('setResultsScreen').classList.remove('hidden');
+
+            document.getElementById('setResultTitle').textContent = `Set ${currentSet + 1} Results`;
+            document.getElementById('setScoreDisplay').textContent = `Set ${currentSet + 1} Result: ${score}/10`;
+
+            const reviewContainer = document.getElementById('setQuestionsReview');
+            reviewContainer.innerHTML = '';
+
+            quizData[currentSet].forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container review-question';
+                questionDiv.style.marginBottom = '20px';
+
+                const isCorrect = userAnswers[currentSet][index] === question.answer;
+                const userAnswer = userAnswers[currentSet][index];
+                const correctAnswer = question.answer;
+
+                questionDiv.innerHTML = `
+                    <div class="question-text">
+                        ${index + 1}. ${question.q}
+                    </div>
+                    <div class="options">
+                        ${question.options.map((option, optIndex) => {
+                            let className = 'option';
+                            if (optIndex === correctAnswer) {
+                                className += ' correct';
+                            } else if (optIndex === userAnswer && !isCorrect) {
+                                className += ' incorrect';
+                            }
+                            
+                            return `<div class="${className}">
+                                ${String.fromCharCode(97 + optIndex)}) ${option}
+                                ${optIndex === correctAnswer ? ' ✓' : ''}
+                                ${optIndex === userAnswer && !isCorrect ? ' ✗' : ''}
+                            </div>`;
+                        }).join('')}
+                    </div>
+                `;
+                
+                reviewContainer.appendChild(questionDiv);
+            });
+
+            // Update button visibility
+            if (currentSet === 1) {
+                document.getElementById('nextSetBtn').classList.add('hidden');
+                document.getElementById('showFinalBtn').classList.remove('hidden');
+            }
+
+            updateProgressBar();
+        }
+
+        function retrySet() {
+            userAnswers[currentSet] = [];
+            currentQuestion = 0;
+            document.getElementById('setResultsScreen').classList.add('hidden');
+            document.getElementById('quizScreen').classList.remove('hidden');
+            displayQuestion();
+        }
+
+        function nextSet() {
+            if (currentSet < 1) {
+                currentSet++;
+                currentQuestion = 0;
+                document.getElementById('setResultsScreen').classList.add('hidden');
+                document.getElementById('quizScreen').classList.remove('hidden');
+                displayQuestion();
+                updateProgressBar();
+            }
+        }
+
+        function showFinalResults() {
+            document.getElementById('setResultsScreen').classList.add('hidden');
+            document.getElementById('finalResultsScreen').classList.remove('hidden');
+
+            const totalScore = setScores[0] + setScores[1];
+            const percentage = Math.round((totalScore / 20) * 100);
+
+            document.getElementById('finalSet1Score').textContent = `${setScores[0]}/10`;
+            document.getElementById('finalSet2Score').textContent = `${setScores[1]}/10`;
+            document.getElementById('finalTotalScore').textContent = `${totalScore}/20`;
+            document.getElementById('finalPercentage').textContent = `${percentage}%`;
+
+            updateProgressBar();
+        }
+
+        function restartQuiz() {
+            currentSet = 0;
+            currentQuestion = 0;
+            userAnswers = [[], []];
+            setScores = [0, 0];
+            
+            document.getElementById('finalResultsScreen').classList.add('hidden');
+            document.getElementById('quizScreen').classList.remove('hidden');
+            
+            initQuiz();
+        }
+
+        function updateProgressBar() {
+            let progress = 0;
+            if (setScores[0] > 0) {
+                progress = 50;
+            }
+            if (setScores[1] > 0) {
+                progress = 100;
+            }
+            
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Initialize the quiz when page loads
+        window.onload = function() {
+            initQuiz();
+        };
+    </script>
+</body>
+</html>
