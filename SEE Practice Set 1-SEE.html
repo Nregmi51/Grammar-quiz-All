@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Grammar Quiz</title>
+    <!--
+    This script loads Tailwind CSS from a CDN. It is required for the app's styling.
+    -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3e8ff; /* A soft lilac background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem; /* Increased padding for large screen */
+        }
+        .question-card, .review-card {
+            background: linear-gradient(145deg, #fff, #f0f0f0);
+            box-shadow: 20px 20px 60px #d9d9d9, -20px -20px 60px #ffffff;
+        }
+        .option-button:hover:not(.correct):not(.incorrect) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .correct {
+            background-color: #84cc16 !important; /* Tailwind's `bg-green-500` */
+            color: white !important;
+            border-color: #65a30d !important;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .incorrect {
+            background-color: #ef4444 !important; /* Tailwind's `bg-red-500` */
+            color: white !important;
+            border-color: #dc2626 !important;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .selected-wrong {
+            background-color: #f87171 !important; /* Tailwind's `bg-red-400` */
+            color: white !important;
+            border-color: #ef4444 !important;
+        }
+        .selected-correct {
+            background-color: #84cc16 !important; /* Tailwind's `bg-green-500` */
+            color: white !important;
+            border-color: #65a30d !important;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 flex items-center justify-center min-h-screen p-4">
+
+    <!-- Main Quiz Container -->
+    <div id="quiz-container" class="w-full max-w-5xl bg-white p-12 rounded-3xl shadow-2xl flex flex-col items-center border-4 border-purple-300">
+        
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="text-center transition-opacity duration-500">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-purple-700 mb-4 animate-bounce">
+                English Quiz
+            </h1>
+            <p class="text-2xl text-gray-700 mb-8">
+                Test your grammar skills with 8 sets of multiple-choice questions!
+            </p>
+            <button id="start-button" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-6 px-12 rounded-full shadow-lg transition-transform transform hover:scale-105 text-xl">
+                Start Quiz
+            </button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="hidden w-full transition-opacity duration-500">
+            
+            <!-- Header Section -->
+            <div class="flex justify-between items-center mb-8">
+                <div id="quiz-info" class="text-2xl font-semibold text-gray-700">
+                    Set <span id="set-number">1</span> of 8
+                </div>
+                <div id="timer" class="text-3xl font-bold text-purple-600">
+                    <span id="time-display">00:00</span>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-gray-200 rounded-full h-3 mb-8">
+                <div id="progress-bar" class="bg-purple-500 h-3 rounded-full transition-all duration-500" style="width: 0%;"></div>
+            </div>
+
+            <!-- Question and Options -->
+            <div class="question-card p-8 rounded-2xl mb-12 border-4 border-purple-200">
+                <h2 id="question-text" class="text-3xl md:text-4xl font-extrabold text-purple-800 mb-8">
+                    Question Text
+                </h2>
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Option buttons will be injected here by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Footer Buttons -->
+            <div class="flex justify-center space-x-6">
+                <button id="next-button" class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-4 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 text-xl" disabled>
+                    Next Question
+                </button>
+            </div>
+        </div>
+
+        <!-- Set Results Screen -->
+        <div id="results-screen" class="hidden text-center w-full transition-opacity duration-500">
+            <h2 class="text-5xl md:text-6xl font-bold text-purple-700 mb-6">Set Complete!</h2>
+            <div class="text-2xl text-gray-700 mb-8">
+                You got <span id="correct-count" class="font-bold text-green-600">0</span> correct and <span id="incorrect-count" class="font-bold text-red-600">0</span> incorrect.
+            </div>
+            <div class="flex justify-center space-x-6">
+                <button id="review-button" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 text-xl">
+                    Review Answers
+                </button>
+                <button id="next-set-button" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 text-xl">
+                    Next Set
+                </button>
+            </div>
+        </div>
+
+        <!-- Final Results Screen -->
+        <div id="final-results-screen" class="hidden text-center w-full transition-opacity duration-500">
+            <h2 class="text-5xl md:text-6xl font-bold text-green-700 mb-6">Quiz Finished! 🎉</h2>
+            <div class="text-2xl text-gray-700 mb-8">
+                You completed the quiz in <span id="total-time-display" class="font-bold text-purple-600"></span>.
+            </div>
+            <div class="text-2xl text-gray-700 mb-8">
+                Your final score: <span id="final-score" class="font-bold text-green-600"></span> out of 48.
+            </div>
+            <button id="restart-button" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 text-xl">
+                Restart Quiz
+            </button>
+        </div>
+
+        <!-- Review Modal -->
+        <div id="review-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4">
+            <div class="review-card w-full max-w-4xl p-8 rounded-2xl overflow-y-auto max-h-[90vh]">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-3xl font-bold text-purple-700">Review Your Answers</h3>
+                    <button id="close-review-button" class="text-gray-500 hover:text-gray-800 text-4xl font-bold">&times;</button>
+                </div>
+                <div id="review-content">
+                    <!-- Review questions will be injected here -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Quiz Data Structure ---
+        // An array of sets, where each set is an array of question objects.
+        const quizData = [
+            // Set 1
+            [
+                { q: "Sumit's teachers have arrived here, ..................?", o: ["I. have they", "II. haven't they", "III. didn't they", "IV. do they"], a: 1 },
+                { q: "Let Sanjali open the window. Change into negative..", o: ["I. Sanjali doesn't open the window.", "II. Don't let Sanjali open the window.", "III. Sanjali isn't opening the window.", "IV. Let Sanjali not opened the window."], a: 1 },
+                { q: "Rupesh sold some furniture yesterday. Change into 'When' question..", o: ["I. When Rupesh sold some furniture?", "II. When did Rupesh sell some furniture?", "III. When Rupesh sells some furniture?", "IV. When does Rupesh sell some furniture?"], a: 1 },
+                { q: "Sara (watch) TV when the doorbell rang. Use the correct tense of the verb..", o: ["I. watches", "II. watched", "III. was watching", "IV. had watched"], a: 2 },
+                { q: "Pallavi told him to remember to post the letter. Change into direct speech..", o: ["I. Pallavi said, \"Remember to post the letter.\"", "II. Pallavi said to him, \"Remember to post the letter.\"", "III. Pallavi asked, \"Did you remember to post the letter?\"", "IV. Pallavi told him, \"You should remember to post the letter.\""], a: 1 },
+                { q: "They promised us higher wages. Change into passive voice..", o: ["I. Higher wages are promised to us.", "II. We were promised higher wages.", "III. Higher wages will be promised to us.", "IV. We are promised higher wages."], a: 1 }
+            ],
+            // Set 2
+            [
+                { q: "Let us arrange the party, ..................? Supply the correct question tag..", o: ["I. do we", "II. don't we", "III. shall we", "IV. will we"], a: 2 },
+                { q: "Somebody broke the vase. Change into negative..", o: ["I. Somebody didn't break the vase.", "II. Nobody broke the vase.", "III. The vase was not broken by somebody.", "IV. Somebody does not break the vase."], a: 1 },
+                { q: "Pokhara is 200 km from Kathmandu. Change into 'How far' question..", o: ["I. How far Pokhara is from Kathmandu?", "II. How far is Pokhara from Kathmandu?", "III. How far Pokhara from Kathmandu is?", "IV. How far was Pokhara from Kathmandu?"], a: 1 },
+                { q: "At 3 pm yesterday, I (watch) TV for two hours. Use the verb in the correct tense..", o: ["I. watched", "II. was watching", "III. had watched", "IV. had been watching"], a: 3 },
+                { q: "I have already finished my project work,\" she said. Change into indirect speech..", o: ["I. She said that she has already finished her project work.", "II. She said that she had already finished her project work.", "III. She said that I had already finished my project work.", "IV. She said that she would already finish her project work."], a: 1 },
+                { q: "By whom was the door opened? Change into active voice..", o: ["I. Who opened the door?", "II. Someone opened the door.", "III. The door was opened by someone.", "IV. Did someone open the door?"], a: 0 }
+            ],
+            // Set 3
+            [
+                { q: "Rewan shut the door, ..................? Supply the correct question tag..", o: ["I. did he", "II. didn't he", "III. does he", "IV. doesn't he"], a: 1 },
+                { q: "He has already joined the college. Change into negative..", o: ["I. He has not already joined the college.", "II. He did not join the college.", "III. He will not join the college.", "IV. He has not joined the college yet."], a: 3 },
+                { q: "Sandesh has recently been to London. Change into 'Where' question..", o: ["I. Where Sandesh has recently been?", "II. Where has Sandesh recently been?", "III. Where did Sandesh recently go?", "IV. Where has Sandesh been?"], a: 1 },
+                { q: "They (paint) the house at this moment. Use the verb in the correct tense..", o: ["I. paint", "II. painted", "III. are painting", "IV. have painted"], a: 2 },
+                { q: "The doctor said, \"Where did you last take your medicine.?\" Indirect speech please", o: ["I. The doctor asked where I had last taken my medicine.", "II. The doctor asked where did I last take my medicine.", "III. The doctor asked where I last took my medicine.", "IV. The doctor asked where he/she had last taken his/her medicine."], a: 0 },
+                { q: "Did they invite the guests? Change into passive voice..", o: ["I. Are the guests invited?", "II. Were the guests invited?", "III. Have the guests been invited?", "IV. The guests were invited by them."], a: 1 }
+            ],
+            // Set 4
+            [
+                { q: "Everyone needs respect in the world, ..................? Supply the correct question tag..", o: ["I. don't they", "II. doesn't he", "III. do they", "IV. need they"], a: 0 },
+                { q: "He always goes to a temple to worship Lord Shiva. Change into negative..", o: ["I. He never goes to a temple to worship Lord Shiva.", "II. He does not always go to a temple to worship Lord Shiva.", "III. He isn't always going to a temple to worship Lord Shiva.", "IV. He didn't always go to a temple to worship Lord Shiva."], a: 0 },
+                { q: "She shut the door to prevent flies from coming in. Change into 'Why' question..", o: ["I. Why she shut the door?", "II. Why did she shut the door?", "III. Why does she shut the door?", "IV. Why has she shut the door?"], a: 1 },
+                { q: "Sonika (dislike). praising her in the public. Use the verb in the correct tense..", o: ["I. disliked", "II. dislikes", "III. is disliking", "IV. had disliked"], a: 1 },
+                { q: "Our principal forbade us to make bad-mouth to others. Change into direct speech..", o: ["I. Our principal said, \"Don't make bad-mouth to others.\"", "II. Our principal said to us, \"Don't make bad-mouth to others.\"", "III. Our principal asked, \"Did you make bad-mouth to others?\"", "IV. Our principal told us, \"You must not make bad-mouth to others.\""], a: 1 },
+                { q: "They are sure to submit their project works. Change into passive voice..", o: ["I. Their project works are sure to be submitted.", "II. They are sure that their project works will be submitted.", "III. Project works are sure to be submitted by them.", "IV. Their project works will be submitted by them."], a: 0 }
+            ],
+            // Set 5
+            [
+                { q: "Woodcutters fell the trees for smuggling, ..................? Supply the correct question tag..", o: ["I. do they", "II. don't they", "III. didn't they", "IV. fell they"], a: 1 },
+                { q: "She loves reading story books, too. Change into negative..", o: ["I. She doesn't love reading story books.", "II. She didn't love reading story books.", "III. She is not loving reading story books.", "IV. She never loves reading story books."], a: 0 },
+                { q: "I gave your book to your sister. Change into 'whom' question..", o: ["I. Whom you gave your book to?", "II. Whom did you give your book ?", "III. To whom you gave your book?", "IV. Who did you give your book ?"], a: 1 },
+                { q: "He (not read). any new books recently. Put the verb 'read' in the correct tense..", o: ["I. didn't read", "II. doesn't read", "III. hasn't read", "IV. wasn't reading"], a: 2 },
+                { q: "Hari asked me when I would return from my holiday tour. Change into direct speech..", o: ["I. Hari said to me, \"When will you return from your holiday tour?\"", "II. Hari said, \"When would you return from your holiday tour?\"", "III. Hari asked, \"When do you return from your holiday tour?\"", "IV. Hari said to me, \"When you will return from your holiday tour?\""], a: 0 },
+                { q: "‘Somebody has sent me a letter.’ Change into passive voice..", o: ["I. A letter have been sent to me by somebody.", "II. I have been sent a letter.", "III. Has a letter been sent to me?", "IV. A letter was sent to me."], a: 1 }
+            ],
+            // Set 6
+            [
+                { q: "Let's have a fun tonight, ..................? Add a question tag..", o: ["I. do we", "II. don't we", "III. shall we", "IV. will we"], a: 2 },
+                { q: "‘Rima never blames others for mistakes.’ Change into an affirmative sentence..", o: ["I. Rima hardly blames others for mistakes.", "II. Rima blames others for mistakes.", "III. Rima always blames others for mistakes.", "IV. Rima does not blame others for mistakes."], a: 2 },
+                { q: "‘Her parents go to the temple twice a week.’ Change this into 'How often' question.", o: ["I. How often her parents go to the temple?", "II. How often do her parents go to the temple?", "III. How often her parents went to the temple?", "IV. How often did her parents go to the temple?"], a: 1 },
+                { q: "As soon as I opened the fridge, I (see) some apples. Use the correct tense of the verb 'see'..", o: ["I. see", "II. saw", "III. was seeing", "IV. had seen"], a: 1 },
+                { q: "Dakshina forbade to turn off the switch. Change into direct speech..", o: ["I. Dakshina said, \"Turn off the switch.\"", "II. Dakshina said, \"Don't turn off the switch.\"", "III. Dakshina asked, \"Did you turn off the switch?\"", "IV. Dakshina told, \"You must not turn off the switch.\""], a: 1 },
+                { q: "Nobody knew the secret. Change into passive voice..", o: ["I. The secret was known by nobody.", "II. The secret was not known to anyone.", "III. No one knew the secret.", "IV. The secret is not known by anyone."], a: 1 }
+            ],
+            // Set 7
+            [
+                { q: "Everyone is ready, ..................? Supply a correct question tag..", o: ["I. isn't he", "II. aren't they", "III. is he", "IV. are they"], a: 1 },
+                { q: "’ My pet loves traveling in fast cars.’ Change into negative..", o: ["I. My pet don't love traveling in fast cars.", "II. My pet doesn't love traveling in fast cars.", "III. My pet isn't loving traveling in fast cars.", "IV. My pet never loves traveling in fast cars."], a: 1 },
+                { q: "They knocked on the door to call him up. Change this into 'Why' question.", o: ["I. Why they knocked on the door?", "II. Why did they knock on the door?", "III. Why do they knock on the door?", "IV. Why have they knocked on the door?"], a: 1 },
+                { q: "Rojal (teach) in Kathmandu since 2010. Use the verb in the correct tense..", o: ["I. taught", "II. teaches", "III. has taught", "IV. has been teaching"], a: 3 },
+                { q: "His father asked us if we could solve that problem. Change into direct speech..", o: ["I. His father said to us, \"Can you solve that problem?\"", "II. His father said to us, \"Can you solve this problem?\"", "III. His father asked, \"Could you solve that problem?\"", "IV. His father asked us, \"Will you solve that problem?\""], a: 1 },
+                { q: "Nothing has been done. Change into active voice..", o: ["I. Nobody has done something.", "II. They have done nothing.", "III. Everyone has done something.", "IV. Nothing was done by anyone."], a: 1 }
+            ],
+            // Set 8
+            [
+                { q: "They'd rather solve it themselves, ..................? Supply the correct question tag..", o: ["I. had they", "II. didn't they", "III. would they", "IV. wouldn't they"], a: 3 },
+                { q: "Siwani didn't bring any books in the class. Change into affirmative..", o: ["I. Siwani brought some books in the class.", "II. Siwani didn't bring books in the class.", "III. Siwani never brought books in the class.", "IV. Siwani brings some books in the class."], a: 0 },
+                { q: "His mother prepares meal for him before he wakes up. Change into 'When' question..", o: ["I. When his mother prepares meal for him?", "II. When does his mother prepare meal for him?", "III. When did his mother prepare meal for him?", "IV. When his mother prepared meal for him?"], a: 1 },
+                { q: "By next month, he (complete) his project work. Use the verb in the correct tense..", o: ["I. completes", "II. will complete", "III. will have completed", "IV. has completed"], a: 2 },
+                { q: "She said, \"The earth rounds the sun.\" Change into indirect speech..", o: ["I. She said that the earth rounded the sun.", "II. She said that the earth would round the sun.", "III. She said that the earth rounds the sun.", "IV. She said that the earth has rounded the sun."], a: 2 },
+                { q: "I want my students to love me. Change into passive voice..", o: ["I. I want my students to be loved by me.", "II. I want to be loved by my students.", "III. My students are wanted to love me.", "IV. I am wanted by my students to love me."], a: 0 }
+            ]
+        ];
+
+        // --- State Variables ---
+        let currentSet = 0;
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        let incorrectAnswers = 0;
+        let totalCorrect = 0;
+        let answeredQuestionsInSet = 0;
+        let timerInterval;
+        let timeElapsed = 0;
+        let userAnswers = [];
+
+        // --- DOM Elements ---
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const finalResultsScreen = document.getElementById('final-results-screen');
+        const startButton = document.getElementById('start-button');
+        const setNumberDisplay = document.getElementById('set-number');
+        const progressBar = document.getElementById('progress-bar');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextButton = document.getElementById('next-button');
+        const correctCountDisplay = document.getElementById('correct-count');
+        const incorrectCountDisplay = document.getElementById('incorrect-count');
+        const reviewButton = document.getElementById('review-button');
+        const nextSetButton = document.getElementById('next-set-button');
+        const restartButton = document.getElementById('restart-button');
+        const reviewModal = document.getElementById('review-modal');
+        const closeReviewButton = document.getElementById('close-review-button');
+        const reviewContent = document.getElementById('review-content');
+        const timerDisplay = document.getElementById('time-display');
+        const totalTimeDisplay = document.getElementById('total-time-display');
+        const finalScoreDisplay = document.getElementById('final-score');
+        
+        // --- Event Listeners ---
+        startButton.addEventListener('click', startQuiz);
+        nextButton.addEventListener('click', nextQuestion);
+        reviewButton.addEventListener('click', showReviewModal);
+        closeReviewButton.addEventListener('click', hideReviewModal);
+        nextSetButton.addEventListener('click', startNextSet);
+        restartButton.addEventListener('click', resetQuiz);
+
+        // --- Quiz Functions ---
+
+        /**
+         * Starts the quiz by showing the quiz screen and initializing the first set.
+         */
+        function startQuiz() {
+            welcomeScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            startTimer();
+            showSet(0);
+        }
+
+        /**
+         * Resets all quiz state and shows the welcome screen.
+         */
+        function resetQuiz() {
+            clearInterval(timerInterval);
+            currentSet = 0;
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            incorrectAnswers = 0;
+            totalCorrect = 0;
+            answeredQuestionsInSet = 0;
+            timeElapsed = 0;
+            userAnswers = [];
+
+            finalResultsScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            welcomeScreen.classList.remove('hidden');
+            nextButton.disabled = true;
+            nextButton.textContent = 'Next Question';
+        }
+
+        /**
+         * Starts a timer that updates every second.
+         */
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeElapsed++;
+                const minutes = Math.floor(timeElapsed / 60);
+                const seconds = timeElapsed % 60;
+                timerDisplay.textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        /**
+         * Displays a new set of questions.
+         * @param {number} setIndex - The index of the set to display.
+         */
+        function showSet(setIndex) {
+            currentSet = setIndex;
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            incorrectAnswers = 0;
+            answeredQuestionsInSet = 0;
+            userAnswers = [];
+            setNumberDisplay.textContent = currentSet + 1;
+            showQuestion();
+            quizScreen.classList.remove('hidden');
+            resultsScreen.classList.add('hidden');
+            finalResultsScreen.classList.add('hidden');
+            nextButton.disabled = true;
+            nextButton.textContent = 'Next Question';
+            updateProgressBar();
+        }
+
+        /**
+         * Renders the current question and its options.
+         */
+        function showQuestion() {
+            const currentQuestionData = quizData[currentSet][currentQuestionIndex];
+            questionText.textContent = currentQuestionData.q;
+            optionsContainer.innerHTML = '';
+            
+            currentQuestionData.o.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('option-button', 'text-left', 'w-full', 'p-6', 'bg-gray-200', 'rounded-xl', 'text-2xl', 'font-bold', 'text-gray-800', 'transition-colors', 'duration-300', 'hover:bg-gray-300');
+                button.addEventListener('click', () => handleAnswerClick(index));
+                optionsContainer.appendChild(button);
+            });
+            nextButton.disabled = true;
+        }
+
+        /**
+         * Handles a user's answer click. Disables options and checks for correctness.
+         * @param {number} selectedOptionIndex - The index of the selected option.
+         */
+        function handleAnswerClick(selectedOptionIndex) {
+            const currentQuestion = quizData[currentSet][currentQuestionIndex];
+            const isCorrect = selectedOptionIndex === currentQuestion.a;
+            userAnswers.push({
+                question: currentQuestion.q,
+                options: currentQuestion.o,
+                userChoice: selectedOptionIndex,
+                correctAnswer: currentQuestion.a,
+                isCorrect: isCorrect
+            });
+
+            // Update scores
+            if (isCorrect) {
+                correctAnswers++;
+                totalCorrect++;
+            } else {
+                incorrectAnswers++;
+            }
+            answeredQuestionsInSet++;
+
+            // Highlight selected option and correct answer
+            Array.from(optionsContainer.children).forEach((button, index) => {
+                button.disabled = true;
+                if (index === currentQuestion.a) {
+                    button.classList.add('correct');
+                } else if (index === selectedOptionIndex && !isCorrect) {
+                    button.classList.add('incorrect');
+                }
+            });
+
+            nextButton.disabled = false;
+        }
+
+        /**
+         * Moves to the next question or set.
+         */
+        function nextQuestion() {
+            currentQuestionIndex++;
+            updateProgressBar();
+
+            if (currentQuestionIndex < quizData[currentSet].length) {
+                showQuestion();
+            } else {
+                showSetResults();
+            }
+        }
+
+        /**
+         * Updates the progress bar visually.
+         */
+        function updateProgressBar() {
+            const totalQuestionsInSet = quizData[currentSet].length;
+            const progress = (answeredQuestionsInSet / totalQuestionsInSet) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+        
+        /**
+         * Displays the results for the current set.
+         */
+        function showSetResults() {
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+            correctCountDisplay.textContent = correctAnswers;
+            incorrectCountDisplay.textContent = incorrectAnswers;
+            
+            // If this is the last set, update the button to show final results
+            if (currentSet === quizData.length - 1) {
+                nextSetButton.textContent = 'Finish Quiz';
+            }
+        }
+
+        /**
+         * Starts the next set or shows the final results.
+         */
+        function startNextSet() {
+            if (currentSet < quizData.length - 1) {
+                showSet(currentSet + 1);
+            } else {
+                showFinalResults();
+            }
+        }
+
+        /**
+         * Displays the final results of the quiz.
+         */
+        function showFinalResults() {
+            resultsScreen.classList.add('hidden');
+            finalResultsScreen.classList.remove('hidden');
+            clearInterval(timerInterval);
+            const minutes = Math.floor(timeElapsed / 60);
+            const seconds = timeElapsed % 60;
+            totalTimeDisplay.textContent = `${minutes} minutes and ${seconds} seconds`;
+            finalScoreDisplay.textContent = totalCorrect;
+        }
+
+        /**
+         * Displays the review modal.
+         */
+        function showReviewModal() {
+            reviewModal.classList.remove('hidden');
+            reviewContent.innerHTML = '';
+            
+            userAnswers.forEach((answer, index) => {
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('mb-6', 'p-6', 'rounded-xl', 'border-2', 'border-gray-200');
+
+                // Question heading
+                const reviewQuestion = document.createElement('p');
+                reviewQuestion.classList.add('text-xl', 'font-bold', 'text-gray-800', 'mb-4');
+                reviewQuestion.textContent = `${index + 1}. ${answer.question}`;
+                reviewItem.appendChild(reviewQuestion);
+                
+                // Options and user/correct choices
+                const reviewOptions = document.createElement('div');
+                reviewOptions.classList.add('flex', 'flex-col', 'space-y-3');
+                answer.options.forEach((option, optionIndex) => {
+                    const optionP = document.createElement('p');
+                    optionP.textContent = option;
+                    optionP.classList.add('p-3', 'rounded-lg', 'text-lg', 'font-medium', 'transition-colors', 'duration-300');
+                    if (optionIndex === answer.correctAnswer) {
+                        optionP.classList.add('bg-green-200', 'text-green-800', 'font-bold');
+                    } else if (optionIndex === answer.userChoice) {
+                        optionP.classList.add('bg-red-200', 'text-red-800', 'font-bold');
+                    } else {
+                         optionP.classList.add('bg-gray-100', 'text-gray-600');
+                    }
+                    reviewOptions.appendChild(optionP);
+                });
+                reviewItem.appendChild(reviewOptions);
+                reviewContent.appendChild(reviewItem);
+            });
+        }
+        
+        /**
+         * Hides the review modal.
+         */
+        function hideReviewModal() {
+            reviewModal.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
