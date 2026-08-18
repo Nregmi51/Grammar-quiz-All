@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
+    <title>🎯 Subject–Verb Agreement · 40 rules + quiz</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(145deg, #f9f2e0 0%, #fee9d7 100%);
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .slide-wrapper {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(4px);
+            border-radius: 64px 64px 40px 40px;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.20), 0 10px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            border: 2px solid #ffd966;
+        }
+        /* header & footer */
+        .hf {
+            background: #1f2c3c;
+            color: #f9f3e8;
+            padding: 0.9rem 2.2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            border-bottom: 6px solid #f7c35c;
+            gap: 0.8rem 1.5rem;
+        }
+        .hf.footer {
+            border-bottom: none;
+            border-top: 6px solid #f7c35c;
+            background: #1f2c3c;
+            justify-content: center;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        .hf .badge {
+            background: #2f4057;
+            padding: 0.3rem 1.6rem;
+            border-radius: 60px;
+            color: #ffde9e;
+            font-size: 1rem;
+        }
+        .hf .email-badge {
+            background: #2f4057;
+            padding: 0.3rem 1.6rem;
+            border-radius: 60px;
+            font-size: 1rem;
+            color: #bdd3f0;
+        }
+        /* content area */
+        .slide-content {
+            padding: 2rem 2.5rem 1.5rem;
+            background: #fefcf7;
+        }
+        .rule-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #182b3f;
+            background: #fceeca;
+            padding: 0.5rem 1.8rem;
+            border-radius: 120px;
+            display: inline-block;
+            margin-bottom: 1.8rem;
+            border-left: 12px solid #f7b32b;
+            letter-spacing: -0.3px;
+            box-shadow: 0 4px 0 #dba12a;
+        }
+        .rule-body {
+            font-size: 2rem;
+            line-height: 1.5;
+            font-weight: 600;
+            color: #0b1f2e;
+            background: #f8f2e6;
+            padding: 2rem 2.5rem;
+            border-radius: 48px;
+            border: 3px solid #fad37d;
+            box-shadow: inset 0 4px 10px rgba(0,0,0,0.02);
+            word-break: break-word;
+        }
+        .rule-body .ex {
+            background: #e4f0fa;
+            padding: 1rem 1.8rem;
+            border-radius: 60px;
+            margin-top: 1.2rem;
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #003b6f;
+            border-left: 8px solid #f7b32b;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.3px;
+        }
+        .rule-body u {
+            text-decoration: underline;
+            text-underline-offset: 8px;
+            text-decoration-color: #f7b32b;
+            text-decoration-thickness: 6px;
+            background: #feeec2;
+            padding: 0.1rem 0.4rem;
+            border-radius: 20px;
+            font-weight: 800;
+        }
+        .golden-box {
+            background: #ffecbb;
+            padding: 1.2rem 2rem;
+            border-radius: 80px;
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #1f3a4b;
+            border: 3px solid #f7b32b;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        .nav-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+            gap: 0.8rem 1.2rem;
+        }
+        .nav-btn {
+            background: #1f2c3c;
+            border: none;
+            color: white;
+            font-size: 1.6rem;
+            font-weight: 700;
+            padding: 0.8rem 2.4rem;
+            border-radius: 80px;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #0b141e;
+            transition: all 0.08s ease;
+            border: 2px solid #4d688b;
+            min-width: 150px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            letter-spacing: 1px;
+        }
+        .nav-btn:active {
+            transform: translateY(6px);
+            box-shadow: 0 2px 0 #0b141e;
+        }
+        .nav-btn:disabled {
+            opacity: 0.4;
+            transform: translateY(0);
+            box-shadow: 0 8px 0 #0b141e;
+            pointer-events: none;
+        }
+        .progress-indicator {
+            background: #e7dcc8;
+            padding: 0.5rem 2rem;
+            border-radius: 80px;
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #1f2c3c;
+            border: 3px solid #dba12a;
+        }
+        /* QUIZ section — vibrant clickable */
+        .quiz-section {
+            margin-top: 2.8rem;
+            background: #eef3fa;
+            padding: 2rem 2rem 1.5rem;
+            border-radius: 48px;
+            border: 4px solid #f7b32b;
+            box-shadow: 0 8px 0 #b5872b;
+        }
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem 2rem;
+            margin: 1.5rem 0 1.2rem;
+        }
+        .quiz-item {
+            background: #ffffff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 120px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem 1rem;
+            flex-wrap: wrap;
+            border: 3px solid #d6dce8;
+            box-shadow: 0 4px 0 #b0bacb;
+            transition: all 0.05s linear;
+        }
+        .quiz-item .qtext {
+            flex: 1;
+            min-width: 120px;
+            color: #0b1f2e;
+        }
+        .quiz-item .options {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+        .quiz-item .opt-btn {
+            background: #eef3fa;
+            border: 3px solid #b7c4d6;
+            padding: 0.2rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: 0.06s linear;
+            box-shadow: 0 4px 0 #9aabbd;
+            color: #1f3a4b;
+            background: white;
+            min-width: 70px;
+            text-align: center;
+        }
+        .quiz-item .opt-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0 #9aabbd;
+        }
+        .quiz-item .opt-btn.selected-correct {
+            background: #2ecc71;
+            border-color: #1e8b4c;
+            color: white;
+            box-shadow: 0 4px 0 #1a6e3b;
+        }
+        .quiz-item .opt-btn.selected-wrong {
+            background: #e74c3c;
+            border-color: #b03a2e;
+            color: white;
+            box-shadow: 0 4px 0 #8a2c22;
+        }
+        .quiz-item .opt-btn.show-correct {
+            background: #2ecc71;
+            border-color: #1e8b4c;
+            color: white;
+            box-shadow: 0 4px 0 #1a6e3b;
+        }
+        .quiz-item .opt-btn:disabled {
+            opacity: 0.7;
+            transform: translateY(0);
+            box-shadow: 0 4px 0 #9aabbd;
+            pointer-events: none;
+        }
+        .quiz-actions {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 0.5rem 0 0.2rem;
+        }
+        .action-btn {
+            background: #f7b32b;
+            border: none;
+            font-weight: 800;
+            font-size: 1.5rem;
+            padding: 0.6rem 2.6rem;
+            border-radius: 80px;
+            box-shadow: 0 8px 0 #b4831f;
+            cursor: pointer;
+            border: 2px solid #f5c45a;
+            color: #1f2c3c;
+            transition: 0.06s;
+        }
+        .action-btn:active {
+            transform: translateY(6px);
+            box-shadow: 0 2px 0 #b4831f;
+        }
+        .action-btn.reset {
+            background: #d5dce8;
+            box-shadow: 0 8px 0 #9aa9bb;
+            border-color: #c2cddd;
+            color: #1f2c3c;
+        }
+        .quiz-msg {
+            background: #f7f1e3;
+            padding: 0.4rem 2rem;
+            border-radius: 80px;
+            font-weight: 700;
+            font-size: 1.4rem;
+            display: inline-block;
+            border: 3px solid #f7b32b;
+        }
+        @media (max-width: 800px) {
+            .rule-title { font-size: 1.8rem; }
+            .rule-body { font-size: 1.5rem; padding: 1.2rem; }
+            .rule-body .ex { font-size: 1.3rem; }
+            .quiz-grid { grid-template-columns: 1fr; }
+            .nav-btn { font-size: 1.2rem; padding: 0.5rem 1.2rem; min-width: 100px; }
+            .progress-indicator { font-size: 1.2rem; }
+            .quiz-item { font-size: 1.2rem; }
+        }
+        @media (max-width: 500px) {
+            .slide-content { padding: 1rem; }
+            .rule-title { font-size: 1.4rem; }
+            .rule-body { font-size: 1.2rem; }
+            .golden-box { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="slide-wrapper">
+    <!-- header -->
+    <div class="hf">
+        <span class="badge">📘 Presented by N. Regmi</span>
+        <span class="email-badge">📧 nregmi511@gmail.com</span>
+    </div>
+
+    <!-- main slide -->
+    <div class="slide-content" id="slideContent">
+        <!-- dynamic -->
+    </div>
+
+    <!-- footer -->
+    <div class="hf footer">
+        <span>✨ 40 RULES · Subject–Verb Agreement ✨</span>
+        <span>📱 mobile & smart board</span>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- 40 rules (full) ----------
+        const rules = [
+            { rule: "Singular subject → singular verb.", ex: "He <u>plays</u>." },
+            { rule: "Plural subject → plural verb.", ex: "They <u>play</u>." },
+            { rule: "Two subjects joined by 'and' → plural verb.", ex: "Ram and Shyam <u>are</u> friends." },
+            { rule: "'And' referring to one person/thing → singular verb.", ex: "Bread and butter <u>is</u> my breakfast." },
+            { rule: "Either... or → verb agrees with the nearer subject.", ex: "Either Ram or his friends <u>are</u> coming." },
+            { rule: "Neither... nor → verb agrees with the nearer subject.", ex: "Neither the students nor the teacher <u>is</u> ready." },
+            { rule: "Not only... but also → verb agrees with the nearer subject.", ex: "Not only Ram but also his friends <u>are</u> coming." },
+            { rule: "Each → singular verb.", ex: "Each student <u>has</u> a book." },
+            { rule: "Every → singular verb.", ex: "Every child <u>is</u> important." },
+            { rule: "Everyone/Everybody → singular verb.", ex: "Everyone <u>is</u> ready." },
+            { rule: "Someone/Somebody/Anyone/Anybody → singular verb.", ex: "Somebody <u>has</u> called." },
+            { rule: "Nobody/No one → singular verb.", ex: "Nobody <u>knows</u> the answer." },
+            { rule: "Both → plural verb.", ex: "Both boys <u>are</u> present." },
+            { rule: "Many/Few/Several → plural verb.", ex: "Many students <u>are</u> absent." },
+            { rule: "Much/Little/Less → singular verb.", ex: "Much water <u>is</u> wasted." },
+            { rule: "Uncountable nouns → singular verb.", ex: "Information <u>is</u> useful." },
+            { rule: "Collective noun acting as one unit → singular verb.", ex: "The team <u>is</u> winning." },
+            { rule: "Collective noun showing individual actions → plural verb.", ex: "The team <u>are</u> arguing among themselves." },
+            { rule: "Words between subject and verb do not affect agreement.", ex: "The boy, with his friends, <u>is</u> playing." },
+            { rule: "Along with/as well as/together with → ignore the additional noun.", ex: "Ram, along with his friends, <u>is</u> coming." },
+            { rule: "There is / There are → agree with the real subject.", ex: "There <u>are</u> five books." },
+            { rule: "A number of + plural noun → plural verb.", ex: "A number of students <u>are</u> absent." },
+            { rule: "The number of + plural noun → singular verb.", ex: "The number of students <u>is</u> increasing." },
+            { rule: "One of + plural noun → singular verb.", ex: "One of the boys <u>is</u> absent." },
+            { rule: "More than one + singular noun → singular verb.", ex: "More than one student <u>has</u> answered." },
+            { rule: "Many a + singular noun → singular verb.", ex: "Many a student <u>has</u> failed." },
+            { rule: "Each of + plural noun → singular verb.", ex: "Each of the students <u>is</u> ready." },
+            { rule: "Every one of + plural noun → singular verb.", ex: "Every one of the players <u>has</u> a uniform." },
+            { rule: "Fractions → verb agrees with the noun after 'of'.", ex: "Half of the water <u>is</u> gone. / Half of the students <u>are</u> absent." },
+            { rule: "Percentages → verb agrees with the noun after 'of'.", ex: "50% of the work <u>is</u> complete. / 50% of the students <u>are</u> present." },
+            { rule: "Time as one unit → singular verb.", ex: "Five years <u>is</u> a long time." },
+            { rule: "Money as one amount → singular verb.", ex: "₹ 500 <u>is</u> enough." },
+            { rule: "Distance/weight as one unit → singular verb.", ex: "Ten kilometres <u>is</u> a long distance." },
+            { rule: "Titles of books/movies → singular verb.", ex: "'Gulliver's Travels' <u>is</u> interesting." },
+            { rule: "Subjects ending in -s but singular in meaning → singular verb.", ex: "Mathematics <u>is</u> difficult." },
+            { rule: "Police/people/cattle → plural verb.", ex: "The police <u>are</u> investigating." },
+            { rule: "Scissors/trousers/spectacles → plural verb.", ex: "These scissors <u>are</u> sharp." },
+            { rule: "A pair of + plural noun → singular verb.", ex: "A pair of scissors <u>is</u> on the table." },
+            { rule: "Gerund (-ing) as subject → singular verb.", ex: "Swimming <u>is</u> good exercise." },
+            { rule: "Relative pronouns (who/which/that) → verb agrees with the noun they refer to.", ex: "She <u>is</u> one of the students who <u>work</u> hard." }
+        ];
+        const goldenRule = "GOLDEN RULE: Find the real subject → ignore extra words → identify singular/plural → choose the correct verb.";
+
+        let currentIndex = 0;
+        const total = rules.length;
+
+        // ----- 20 quiz questions (clickable options) -----
+        const quizData = [
+            { q: "Either the teacher or the students _____ responsible.", options: ["is", "are"], correct: "are" },
+            { q: "Neither the boys nor the girl _____ here.", options: ["is", "are"], correct: "is" },
+            { q: "Bread and butter _____ my favourite.", options: ["is", "are"], correct: "is" },
+            { q: "The team _____ playing well together.", options: ["is", "are"], correct: "is" },
+            { q: "The team _____ arguing about the strategy.", options: ["is", "are"], correct: "are" },
+            { q: "Every student and teacher _____ a badge.", options: ["has", "have"], correct: "has" },
+            { q: "Many a student _____ failed.", options: ["has", "have"], correct: "has" },
+            { q: "The number of participants _____ increasing.", options: ["is", "are"], correct: "is" },
+            { q: "A number of participants _____ absent.", options: ["is", "are"], correct: "are" },
+            { q: "The scissors _____ on the table.", options: ["is", "are"], correct: "are" },
+            { q: "A pair of scissors _____ sharp.", options: ["is", "are"], correct: "is" },
+            { q: "Ten kilometres _____ a long distance.", options: ["is", "are"], correct: "is" },
+            { q: "Mathematics _____ my favourite subject.", options: ["is", "are"], correct: "is" },
+            { q: "The police _____ investigating the case.", options: ["is", "are"], correct: "are" },
+            { q: "Everyone _____ invited to the party.", options: ["is", "are"], correct: "is" },
+            { q: "Somebody _____ left the door open.", options: ["has", "have"], correct: "has" },
+            { q: "Half of the students _____ present.", options: ["is", "are"], correct: "are" },
+            { q: "Half of the water _____ wasted.", options: ["is", "are"], correct: "is" },
+            { q: "Gulliver's Travels _____ an interesting book.", options: ["is", "are"], correct: "is" },
+            { q: "She is one of the students who _____ hard.", options: ["work", "works"], correct: "work" }
+        ];
+
+        const container = document.getElementById('slideContent');
+
+        function renderSlide(index) {
+            const data = rules[index];
+            const exampleHtml = data.ex ? `<div class="ex">📌 ${data.ex}</div>` : '';
+            const goldenHtml = (index === total-1) ? `<div class="golden-box">⭐ ${goldenRule}</div>` : '';
+
+            const html = `
+                <div>
+                    <div class="rule-title">#${index+1} · ${data.rule}</div>
+                    <div class="rule-body">
+                        ${exampleHtml}
+                        ${goldenHtml}
+                        <div style="margin-top: 1.2rem; font-weight: 500; color: #3f5f77;">📖 rule ${index+1} of ${total}</div>
+                    </div>
+                    <div class="nav-area">
+                        <button class="nav-btn" id="prevBtn" ${index === 0 ? 'disabled' : ''}>◀ Previous</button>
+                        <span class="progress-indicator">${index+1} / ${total}</span>
+                        <button class="nav-btn" id="nextBtn" ${index === total-1 ? 'disabled' : ''}>Next ▶</button>
+                    </div>
+                </div>
+                <!-- QUIZ always visible -->
+                <div class="quiz-section" id="quizSection">
+                    <h3 style="font-size:2rem; font-weight:800; color:#1f2c3c; display:flex; gap:1rem; align-items:center; flex-wrap:wrap;">
+                        <span>🧠 20 click‑to‑answer</span>
+                        <span style="font-size:1.2rem; background:#e7dcc8; padding:0.1rem 1.8rem; border-radius:60px;">choose the right verb</span>
+                    </h3>
+                    <div id="quizContainer"></div>
+                </div>
+            `;
+            container.innerHTML = html;
+
+            document.getElementById('prevBtn')?.addEventListener('click', ()=> { if(currentIndex > 0) { currentIndex--; renderSlide(currentIndex); } });
+            document.getElementById('nextBtn')?.addEventListener('click', ()=> { if(currentIndex < total-1) { currentIndex++; renderSlide(currentIndex); } });
+
+            renderQuiz();
+        }
+
+        // ----- render quiz with clickable options -----
+        function renderQuiz() {
+            const qContainer = document.getElementById('quizContainer');
+            if (!qContainer) return;
+
+            let gridHtml = `<div class="quiz-grid">`;
+            quizData.forEach((item, idx) => {
+                const optA = item.options[0];
+                const optB = item.options[1];
+                gridHtml += `
+                    <div class="quiz-item" data-qidx="${idx}">
+                        <span class="qtext">${idx+1}. ${item.q}</span>
+                        <div class="options">
+                            <button class="opt-btn" data-opt="${optA}" data-q="${idx}">${optA}</button>
+                            <button class="opt-btn" data-opt="${optB}" data-q="${idx}">${optB}</button>
+                        </div>
+                    </div>
+                `;
+            });
+            gridHtml += `</div>`;
+
+            gridHtml += `
+                <div class="quiz-actions">
+                    <button class="action-btn" id="checkQuizBtn">✅ Check all</button>
+                    <button class="action-btn reset" id="resetQuizBtn">⟲ Reset</button>
+                    <span id="quizMsg" class="quiz-msg"> </span>
+                </div>
+            `;
+            qContainer.innerHTML = gridHtml;
+
+            // --- attach click to each option ---
+            document.querySelectorAll('.opt-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const qIdx = parseInt(this.dataset.q);
+                    const selected = this.dataset.opt;
+                    const parentItem = this.closest('.quiz-item');
+                    if (!parentItem) return;
+                    // disable all options in this group
+                    const allOpts = parentItem.querySelectorAll('.opt-btn');
+                    allOpts.forEach(b => b.disabled = true);
+
+                    const correctAns = quizData[qIdx].correct;
+                    // highlight
+                    allOpts.forEach(b => {
+                        if (b.dataset.opt === correctAns) {
+                            b.classList.add('show-correct');
+                        }
+                        if (b === this) {
+                            if (selected === correctAns) {
+                                b.classList.add('selected-correct');
+                            } else {
+                                b.classList.add('selected-wrong');
+                            }
+                        }
+                    });
+                    // update message
+                    const msg = document.getElementById('quizMsg');
+                    if (msg) {
+                        const allItems = document.querySelectorAll('.quiz-item');
+                        let answered = 0, correctCount = 0;
+                        allItems.forEach(item => {
+                            const btns = item.querySelectorAll('.opt-btn');
+                            let disabledCount = 0;
+                            btns.forEach(b => { if (b.disabled) disabledCount++; });
+                            if (disabledCount === btns.length) {
+                                answered++;
+                                btns.forEach(b => {
+                                    if (b.classList.contains('selected-correct') || b.classList.contains('show-correct')) {
+                                        if (b.dataset.opt === quizData[parseInt(item.dataset.qidx)].correct) correctCount++;
+                                    }
+                                });
+                            }
+                        });
+                        msg.textContent = `✅ ${correctCount} / ${quizData.length} correct (${answered} answered)`;
+                        msg.style.background = '#f7f1e3';
+                    }
+                });
+            });
+
+            // check all button: reveal all correct / wrong
+            document.getElementById('checkQuizBtn')?.addEventListener('click', function() {
+                const items = document.querySelectorAll('.quiz-item');
+                let correctCount = 0;
+                items.forEach((item, idx) => {
+                    const btns = item.querySelectorAll('.opt-btn');
+                    const correctAns = quizData[idx].correct;
+                    btns.forEach(b => {
+                        b.disabled = true;
+                        if (b.dataset.opt === correctAns) {
+                            b.classList.add('show-correct');
+                        } else {
+                            // if user selected wrong, mark it
+                            if (b.classList.contains('selected-wrong')) {
+                                // keep it
+                            } else {
+                                // if not selected and wrong, just show correct
+                            }
+                        }
+                        // count correct if any selected-correct
+                        if (b.classList.contains('selected-correct') && b.dataset.opt === correctAns) {
+                            correctCount++;
+                        }
+                    });
+                });
+                const msg = document.getElementById('quizMsg');
+                if (msg) {
+                    msg.textContent = `🏁 ${correctCount} / ${quizData.length} correct (all revealed)`;
+                    msg.style.background = '#f7e9c3';
+                }
+            });
+
+            document.getElementById('resetQuizBtn')?.addEventListener('click', function() {
+                document.querySelectorAll('.opt-btn').forEach(b => {
+                    b.disabled = false;
+                    b.classList.remove('selected-correct', 'selected-wrong', 'show-correct');
+                });
+                const msg = document.getElementById('quizMsg');
+                if (msg) { msg.textContent = ' '; msg.style.background = '#f7f1e3'; }
+            });
+        }
+
+        // initial
+        renderSlide(0);
+    })();
+</script>
+
+</body>
+</html>
