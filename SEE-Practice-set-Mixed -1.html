@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SEE English Grammar Practice - 10 Sets</title>
+    <!-- jsPDF + autoTable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js">
+    </script>
+    <style>
+        /* ─────────── RESET & BASE ─────────── */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+            /* CREAMY ANIMATED BACKGROUND */
+            background: linear-gradient(145deg, #fdf6ec 0%, #f8ede0 30%, #f5e6d3 60%, #faf0e0 100%);
+            background-size: 400% 400%;
+            animation: creamyFlow 18s ease-in-out infinite alternate;
+            position: relative;
+        }
+
+        @keyframes creamyFlow {
+            0% {
+                background-position: 0% 0%;
+            }
+            25% {
+                background-position: 100% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            75% {
+                background-position: 0% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        /* subtle floating particles for extra creaminess */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(255, 235, 210, 0.25) 0%, transparent 60%),
+                radial-gradient(circle at 80% 70%, rgba(245, 220, 190, 0.20) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 245, 230, 0.10) 0%, transparent 80%);
+            pointer-events: none;
+            z-index: 0;
+            animation: shimmerGlow 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes shimmerGlow {
+            0% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+        }
+
+        .app-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 250, 242, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 52px;
+            padding: 36px 42px 50px;
+            box-shadow: 0 40px 80px -20px rgba(160, 120, 80, 0.30),
+                0 12px 30px rgba(0, 0, 0, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.70);
+            border: 1px solid rgba(255, 235, 210, 0.55);
+            transition: all 0.25s ease;
+        }
+
+        /* ─── HEADER ─── */
+        .main-header {
+            background: linear-gradient(135deg, #d4a373, #e9c9a9, #f5dcc8);
+            border-radius: 32px;
+            padding: 28px 38px;
+            margin-bottom: 34px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 14px 34px -10px rgba(180, 130, 80, 0.35);
+            border: 1px solid rgba(255, 245, 225, 0.50);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 40%, rgba(255, 235, 200, 0.25) 0%, transparent 60%);
+            animation: headerGlow 10s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes headerGlow {
+            0% {
+                transform: translateX(-10%) scale(1);
+            }
+            100% {
+                transform: translateX(10%) scale(1.2);
+            }
+        }
+
+        .main-header h1 {
+            position: relative;
+            z-index: 1;
+            font-size: 2.6rem;
+            font-weight: 900;
+            color: #3d281a;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 12px rgba(255, 220, 170, 0.30);
+            margin: 0;
+            line-height: 1.15;
+        }
+
+        .main-header .header-sub {
+            position: relative;
+            z-index: 1;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #4d3422;
+            background: rgba(255, 248, 235, 0.65);
+            backdrop-filter: blur(6px);
+            padding: 12px 28px;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 235, 200, 0.30);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 16px rgba(160, 120, 80, 0.08);
+        }
+
+        .main-header .header-sub span {
+            font-weight: 400;
+            opacity: 0.75;
+            margin: 0 4px;
+        }
+
+        .main-header .header-sub .email {
+            font-weight: 800;
+            color: #7a4f2a;
+            letter-spacing: 0.5px;
+            font-size: 1.1rem;
+        }
+
+        /* ─── STUDENT INFO ─── */
+        .student-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px 36px;
+            background: rgba(255, 245, 230, 0.55);
+            backdrop-filter: blur(6px);
+            border-radius: 48px;
+            padding: 18px 34px;
+            margin-bottom: 28px;
+            border: 1px solid rgba(220, 190, 160, 0.20);
+            align-items: center;
+            box-shadow: 0 4px 16px rgba(160, 120, 80, 0.05);
+        }
+
+        .student-info label {
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: #4d3422;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .student-info input {
+            border: 2px solid #e8d5c0;
+            border-radius: 40px;
+            padding: 10px 20px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            background: #fefcf7;
+            transition: all 0.25s ease;
+            font-family: inherit;
+            color: #2d1f12;
+            outline: none;
+            width: 180px;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .student-info input:focus {
+            border-color: #c9a77b;
+            box-shadow: 0 0 0 5px rgba(200, 160, 120, 0.15), inset 0 2px 6px rgba(0, 0, 0, 0.02);
+            background: #ffffff;
+        }
+
+        .student-info input::placeholder {
+            color: #c4b0a0;
+            font-weight: 400;
+        }
+
+        /* ─── SET NAV ─── */
+        .set-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 32px;
+            padding: 6px 0;
+        }
+
+        .set-nav button {
+            background: rgba(255, 248, 235, 0.70);
+            backdrop-filter: blur(4px);
+            border: 2px solid rgba(200, 170, 140, 0.25);
+            color: #4d3422;
+            font-weight: 800;
+            font-size: 1.1rem;
+            padding: 12px 22px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            flex: 0 0 auto;
+            min-width: 64px;
+            text-align: center;
+            font-family: inherit;
+            letter-spacing: 0.3px;
+        }
+
+        .set-nav button:hover {
+            background: #fffbf5;
+            border-color: #c9a77b;
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 28px -10px rgba(180, 140, 100, 0.25);
+        }
+
+        .set-nav button.active {
+            background: linear-gradient(135deg, #d4a373, #e9c9a9);
+            color: #2d1f12;
+            border-color: #c9a77b;
+            box-shadow: 0 10px 24px -8px rgba(180, 140, 100, 0.35);
+            transform: scale(1.05);
+            font-weight: 900;
+        }
+
+        .set-nav button .set-badge {
+            display: inline-block;
+            background: rgba(160, 120, 80, 0.12);
+            border-radius: 40px;
+            padding: 0 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-left: 6px;
+            color: #7a4f2a;
+        }
+
+        .set-nav button.active .set-badge {
+            background: rgba(255, 245, 225, 0.40);
+            color: #3d281a;
+        }
+
+        /* ─── SET TITLE ─── */
+        .set-title-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            padding: 0 4px;
+        }
+
+        .set-title-bar h2 {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #3d281a;
+            margin: 0;
+            letter-spacing: -0.3px;
+            text-shadow: 0 2px 8px rgba(180, 140, 100, 0.10);
+        }
+
+        .set-title-bar .score-badge {
+            background: linear-gradient(135deg, #f5dcc8, #e9c9a9);
+            color: #3d281a;
+            font-weight: 800;
+            font-size: 1.3rem;
+            padding: 10px 28px;
+            border-radius: 60px;
+            box-shadow: 0 8px 20px -6px rgba(180, 140, 100, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255, 245, 225, 0.40);
+        }
+
+        .set-title-bar .score-badge span {
+            font-size: 1.6rem;
+        }
+
+        /* ─── SECTION LABEL ─── */
+        .section-label {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #4d3422;
+            margin: 34px 0 20px 0;
+            padding: 8px 0 8px 20px;
+            border-left: 8px solid #d4a373;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            letter-spacing: -0.2px;
+        }
+
+        .section-label small {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #8a7a6a;
+            background: rgba(200, 170, 140, 0.12);
+            padding: 4px 18px;
+            border-radius: 40px;
+        }
+
+        /* ─── QUESTION GRID ─── */
+        .question-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .q-item {
+            background: rgba(255, 252, 247, 0.85);
+            backdrop-filter: blur(4px);
+            border-radius: 22px;
+            padding: 20px 28px 20px 28px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(220, 190, 160, 0.12);
+            transition: all 0.25s ease;
+        }
+
+        .q-item:hover {
+            border-color: rgba(200, 170, 140, 0.25);
+            box-shadow: 0 10px 28px rgba(180, 140, 100, 0.06);
+            background: rgba(255, 252, 247, 0.95);
+        }
+
+        .q-item .q-text {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #2d1f12;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            line-height: 1.4;
+        }
+
+        .q-item .q-text .q-num {
+            font-weight: 800;
+            color: #7a4f2a;
+            background: rgba(200, 170, 140, 0.15);
+            padding: 0 14px;
+            border-radius: 40px;
+            font-size: 1rem;
+            min-width: 38px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        /* ─── OPTIONS ─── */
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .options .opt {
+            background: #fcf8f2;
+            border: 2px solid #e8d5c0;
+            border-radius: 40px;
+            padding: 8px 22px 8px 18px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #3d281a;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            user-select: none;
+            font-family: inherit;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .options .opt:hover {
+            background: #f7efe6;
+            border-color: #c9a77b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px -6px rgba(180, 140, 100, 0.12);
+        }
+
+        .options .opt.selected {
+            background: linear-gradient(135deg, #d4a373, #e9c9a9);
+            border-color: #c9a77b;
+            color: #2d1f12;
+            box-shadow: 0 6px 16px -4px rgba(180, 140, 100, 0.25);
+            font-weight: 800;
+        }
+
+        .options .opt.correct-reveal {
+            background: #d9e6d0;
+            border-color: #7a9f6a;
+            color: #2a4d1a;
+            font-weight: 800;
+        }
+
+        .options .opt.wrong-reveal {
+            background: #f5d6d0;
+            border-color: #c97a6a;
+            color: #6d2a1a;
+            font-weight: 800;
+        }
+
+        .options .opt .opt-label {
+            font-weight: 500;
+            opacity: 0.60;
+            font-size: 0.85rem;
+        }
+
+        .options .opt.selected .opt-label {
+            opacity: 0.75;
+            color: rgba(60, 40, 25, 0.70);
+        }
+
+        /* ─── Q10 INPUT ─── */
+        .q10-input {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .q10-input input {
+            flex: 1 1 320px;
+            padding: 12px 22px;
+            border: 2px solid #e8d5c0;
+            border-radius: 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: #fefcf7;
+            transition: all 0.25s ease;
+            font-family: inherit;
+            color: #2d1f12;
+            outline: none;
+            min-width: 180px;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .q10-input input:focus {
+            border-color: #c9a77b;
+            box-shadow: 0 0 0 5px rgba(200, 160, 120, 0.12), inset 0 2px 6px rgba(0, 0, 0, 0.02);
+            background: #ffffff;
+        }
+
+        .q10-input input.correct {
+            border-color: #7a9f6a;
+            background: #f2f9ed;
+        }
+
+        .q10-input input.wrong {
+            border-color: #c97a6a;
+            background: #fdf2ef;
+        }
+
+        .q10-input .answer-hint {
+            font-size: 1.0rem;
+            font-weight: 700;
+            color: #7a6a5a;
+            padding: 4px 18px;
+            border-radius: 40px;
+            background: rgba(160, 120, 80, 0.06);
+            display: none;
+        }
+
+        .q10-input .answer-hint.show {
+            display: inline-block;
+        }
+
+        .q10-input .answer-hint.correct-hint {
+            color: #4a7a3a;
+            background: #ecf5e6;
+        }
+
+        .q10-input .answer-hint.wrong-hint {
+            color: #b05a4a;
+            background: #f5e6e0;
+        }
+
+        /* ─── ACTION BAR ─── */
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 38px;
+            padding-top: 28px;
+            border-top: 2px dashed rgba(200, 170, 140, 0.20);
+        }
+
+        .action-bar .btn {
+            padding: 14px 34px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            letter-spacing: 0.3px;
+        }
+
+        .action-bar .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn-check {
+            background: linear-gradient(135deg, #d4a373, #c9a77b);
+            color: #2d1f12;
+            box-shadow: 0 10px 24px -8px rgba(180, 140, 100, 0.30);
+        }
+        .btn-check:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 32px -10px rgba(180, 140, 100, 0.40);
+        }
+
+        .btn-reset {
+            background: #f5ede6;
+            color: #4d3422;
+            border: 2px solid #e8d5c0;
+        }
+        .btn-reset:hover {
+            background: #ede0d6;
+            border-color: #c9a77b;
+            transform: translateY(-2px);
+        }
+
+        .btn-show {
+            background: #fffcf7;
+            color: #7a4f2a;
+            border: 2px solid #d4a373;
+        }
+        .btn-show:hover {
+            background: #fdf6ed;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px -8px rgba(180, 140, 100, 0.15);
+        }
+
+        .btn-clear {
+            background: #f5e6e0;
+            color: #7a3a2a;
+            border: 2px solid #dbb0a0;
+        }
+        .btn-clear:hover {
+            background: #f0dcd4;
+            transform: translateY(-2px);
+        }
+
+        .btn-export {
+            background: linear-gradient(135deg, #8fb08a, #7a9f6a);
+            color: #fff;
+            border: none;
+            box-shadow: 0 10px 24px -8px rgba(120, 160, 100, 0.30);
+        }
+        .btn-export:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 32px -10px rgba(120, 160, 100, 0.40);
+        }
+
+        /* ─── RESULTS PANEL ─── */
+        .results-panel {
+            margin-top: 34px;
+            padding: 24px 32px;
+            border-radius: 32px;
+            background: linear-gradient(135deg, #fcf5ed, #f8ede2);
+            border: 2px solid rgba(200, 170, 140, 0.15);
+            box-shadow: 0 10px 28px -10px rgba(180, 140, 100, 0.08);
+        }
+
+        .results-panel h3 {
+            font-size: 1.7rem;
+            font-weight: 900;
+            color: #3d281a;
+            margin-bottom: 16px;
+            letter-spacing: -0.3px;
+        }
+
+        .results-panel .result-summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px 48px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2d1f12;
+        }
+
+        .results-panel .result-summary span {
+            background: rgba(255, 252, 247, 0.60);
+            padding: 6px 22px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 245, 225, 0.30);
+        }
+
+        .results-panel .result-detail {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            font-size: 1.05rem;
+        }
+
+        .results-panel .result-detail .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 252, 247, 0.50);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+        }
+
+        .results-panel .result-detail .detail-item .status-icon {
+            font-size: 1.4rem;
+        }
+
+        .results-panel .result-detail .detail-item.correct {
+            border-left: 6px solid #7a9f6a;
+        }
+        .results-panel .result-detail .detail-item.wrong {
+            border-left: 6px solid #c97a6a;
+        }
+        .results-panel .result-detail .detail-item.unanswered {
+            border-left: 6px solid #d4a373;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 800px) {
+            .app-container {
+                padding: 20px 18px 30px;
+                border-radius: 32px;
+            }
+            .main-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+                padding: 20px 24px;
+            }
+            .main-header h1 {
+                font-size: 1.9rem;
+            }
+            .main-header .header-sub {
+                font-size: 1rem;
+                padding: 8px 20px;
+            }
+            .student-info {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 16px 22px;
+            }
+            .student-info label {
+                font-size: 1rem;
+                flex-wrap: wrap;
+            }
+            .student-info input {
+                width: 100%;
+                font-size: 0.95rem;
+            }
+            .set-title-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+            }
+            .set-title-bar h2 {
+                font-size: 1.8rem;
+            }
+            .set-nav button {
+                padding: 10px 16px;
+                font-size: 0.95rem;
+                min-width: 50px;
+            }
+            .q-item {
+                padding: 16px 18px;
+            }
+            .q-item .q-text {
+                font-size: 1.05rem;
+            }
+            .options .opt {
+                padding: 6px 16px 6px 12px;
+                font-size: 0.95rem;
+            }
+            .action-bar .btn {
+                padding: 12px 24px;
+                font-size: 0.95rem;
+                flex: 1 1 auto;
+                justify-content: center;
+            }
+            .q10-input input {
+                min-width: 140px;
+                flex: 1 1 200px;
+                font-size: 0.95rem;
+            }
+            .results-panel .result-detail {
+                grid-template-columns: 1fr;
+            }
+            .section-label {
+                font-size: 1.2rem;
+            }
+            .set-title-bar .score-badge {
+                font-size: 1.1rem;
+                padding: 8px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .app-container {
+                padding: 14px 10px 22px;
+                border-radius: 24px;
+            }
+            .main-header {
+                padding: 16px 16px;
+            }
+            .main-header h1 {
+                font-size: 1.4rem;
+            }
+            .main-header .header-sub {
+                font-size: 0.85rem;
+                padding: 6px 14px;
+                gap: 6px;
+            }
+            .set-nav button {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+                min-width: 40px;
+            }
+            .q-item .q-text {
+                font-size: 0.92rem;
+                flex-wrap: wrap;
+            }
+            .options .opt {
+                font-size: 0.82rem;
+                padding: 5px 12px 5px 10px;
+            }
+            .section-label {
+                font-size: 1rem;
+                padding-left: 12px;
+                border-left-width: 5px;
+            }
+            .set-title-bar h2 {
+                font-size: 1.4rem;
+            }
+            .action-bar {
+                gap: 10px;
+            }
+            .action-bar .btn {
+                font-size: 0.82rem;
+                padding: 10px 16px;
+            }
+            .q10-input input {
+                font-size: 0.85rem;
+                padding: 10px 16px;
+                min-width: 100px;
+            }
+            .results-panel {
+                padding: 16px 18px;
+            }
+            .results-panel h3 {
+                font-size: 1.3rem;
+            }
+            .results-panel .result-summary {
+                font-size: 1rem;
+                gap: 12px 20px;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(200, 170, 140, 0.08);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4c0b0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c9a77b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container" id="app">
+
+        <!-- HEADER -->
+        <header class="main-header">
+            <h1>📘 SEE Grammar Practice</h1>
+            <div class="header-sub">
+                <span>✦</span> Prepared by <strong>N. Regmi Sir</strong>
+                <span>•</span>
+                <span class="email">📧 nregmi511@gmail.com</span>
+            </div>
+        </header>
+
+        <!-- STUDENT INFO -->
+        <div class="student-info">
+            <label>👤 Name <input type="text" id="studentName" placeholder="Your Name" /></label>
+            <label>🔢 Roll No. <input type="text" id="studentRoll" placeholder="Roll Number" /></label>
+        </div>
+
+        <!-- SET NAV -->
+        <nav class="set-nav" id="setNav"></nav>
+
+        <!-- SET CONTENT -->
+        <div id="setContent" class="fade-in"></div>
+
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        //  DATA — all 10 sets (same as before)
+        // ═══════════════════════════════════════════════════════════════
+
+        const SETS = [];
+
+        const opt = (label, value) => ({ label, value });
+
+        // ─── SET 1 ───
+        SETS.push({
+            id: 1,
+            q9: [
+                { q: 'She ______ to school every day.', opts: [opt('goes', 'goes'), opt('going', 'going'), opt('gone',
+                        'gone')], ans: 'goes' },
+                { q: 'The news ______ not true.', opts: [opt('is', 'is'), opt('are', 'are'), opt('were', 'were')],
+                    ans: 'is' },
+                { q: 'He has been living here ______ 2010.', opts: [opt('since', 'since'), opt('for', 'for'), opt('from',
+                        'from')], ans: 'since' },
+                { q: 'My brother is older ______ me.', opts: [opt('than', 'than'), opt('then', 'then'), opt('to', 'to')],
+                    ans: 'than' },
+                { q: 'This is the book ______ I bought yesterday.', opts: [opt('which', 'which'), opt('who', 'who'),
+                        opt('whom', 'whom')], ans: 'which' },
+                { q: 'If I were you, I ______ that offer.', opts: [opt('will accept', 'will accept'), opt('would accept',
+                        'would accept'), opt('would have accepted', 'would have accepted')], ans: 'would accept' },
+                { q: 'Neither of the boys ______ present.', opts: [opt('was', 'was'), opt('were', 'were'), opt('are',
+                        'are')], ans: 'was' },
+                { q: 'She is afraid ______ dogs.', opts: [opt('of', 'of'), opt('from', 'from'), opt('with', 'with')],
+                    ans: 'of' },
+                { q: 'The thief ran away ______ he saw the police.', opts: [opt('before', 'before'), opt('because',
+                        'because'), opt('as soon as', 'as soon as')], ans: 'as soon as' },
+                { q: 'We ______ the work before she arrived.', opts: [opt('had finished', 'had finished'), opt(
+                        'have finished', 'have finished'), opt('finished', 'finished')], ans: 'had finished' }
+            ],
+            q10: [
+                { instr: 'She said, "I am reading a book." (Report the sentence)',
+                ans: 'She said that she was reading a book.' },
+                { instr: 'Someone has broken the window. (Passive voice)', ans: 'The window has been broken.' },
+                { instr: 'He goes to office by bus. (Add a question tag)', ans: 'He goes to office by bus, doesn\'t he?' },
+                { instr: 'She is too weak to walk. (Rewrite with "so ... that")',
+                ans: 'She is so weak that she cannot walk.' },
+                { instr: 'They have finished the project. (Change into negative)',
+                ans: 'They have not finished the project.' }
+            ]
+        });
+
+        // ─── SET 2 ───
+        SETS.push({
+            id: 2,
+            q9: [
+                { q: 'He ______ TV when I arrived.', opts: [opt('watches', 'watches'), opt('was watching',
+                        'was watching'), opt('is watching', 'is watching')], ans: 'was watching' },
+                { q: 'The professor gave us ______ useful advice.', opts: [opt('an', 'an'), opt('a', 'a'), opt('the',
+                        'the')], ans: 'a' },
+                { q: 'I have been waiting ______ two hours.', opts: [opt('since', 'since'), opt('for', 'for'), opt('from',
+                        'from')], ans: 'for' },
+                { q: 'You must abide ______ the rules.', opts: [opt('by', 'by'), opt('with', 'with'), opt('of', 'of')],
+                    ans: 'by' },
+                { q: 'This is the man ______ car was stolen.', opts: [opt('who', 'who'), opt('whose', 'whose'), opt(
+                        'whom', 'whom')], ans: 'whose' },
+                { q: 'If he had studied hard, he ______ passed.', opts: [opt('would', 'would'), opt('would have',
+                        'would have'), opt('will have', 'will have')], ans: 'would have' },
+                { q: 'The committee ______ divided in its opinion.', opts: [opt('was', 'was'), opt('were', 'were'),
+                    opt('has', 'has')], ans: 'was' },
+                { q: 'She is different ______ her sister.', opts: [opt('from', 'from'), opt('than', 'than'), opt('to',
+                        'to')], ans: 'from' },
+                { q: 'Hardly had he reached the station ______ the train left.', opts: [opt('when', 'when'), opt('than',
+                        'than'), opt('then', 'then')], ans: 'when' },
+                { q: 'Bread and butter ______ my favourite breakfast.', opts: [opt('is', 'is'), opt('are', 'are'),
+                    opt('were', 'were')], ans: 'is' }
+            ],
+            q10: [
+                { instr: 'He said to me, "I will help you." (Report the sentence)',
+                ans: 'He told me that he would help me.' },
+                { instr: 'Who teaches you English? (Passive voice)', ans: 'By whom are you taught English?' },
+                { instr: 'Let\'s go for a walk. (Add a question tag)', ans: 'Let\'s go for a walk, shall we?' },
+                { instr: 'He is the tallest boy in the class. (Rewrite with "no other")',
+                    ans: 'No other boy in the class is as tall as he.' },
+                { instr: 'The students were watching the match. (Change into interrogative)',
+                    ans: 'Were the students watching the match?' }
+            ]
+        });
+
+        // ─── SET 3 ───
+        SETS.push({
+            id: 3,
+            q9: [
+                { q: 'The river ______ overflowed its banks last year.', opts: [opt('has', 'has'), opt('had', 'had'),
+                        opt('have', 'have')], ans: 'had' },
+                { q: 'She is ______ European tourist.', opts: [opt('a', 'a'), opt('an', 'an'), opt('the', 'the')],
+                    ans: 'a' },
+                { q: 'No sooner did he see me ______ he ran away.', opts: [opt('than', 'than'), opt('when', 'when'),
+                        opt('then', 'then')], ans: 'than' },
+                { q: 'He is capable ______ doing this work.', opts: [opt('of', 'of'), opt('for', 'for'), opt('with',
+                        'with')], ans: 'of' },
+                { q: 'The man ______ is standing there is my uncle.', opts: [opt('which', 'which'), opt('who', 'who'),
+                        opt('whose', 'whose')], ans: 'who' },
+                { q: 'If you heat ice, it ______.', opts: [opt('melts', 'melts'), opt('will melt', 'will melt'), opt(
+                        'would melt', 'would melt')], ans: 'melts' },
+                { q: 'Each of the students ______ given a prize.', opts: [opt('was', 'was'), opt('were', 'were'), opt(
+                        'has', 'has')], ans: 'was' },
+                { q: 'I prefer tea ______ coffee.', opts: [opt('to', 'to'), opt('than', 'than'), opt('from', 'from')],
+                    ans: 'to' },
+                { q: 'The boys as well as their teacher ______ playing.', opts: [opt('was', 'was'), opt('were', 'were'),
+                        opt('have', 'have')], ans: 'was' },
+                { q: 'She has been learning French ______ three years.', opts: [opt('for', 'for'), opt('since',
+                        'since'), opt('from', 'from')], ans: 'for' }
+            ],
+            q10: [
+                { instr: 'She said to me, "Where do you live?" (Report the sentence)',
+                    ans: 'She asked me where I lived.' },
+                { instr: 'The police arrested the thief. (Passive voice)', ans: 'The thief was arrested by the police.' },
+                { instr: 'He never tells a lie. (Add a question tag)', ans: 'He never tells a lie, does he?' },
+                { instr: 'He is too old to work. (Rewrite with "so ... that")',
+                    ans: 'He is so old that he cannot work.' },
+                { instr: 'The news is true. (Change into negative)', ans: 'The news is not false.' }
+            ]
+        });
+
+        // ─── SET 4 ───
+        SETS.push({
+            id: 4,
+            q9: [
+                { q: 'Sita ______ have finished the work by tomorrow.', opts: [opt('will', 'will'), opt('would',
+                        'would'), opt('shall', 'shall')], ans: 'will' },
+                { q: 'He is ______ honest man.', opts: [opt('an', 'an'), opt('a', 'a'), opt('the', 'the')], ans: 'an' },
+                { q: 'She has been sleeping ______ 8 o\'clock.', opts: [opt('for', 'for'), opt('since', 'since'), opt(
+                        'from', 'from')], ans: 'since' },
+                { q: 'He was accused ______ theft.', opts: [opt('of', 'of'), opt('for', 'for'), opt('with', 'with')],
+                    ans: 'of' },
+                { q: 'The house ______ roof is red belongs to me.', opts: [opt('which', 'which'), opt('whose', 'whose'),
+                        opt('that', 'that')], ans: 'whose' },
+                { q: 'I wish I ______ fly.', opts: [opt('could', 'could'), opt('can', 'can'), opt('would', 'would')],
+                    ans: 'could' },
+                { q: 'The number of students in this school ______ increasing.', opts: [opt('is', 'is'), opt('are',
+                        'are'), opt('has', 'has')], ans: 'is' },
+                { q: 'He deals ______ rice and grains.', opts: [opt('in', 'in'), opt('with', 'with'), opt('of', 'of')],
+                    ans: 'in' },
+                { q: 'He is ______ hardworking boy that he always tops.', opts: [opt('so', 'so'), opt('such', 'such'),
+                        opt('too', 'too')], ans: 'such' },
+                { q: 'Each boy and each girl ______ given a book.', opts: [opt('was', 'was'), opt('were', 'were'), opt(
+                        'have', 'have')], ans: 'was' }
+            ],
+            q10: [
+                { instr: 'She said, "I have completed my assignment." (Report the sentence)',
+                    ans: 'She said that she had completed her assignment.' },
+                { instr: 'Open the door. (Passive voice)', ans: 'Let the door be opened.' },
+                { instr: 'She hardly works. (Add a question tag)', ans: 'She hardly works, does she?' },
+                { instr: 'Which team won the match? (Change into passive voice)',
+                    ans: 'By which team was the match won?' },
+                { instr: 'I have some money. (Change into negative)', ans: 'I do not have any money.' }
+            ]
+        });
+
+        // ─── SET 5 ───
+        SETS.push({
+            id: 5,
+            q9: [
+                { q: 'They ______ this temple before I came.', opts: [opt('had visited', 'had visited'), opt(
+                        'have visited', 'have visited'), opt('visited', 'visited')], ans: 'had visited' },
+                { q: 'He is ______ tallest boy in our class.', opts: [opt('the', 'the'), opt('a', 'a'), opt('an',
+                        'an')], ans: 'the' },
+                { q: 'We met an old friend ______ the way.', opts: [opt('on', 'on'), opt('by', 'by'), opt('in', 'in')],
+                    ans: 'on' },
+                { q: 'She is looking forward ______ meeting him.', opts: [opt('to', 'to'), opt('for', 'for'), opt('at',
+                        'at')], ans: 'to' },
+                { q: 'He failed ______ he did not work hard.', opts: [opt('because', 'because'), opt('so', 'so'), opt(
+                        'although', 'although')], ans: 'because' },
+                { q: 'He ______ to the party if he were invited.', opts: [opt('would come', 'would come'), opt(
+                        'will come', 'will come'), opt('comes', 'comes')], ans: 'would come' },
+                { q: 'Many a man ______ ruined by bad company.', opts: [opt('was', 'was'), opt('were', 'were'), opt(
+                        'have', 'have')], ans: 'was' },
+                { q: 'The old man is hard ______ hearing.', opts: [opt('of', 'of'), opt('from', 'from'), opt('in',
+                        'in')], ans: 'of' },
+                { q: 'He is so weak ______ he cannot run.', opts: [opt('that', 'that'), opt('so', 'so'), opt('than',
+                        'than')], ans: 'that' },
+                { q: 'There ______ no water in the tank today.', opts: [opt('is', 'is'), opt('are', 'are'), opt('were',
+                        'were')], ans: 'is' }
+            ],
+            q10: [
+                { instr: 'The teacher said, "The earth moves round the sun." (Report the sentence)',
+                    ans: 'The teacher said that the earth moves round the sun.' },
+                { instr: 'He is writing a letter. (Passive voice)', ans: 'A letter is being written by him.' },
+                { instr: 'He has never been to Japan. (Add a question tag)', ans: 'He has never been to Japan, has he?' },
+                { instr: 'He was too tired to walk. (Rewrite with "so ... that")',
+                    ans: 'He was so tired that he could not walk.' },
+                { instr: 'Everybody loves his country. (Change into negative)', ans: 'Nobody dislikes his country.' }
+            ]
+        });
+
+        // ─── SET 6 ───
+        SETS.push({
+            id: 6,
+            q9: [
+                { q: 'The train ______ before we reached the station.', opts: [opt('had left', 'had left'), opt(
+                        'has left', 'has left'), opt('left', 'left')], ans: 'had left' },
+                { q: 'She is ______ MBA graduate.', opts: [opt('an', 'an'), opt('a', 'a'), opt('the', 'the')],
+                    ans: 'an' },
+                { q: 'I have known him ______ my childhood.', opts: [opt('since', 'since'), opt('for', 'for'), opt(
+                        'from', 'from')], ans: 'since' },
+                { q: 'He is proud ______ his achievement.', opts: [opt('of', 'of'), opt('for', 'for'), opt('with',
+                        'with')], ans: 'of' },
+                { q: 'This is the girl ______ I was talking about.', opts: [opt('whom', 'whom'), opt('who', 'who'),
+                        opt('whose', 'whose')], ans: 'whom' },
+                { q: 'He talks as if he ______ everything.', opts: [opt('knew', 'knew'), opt('knows', 'knows'), opt(
+                        'had known', 'had known')], ans: 'knew' },
+                { q: 'The police ______ searching for the criminal.', opts: [opt('was', 'was'), opt('were', 'were'),
+                        opt('has', 'has')], ans: 'were' },
+                { q: 'She is good ______ mathematics.', opts: [opt('in', 'in'), opt('at', 'at'), opt('with', 'with')],
+                    ans: 'at' },
+                { q: 'Unless you work hard, you ______ pass.', opts: [opt('will', 'will'), opt('will not', 'will not'),
+                        opt('would', 'would')], ans: 'will not' },
+                { q: 'One of my friends ______ in America.', opts: [opt('lives', 'lives'), opt('live', 'live'), opt(
+                        'is living', 'is living')], ans: 'lives' }
+            ],
+            q10: [
+                { instr: 'She said to her mother, "I will buy a new dress." (Report the sentence)',
+                    ans: 'She told her mother that she would buy a new dress.' },
+                { instr: 'Someone was making noise. (Passive voice)', ans: 'Noise was being made by someone.' },
+                { instr: 'I am late. (Add a question tag)', ans: 'I am late, aren\'t I?' },
+                { instr: 'He is too short to reach the shelf. (Rewrite with "so ... that")',
+                    ans: 'He is so short that he cannot reach the shelf.' },
+                { instr: 'She can speak English fluently. (Change into negative)',
+                    ans: 'She cannot speak English fluently.' }
+            ]
+        });
+
+        // ─── SET 7 ───
+        SETS.push({
+            id: 7,
+            q9: [
+                { q: 'They ______ English for five years by now.', opts: [opt('have learned', 'have learned'), opt(
+                        'had learned', 'had learned'), opt('have been learning', 'have been learning')],
+                    ans: 'have been learning' },
+                { q: 'Ram is ______ university student.', opts: [opt('a', 'a'), opt('an', 'an'), opt('the', 'the')],
+                    ans: 'a' },
+                { q: 'He will meet you ______ Sunday.', opts: [opt('on', 'on'), opt('in', 'in'), opt('at', 'at')],
+                    ans: 'on' },
+                { q: 'I am not interested ______ politics.', opts: [opt('in', 'in'), opt('for', 'for'), opt('with',
+                        'with')], ans: 'in' },
+                { q: 'The book ______ cover is torn belongs to me.', opts: [opt('whose', 'whose'), opt('which',
+                        'which'), opt('who', 'who')], ans: 'whose' },
+                { q: 'She ______ have called me earlier.', opts: [opt('should', 'should'), opt('shall', 'shall'), opt(
+                        'will', 'will')], ans: 'should' },
+                { q: 'The scissors ______ sharp.', opts: [opt('are', 'are'), opt('is', 'is'), opt('was', 'was')],
+                    ans: 'are' },
+                { q: 'He is senior ______ me.', opts: [opt('to', 'to'), opt('from', 'from'), opt('than', 'than')],
+                    ans: 'to' },
+                { q: 'I got the job ______ I had taken the training.', opts: [opt('because', 'because'), opt('though',
+                        'though'), opt('so', 'so')], ans: 'because' },
+                { q: '______ of the two answers is correct.', opts: [opt('None', 'None'), opt('Neither', 'Neither'),
+                        opt('Both', 'Both')], ans: 'Neither' }
+            ],
+            q10: [
+                { instr: 'He said, "I met her yesterday." (Report the sentence)',
+                    ans: 'He said that he had met her the previous day.' },
+                { instr: 'They will finish the work by Monday. (Passive voice)',
+                    ans: 'The work will be finished by them.' },
+                { instr: 'There is some milk in the jar. (Add a question tag)',
+                    ans: 'There is some milk in the jar, isn\'t there?' },
+                { instr: 'He is too weak to walk. (Rewrite with "so ... that")',
+                    ans: 'He is so weak that he cannot walk.' },
+                { instr: 'He makes a noise. (Change into passive voice)', ans: 'A noise is made by him.' }
+            ]
+        });
+
+        // ─── SET 8 ───
+        SETS.push({
+            id: 8,
+            q9: [
+                { q: 'He ______ from his office by now.', opts: [opt('will have returned', 'will have returned'), opt(
+                        'has returned', 'has returned'), opt('had returned', 'had returned')],
+                    ans: 'will have returned' },
+                { q: 'She gave me ______ one rupee note.', opts: [opt('a', 'a'), opt('an', 'an'), opt('the', 'the')],
+                    ans: 'a' },
+                { q: 'I have been working here ______ 2019.', opts: [opt('since', 'since'), opt('for', 'for'), opt(
+                        'from', 'from')], ans: 'since' },
+                { q: 'He is blind ______ one eye.', opts: [opt('in', 'in'), opt('of', 'of'), opt('with', 'with')],
+                    ans: 'in' },
+                { q: 'He is the man ______ they were looking for.', opts: [opt('whom', 'whom'), opt('who', 'who'),
+                        opt('whose', 'whose')], ans: 'whom' },
+                { q: 'It is high time we ______ the matter.', opts: [opt('discussed', 'discussed'), opt('discuss',
+                        'discuss'), opt('would discuss', 'would discuss')], ans: 'discussed' },
+                { q: 'Ten kilometres ______ a long distance.', opts: [opt('is', 'is'), opt('are', 'are'), opt('were',
+                        'were')], ans: 'is' },
+                { q: 'He was accused ______ stealing.', opts: [opt('of', 'of'), opt('for', 'for'), opt('to', 'to')],
+                    ans: 'of' },
+                { q: 'She is grateful ______ you for the help.', opts: [opt('to', 'to'), opt('for', 'for'), opt('with',
+                        'with')], ans: 'to' },
+                { q: 'The more you read, the ______ you will know.', opts: [opt('more', 'more'), opt('less', 'less'),
+                        opt('better', 'better')], ans: 'better' }
+            ],
+            q10: [
+                { instr: 'She said to him, "Don\'t open the door." (Report the sentence)',
+                    ans: 'She told him not to open the door.' },
+                { instr: 'The work was done by me. (Active voice)', ans: 'I did the work.' },
+                { instr: 'Don\'t make noise. (Add a question tag)', ans: 'Don\'t make noise, will you?' },
+                { instr: 'He is so strong that he can lift it. (Rewrite with "too ... to")',
+                    ans: 'He is too strong not to lift it.' },
+                { instr: 'Stars are visible at night. (Change into interrogative)',
+                    ans: 'Are stars visible at night?' }
+            ]
+        });
+
+        // ─── SET 9 ───
+        SETS.push({
+            id: 9,
+            q9: [
+                { q: 'She ______ TV since morning.', opts: [opt('has been watching', 'has been watching'), opt(
+                        'was watching', 'was watching'), opt('watched', 'watched')], ans: 'has been watching' },
+                { q: 'He is ______ European doctor.', opts: [opt('a', 'a'), opt('an', 'an'), opt('the', 'the')],
+                    ans: 'a' },
+                { q: 'I did not see him ______ the party.', opts: [opt('at', 'at'), opt('in', 'in'), opt('on', 'on')],
+                    ans: 'at' },
+                { q: 'He was tired ______ walking.', opts: [opt('of', 'of'), opt('for', 'for'), opt('with', 'with')],
+                    ans: 'of' },
+                { q: 'The man ______ helped me is my friend.', opts: [opt('who', 'who'), opt('which', 'which'), opt(
+                        'whom', 'whom')], ans: 'who' },
+                { q: 'If I ______ rich, I would help the poor.', opts: [opt('was', 'was'), opt('were', 'were'), opt(
+                        'am', 'am')], ans: 'were' },
+                { q: 'The news ______ broadcast yesterday.', opts: [opt('was', 'was'), opt('is', 'is'), opt('are',
+                        'are')], ans: 'was' },
+                { q: 'She is married ______ a doctor.', opts: [opt('to', 'to'), opt('with', 'with'), opt('of', 'of')],
+                    ans: 'to' },
+                { q: 'He came late ______ that he missed the train.', opts: [opt('so', 'so'), opt('such', 'such'), opt(
+                        'too', 'too')], ans: 'so' },
+                { q: 'It ______ raining since morning.', opts: [opt('has been', 'has been'), opt('is', 'is'), opt(
+                        'was', 'was')], ans: 'has been' }
+            ],
+            q10: [
+                { instr: 'He said, "I may come tomorrow." (Report the sentence)',
+                    ans: 'He said that he might come the next day.' },
+                { instr: 'Who broke the glass? (Passive voice)', ans: 'By whom was the glass broken?' },
+                { instr: 'Let him do the work. (Add a question tag)', ans: 'Let him do the work, will you?' },
+                { instr: 'He is so weak that he cannot lift it. (Rewrite with "too ... to")',
+                    ans: 'He is too weak to lift it.' },
+                { instr: 'He is always late. (Change into negative)', ans: 'He is never late.' }
+            ]
+        });
+
+        // ─── SET 10 ───
+        SETS.push({
+            id: 10,
+            q9: [
+                { q: 'The Sun ______ in the east.', opts: [opt('rises', 'rises'), opt('rose', 'rose'), opt('has risen',
+                        'has risen')], ans: 'rises' },
+                { q: 'He is ______ honest and intelligent boy.', opts: [opt('an', 'an'), opt('a', 'a'), opt('the',
+                        'the')], ans: 'an' },
+                { q: 'I will have finished this work ______ Friday.', opts: [opt('by', 'by'), opt('on', 'on'), opt('in',
+                        'in')], ans: 'by' },
+                { q: 'He is good ______ making jokes.', opts: [opt('at', 'at'), opt('in', 'in'), opt('of', 'of')],
+                    ans: 'at' },
+                { q: 'This is the pen ______ I lost yesterday.', opts: [opt('which', 'which'), opt('who', 'who'), opt(
+                        'whom', 'whom')], ans: 'which' },
+                { q: 'He would help us if he ______.', opts: [opt('could', 'could'), opt('can', 'can'), opt('would',
+                        'would')], ans: 'could' },
+                { q: 'Three miles ______ not a long distance.', opts: [opt('is', 'is'), opt('are', 'are'), opt('were',
+                        'were')], ans: 'is' },
+                { q: 'The train is bound ______ Kathmandu.', opts: [opt('for', 'for'), opt('to', 'to'), opt('at',
+                        'at')], ans: 'for' },
+                { q: 'No sooner had he seen the tiger ______ he ran away.', opts: [opt('than', 'than'), opt('when',
+                        'when'), opt('then', 'then')], ans: 'than' },
+                { q: 'She has a pain ______ her chest.', opts: [opt('in', 'in'), opt('at', 'at'), opt('on', 'on')],
+                    ans: 'in' }
+            ],
+            q10: [
+                { instr: 'She said to me, "Please help me." (Report the sentence)',
+                    ans: 'She requested me to help her.' },
+                { instr: 'The principal has called the meeting. (Passive voice)',
+                    ans: 'The meeting has been called by the principal.' },
+                { instr: 'Somebody is knocking at the door. (Add a question tag)',
+                    ans: 'Somebody is knocking at the door, aren\'t they?' },
+                { instr: 'He is too lazy to work. (Rewrite with "so ... that")',
+                    ans: 'He is so lazy that he cannot work.' },
+                { instr: 'You should not waste your time. (Change into assertive)',
+                    ans: 'You should not waste your time.' }
+            ]
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        //  STATE
+        // ═══════════════════════════════════════════════════════════════
+
+        let currentSet = 0;
+        let selections = {};
+        let revealed = {};
+        let submitted = {};
+        let results = {};
+
+        // ═══════════════════════════════════════════════════════════════
+        //  RENDER
+        // ═══════════════════════════════════════════════════════════════
+
+        function initState() {
+            SETS.forEach((s, si) => {
+                if (!selections[si]) {
+                    selections[si] = {
+                        q9: new Array(s.q9.length).fill(null),
+                        q10: new Array(s.q10.length).fill('')
+                    };
+                }
+                if (!revealed[si]) {
+                    revealed[si] = {
+                        q9: new Array(s.q9.length).fill(false),
+                        q10: new Array(s.q10.length).fill(false)
+                    };
+                }
+                if (submitted[si] === undefined) submitted[si] = false;
+                if (!results[si]) results[si] = null;
+            });
+        }
+
+        function renderSet() {
+            const scrollY = window.scrollY;
+            const active = document.activeElement;
+            let activeInputIdx = null;
+            if (active && active.tagName === 'INPUT' && active.dataset.q10 !== undefined) {
+                activeInputIdx = parseInt(active.dataset.q10);
+            }
+
+            const container = document.getElementById('setContent');
+            const s = SETS[currentSet];
+            const sel = selections[currentSet];
+            const rev = revealed[currentSet];
+            const isSubmitted = submitted[currentSet] || false;
+            const result = results[currentSet];
+
+            let totalMarks = 0;
+            let q9Correct = 0,
+                q10Correct = 0;
+            if (isSubmitted && result) {
+                q9Correct = result.q9Correct;
+                q10Correct = result.q10Correct;
+                totalMarks = result.totalMarks;
+            }
+
+            const totalQ9 = s.q9.length;
+            const totalQ10 = s.q10.length;
+            const maxMarks = totalQ9 * 0.5 + totalQ10 * 1;
+
+            let html = `
+            <div class="set-title-bar">
+              <h2>✦ Set ${s.id}</h2>
+              <div class="score-badge">
+                <span>🏆</span>
+                ${isSubmitted ? `${totalMarks.toFixed(1)}/${maxMarks.toFixed(1)}` : '— / ' + maxMarks.toFixed(1)}
+              </div>
+            </div>
+          `;
+
+            // Q9
+            html += `<div class="section-label">📌 Question 9 <small>Choose the best answer (0.5 mark each)</small></div>`;
+            html += `<div class="question-grid">`;
+            s.q9.forEach((q, i) => {
+                const selected = sel.q9[i];
+                const isRevealed = rev.q9[i] || false;
+                const isCorrect = isSubmitted && result && result.q9CorrectDetails && result.q9CorrectDetails[i];
+                const isWrong = isSubmitted && selected !== null && !isCorrect;
+                const isUnanswered = isSubmitted && selected === null;
+
+                html += `<div class="q-item">`;
+                html += `<div class="q-text"><span class="q-num">${i+1}</span> ${q.q}</div>`;
+                html += `<div class="options">`;
+                q.opts.forEach(opt => {
+                    let cls = 'opt';
+                    if (selected === opt.value) cls += ' selected';
+                    if (isSubmitted) {
+                        if (opt.value === q.ans) cls += ' correct-reveal';
+                        if (selected === opt.value && opt.value !== q.ans) cls += ' wrong-reveal';
+                    } else if (isRevealed && opt.value === q.ans) {
+                        cls += ' correct-reveal';
+                    }
+                    if (isSubmitted && selected === opt.value && isCorrect) cls += ' correct-reveal';
+                    if (isSubmitted && selected === opt.value && isWrong) cls += ' wrong-reveal';
+                    html += `<button class="${cls}" data-q9="${i}" data-val="${opt.value}" ${isSubmitted ? 'disabled style="cursor:default;opacity:0.8;"' : ''}>
+                <span class="opt-label">${String.fromCharCode(65 + q.opts.indexOf(opt))}.</span> ${opt.label}
+              </button>`;
+                });
+                html += `</div>`;
+                if (isSubmitted) {
+                    let statusText = '';
+                    let color = '';
+                    if (isCorrect) { statusText = '✅ Correct';
+                        color = '#4a7a3a'; } else if (isWrong) { statusText = '❌ Incorrect (Answer: ' + q.ans + ')';
+                        color = '#b05a4a'; } else { statusText = '⚠️ Not answered (Answer: ' + q.ans + ')';
+                        color = '#b0803a'; }
+                    html +=
+                        `<div style="margin-top:8px;font-weight:700;font-size:1rem;color:${color};">${statusText}</div>`;
+                }
+                html += `</div>`;
+            });
+            html += `</div>`;
+
+            // Q10
+            html += `<div class="section-label" style="margin-top:34px;">✏️ Question 10 <small>Transformation (1 mark each)</small></div>`;
+            html += `<div class="question-grid">`;
+            s.q10.forEach((q, i) => {
+                const val = sel.q10[i] || '';
+                const isRevealed = rev.q10[i] || false;
+                let isCorrect = false,
+                    isWrong = false,
+                    isUnanswered = false;
+                if (isSubmitted && result) {
+                    const det = result.q10CorrectDetails ? result.q10CorrectDetails[i] : false;
+                    if (det === true) isCorrect = true;
+                    else if (val.trim() !== '') isWrong = true;
+                    else isUnanswered = true;
+                }
+
+                let inputCls = 'q10-input';
+                let hintCls = 'answer-hint';
+                if (isSubmitted) {
+                    if (isCorrect) { inputCls += ' correct';
+                        hintCls += ' show correct-hint'; } else if (isWrong) { inputCls += ' wrong';
+                        hintCls += ' show wrong-hint'; } else { hintCls += ' show'; }
+                } else if (isRevealed) {
+                    inputCls += ' correct';
+                    hintCls += ' show correct-hint';
+                }
+
+                html += `<div class="q-item">`;
+                html += `<div class="q-text"><span class="q-num">${i+1}</span> ${q.instr}</div>`;
+                html += `<div class="${inputCls}">`;
+                html += `<input type="text" placeholder="Type your answer..." data-q10="${i}" value="${val}" ${isSubmitted ? 'disabled style="background:#f5ede6;cursor:default;"' : ''} />`;
+                if (isSubmitted || isRevealed) {
+                    html += `<span class="${hintCls}">${isRevealed || isSubmitted ? '✓ ' + q.ans : ''}</span>`;
+                }
+                html += `</div>`;
+                if (isSubmitted) {
+                    let statusText = '';
+                    let color = '';
+                    if (isCorrect) { statusText = '✅ Correct';
+                        color = '#4a7a3a'; } else if (isWrong) { statusText = '❌ Incorrect (Answer: ' + q.ans + ')';
+                        color = '#b05a4a'; } else { statusText = '⚠️ Not answered (Answer: ' + q.ans + ')';
+                        color = '#b0803a'; }
+                    html +=
+                        `<div style="margin-top:8px;font-weight:700;font-size:1rem;color:${color};">${statusText}</div>`;
+                }
+                html += `</div>`;
+            });
+            html += `</div>`;
+
+            // Results Panel
+            if (isSubmitted && result) {
+                const name = document.getElementById('studentName').value || 'Not provided';
+                const roll = document.getElementById('studentRoll').value || 'Not provided';
+                html += `
+              <div class="results-panel">
+                <h3>📊 Results for Set ${s.id}</h3>
+                <div class="result-summary">
+                  <span>👤 Name: ${name}</span>
+                  <span>🔢 Roll: ${roll}</span>
+                  <span>📝 Score: ${totalMarks.toFixed(1)} / ${maxMarks.toFixed(1)}</span>
+                  <span>✅ MCQ: ${q9Correct}/${totalQ9}</span>
+                  <span>✏️ Trans: ${q10Correct}/${totalQ10}</span>
+                </div>
+                <div style="margin-top:16px;display:flex;gap:14px;flex-wrap:wrap;">
+                  <button class="btn btn-export" id="btnExportPDF">📄 Export Performance (PDF)</button>
+                </div>
+              </div>
+            `;
+            }
+
+            // Action Bar
+            html += `
+            <div class="action-bar">
+              <button class="btn btn-check" id="btnSubmit">${isSubmitted ? '✅ Submitted' : '📥 Submit Set'}</button>
+              <button class="btn btn-reset" id="btnReset">🔄 Reset Set</button>
+              <button class="btn btn-show" id="btnShow">👁 Show Answers</button>
+              <button class="btn btn-clear" id="btnClear">🗑 Clear All</button>
+            </div>
+          `;
+
+            container.innerHTML = html;
+
+            window.scrollTo(0, scrollY);
+            if (activeInputIdx !== null && !isSubmitted) {
+                const input = container.querySelector(`.q10-input input[data-q10="${activeInputIdx}"]`);
+                if (input) {
+                    Promise.resolve().then(() => {
+                        input.focus();
+                        input.setSelectionRange(input.value.length, input.value.length);
+                    });
+                }
+            }
+
+            // Events
+            if (!isSubmitted) {
+                container.querySelectorAll('.opt').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const idx = parseInt(btn.dataset.q9);
+                        const val = btn.dataset.val;
+                        const selState = selections[currentSet];
+                        if (submitted[currentSet]) return;
+                        if (selState.q9[idx] === val) {
+                            selState.q9[idx] = null;
+                        } else {
+                            selState.q9[idx] = val;
+                        }
+                        revealed[currentSet].q9[idx] = false;
+                        renderSet();
+                    });
+                });
+            }
+
+            if (!isSubmitted) {
+                container.querySelectorAll('.q10-input input').forEach(inp => {
+                    inp.addEventListener('input', () => {
+                        const idx = parseInt(inp.dataset.q10);
+                        const selState = selections[currentSet];
+                        if (submitted[currentSet]) return;
+                        selState.q10[idx] = inp.value;
+                        revealed[currentSet].q10[idx] = false;
+                        updateScoreBadge();
+                    });
+                });
+            }
+
+            document.getElementById('btnSubmit').addEventListener('click', () => {
+                if (submitted[currentSet]) {
+                    alert('This set has already been submitted.');
+                    return;
+                }
+                const name = document.getElementById('studentName').value.trim();
+                const roll = document.getElementById('studentRoll').value.trim();
+                if (!name || !roll) {
+                    alert('Please enter your Name and Roll Number before submitting.');
+                    return;
+                }
+                const s = SETS[currentSet];
+                const sel = selections[currentSet];
+                let q9CorrectArr = [];
+                let q9CorrectCount = 0;
+                s.q9.forEach((q, i) => {
+                    const isCorrect = sel.q9[i] === q.ans;
+                    q9CorrectArr.push(isCorrect);
+                    if (isCorrect) q9CorrectCount++;
+                });
+                let q10CorrectArr = [];
+                let q10CorrectCount = 0;
+                s.q10.forEach((q, i) => {
+                    const userAns = sel.q10[i].trim().toLowerCase();
+                    const correctAns = q.ans.trim().toLowerCase();
+                    const isCorrect = userAns === correctAns;
+                    q10CorrectArr.push(isCorrect);
+                    if (isCorrect) q10CorrectCount++;
+                });
+                const totalMarks = q9CorrectCount * 0.5 + q10CorrectCount * 1;
+                results[currentSet] = {
+                    q9Correct: q9CorrectCount,
+                    q10Correct: q10CorrectCount,
+                    q9CorrectDetails: q9CorrectArr,
+                    q10CorrectDetails: q10CorrectArr,
+                    totalMarks: totalMarks,
+                    maxMarks: s.q9.length * 0.5 + s.q10.length * 1
+                };
+                submitted[currentSet] = true;
+                const rev = revealed[currentSet];
+                s.q9.forEach((q, i) => rev.q9[i] = true);
+                s.q10.forEach((q, i) => rev.q10[i] = true);
+                renderSet();
+            });
+
+            document.getElementById('btnReset').addEventListener('click', () => {
+                const sel = selections[currentSet];
+                const rev = revealed[currentSet];
+                sel.q9.fill(null);
+                sel.q10.fill('');
+                rev.q9.fill(false);
+                rev.q10.fill(false);
+                submitted[currentSet] = false;
+                results[currentSet] = null;
+                renderSet();
+            });
+
+            document.getElementById('btnShow').addEventListener('click', () => {
+                if (submitted[currentSet]) {
+                    alert('This set is already submitted. Answers are shown.');
+                    return;
+                }
+                const s = SETS[currentSet];
+                const rev = revealed[currentSet];
+                const sel = selections[currentSet];
+                s.q9.forEach((q, i) => {
+                    rev.q9[i] = true;
+                    if (!sel.q9[i]) sel.q9[i] = q.ans;
+                });
+                s.q10.forEach((q, i) => {
+                    rev.q10[i] = true;
+                    if (!sel.q10[i] || sel.q10[i].trim() === '') sel.q10[i] = q.ans;
+                });
+                renderSet();
+            });
+
+            document.getElementById('btnClear').addEventListener('click', () => {
+                if (confirm('Clear all answers across ALL sets?')) {
+                    SETS.forEach((s, si) => {
+                        selections[si].q9.fill(null);
+                        selections[si].q10.fill('');
+                        revealed[si].q9.fill(false);
+                        revealed[si].q10.fill(false);
+                        submitted[si] = false;
+                        results[si] = null;
+                    });
+                    renderSet();
+                }
+            });
+
+            const exportBtn = document.getElementById('btnExportPDF');
+            if (exportBtn) {
+                exportBtn.addEventListener('click', () => {
+                    generatePDF(currentSet);
+                });
+            }
+        }
+
+        function updateScoreBadge() {
+            const container = document.getElementById('setContent');
+            const badge = container?.querySelector('.score-badge');
+            if (!badge) return;
+            const s = SETS[currentSet];
+            const isSubmitted = submitted[currentSet] || false;
+            if (isSubmitted && results[currentSet]) {
+                const total = results[currentSet].totalMarks;
+                const max = results[currentSet].maxMarks;
+                badge.innerHTML = `<span>🏆</span> ${total.toFixed(1)}/${max.toFixed(1)}`;
+            } else {
+                const max = s.q9.length * 0.5 + s.q10.length * 1;
+                badge.innerHTML = `<span>🏆</span> — / ${max.toFixed(1)}`;
+            }
+        }
+
+        function renderNav() {
+            const nav = document.getElementById('setNav');
+            nav.innerHTML = SETS.map((s, i) =>
+                `<button class="${i === currentSet ? 'active' : ''}" data-idx="${i}">
+              Set ${s.id}
+              <span class="set-badge">${s.q9.length + s.q10.length}</span>
+              ${submitted[i] ? '✅' : ''}
+            </button>`
+            ).join('');
+
+            nav.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = parseInt(btn.dataset.idx);
+                    if (idx !== currentSet) {
+                        currentSet = idx;
+                        renderAll();
+                    }
+                });
+            });
+        }
+
+        function renderAll() {
+            renderNav();
+            renderSet();
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        //  PDF GENERATION — compact A4
+        // ═══════════════════════════════════════════════════════════════
+
+        function generatePDF(setIdx) {
+            const s = SETS[setIdx];
+            const result = results[setIdx];
+            if (!result) return;
+            const name = document.getElementById('studentName').value || 'Not provided';
+            const roll = document.getElementById('studentRoll').value || 'Not provided';
+            const sel = selections[setIdx];
+
+            const doc = new window.jspdf.jsPDF('p', 'mm', 'a4');
+            const margin = 12;
+
+            doc.setFontSize(14);
+            doc.text(`Performance Report - Set ${s.id}`, margin, 18);
+            doc.setFontSize(10);
+            doc.text(`Name: ${name}`, margin, 26);
+            doc.text(`Roll No.: ${roll}`, margin, 32);
+            doc.text(`Score: ${result.totalMarks.toFixed(1)} / ${result.maxMarks.toFixed(1)}  |  MCQ: ${result.q9Correct}/${s.q9.length}  |  Trans: ${result.q10Correct}/${s.q10.length}`, margin, 38);
+
+            const rows = [];
+            s.q9.forEach((q, i) => {
+                const userAns = sel.q9[i] || '(not answered)';
+                const correctAns = q.ans;
+                const isCorrect = result.q9CorrectDetails[i];
+                const status = isCorrect ? '✔' : '✘';
+                const marks = isCorrect ? '0.5' : '0';
+                rows.push([
+                    `MCQ ${i+1}`,
+                    q.q,
+                    userAns,
+                    correctAns,
+                    status,
+                    marks
+                ]);
+            });
+            s.q10.forEach((q, i) => {
+                const userAns = sel.q10[i] || '(not answered)';
+                const correctAns = q.ans;
+                const isCorrect = result.q10CorrectDetails[i];
+                const status = isCorrect ? '✔' : '✘';
+                const marks = isCorrect ? '1' : '0';
+                rows.push([
+                    `T${i+1}`,
+                    q.instr,
+                    userAns,
+                    correctAns,
+                    status,
+                    marks
+                ]);
+            });
+
+            doc.autoTable({
+                startY: 44,
+                head: [
+                    ['#', 'Question', 'Your Answer', 'Correct Answer', 'Status', 'Marks']
+                ],
+                body: rows,
+                theme: 'striped',
+                styles: {
+                    fontSize: 7,
+                    cellPadding: 1.5,
+                    lineColor: [200, 180, 160],
+                    lineWidth: 0.1,
+                },
+                headStyles: {
+                    fillColor: [180, 140, 100],
+                    fontSize: 8,
+                    fontStyle: 'bold',
+                    halign: 'center',
+                },
+                columnStyles: {
+                    0: { cellWidth: 12, halign: 'center' },
+                    1: { cellWidth: 60, halign: 'left' },
+                    2: { cellWidth: 32, halign: 'left' },
+                    3: { cellWidth: 32, halign: 'left' },
+                    4: { cellWidth: 14, halign: 'center' },
+                    5: { cellWidth: 12, halign: 'center' },
+                },
+                tableWidth: 'auto',
+                margin: { left: margin, right: margin },
+                didDrawPage: function(data) {
+                    doc.setFontSize(7);
+                    doc.text('Generated by SEE Grammar Practice', margin, doc.internal.pageSize.height - 6);
+                }
+            });
+
+            doc.save(`Performance_Set${s.id}.pdf`);
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        //  INIT
+        // ═══════════════════════════════════════════════════════════════
+
+        initState();
+        renderAll();
+    </script>
+
+</body>
+</html>
