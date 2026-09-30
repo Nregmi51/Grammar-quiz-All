@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes" />
+    <title>💬 Direct & Indirect Speech Quiz</title>
+    <style>
+        /* ───────── RESET & BASE ───────── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: #1a0b2e;
+            background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 35%, #4a1e6e 70%, #6b2a5e 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ─── ANIMATED FLOATING SPEECH BUBBLES ─── */
+        .bubble {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.12;
+            font-size: 64px;
+            animation: floatBubble 22s ease-in-out infinite alternate;
+            z-index: 0;
+        }
+        .bubble:nth-child(1) { top: 6%; left: 3%; animation-duration: 26s; }
+        .bubble:nth-child(2) { top: 70%; left: 88%; animation-duration: 30s; animation-delay: 3s; }
+        .bubble:nth-child(3) { top: 38%; left: 48%; animation-duration: 24s; animation-delay: 7s; }
+        .bubble:nth-child(4) { top: 84%; left: 12%; animation-duration: 28s; animation-delay: 2s; }
+        .bubble:nth-child(5) { top: 12%; left: 82%; animation-duration: 32s; animation-delay: 9s; }
+        .bubble:nth-child(6) { top: 55%; left: 8%; animation-duration: 27s; animation-delay: 5s; }
+        .bubble:nth-child(7) { top: 25%; left: 92%; animation-duration: 29s; animation-delay: 11s; }
+        .bubble:nth-child(8) { top: 92%; left: 60%; animation-duration: 25s; animation-delay: 6s; }
+
+        @keyframes floatBubble {
+            0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
+            33%  { transform: translate(45px, -35px) rotate(8deg) scale(1.15); }
+            66%  { transform: translate(-25px, 25px) rotate(-5deg) scale(0.9); }
+            100% { transform: translate(35px, -15px) rotate(6deg) scale(1.08); }
+        }
+
+        /* glowing orbs in background */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            opacity: 0.18;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(60px);
+            animation: pulseOrb 14s ease-in-out infinite alternate;
+        }
+        body::before {
+            width: 550px; height: 550px;
+            background: radial-gradient(circle, #f472b6, #a855f7);
+            top: -180px; right: -180px;
+        }
+        body::after {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #38bdf8, #6366f1);
+            bottom: -180px; left: -180px;
+            animation-delay: 4s;
+        }
+        @keyframes pulseOrb {
+            0%   { transform: scale(1);   opacity: 0.15; }
+            50%  { transform: scale(1.2); opacity: 0.25; }
+            100% { transform: scale(1);   opacity: 0.15; }
+        }
+
+        /* ───────── MAIN CARD ───────── */
+        .quiz-container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(26px);
+            -webkit-backdrop-filter: blur(26px);
+            border-radius: 48px;
+            padding: 34px 36px 42px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ───────── HEADER ───────── */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .header-left .logo {
+            font-size: 38px;
+            line-height: 1;
+            filter: drop-shadow(0 0 16px rgba(244, 114, 182, 0.5));
+            animation: logoPulse 3s ease-in-out infinite;
+        }
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50%      { transform: scale(1.1) rotate(-5deg); }
+        }
+        .header-left h1 {
+            font-size: 28px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+        }
+        .header-left h1 span {
+            background: linear-gradient(135deg, #f472b6, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .credit-badge {
+            background: linear-gradient(135deg, rgba(244, 114, 182, 0.20), rgba(168, 85, 247, 0.12));
+            border: 1.5px solid rgba(244, 114, 182, 0.30);
+            border-radius: 60px;
+            padding: 8px 22px 8px 18px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #f9a8d4;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+            backdrop-filter: blur(4px);
+        }
+        .credit-badge .heart {
+            color: #ef4444;
+            animation: pulseHeart 1.6s infinite;
+            font-size: 18px;
+        }
+        @keyframes pulseHeart {
+            0%, 100% { transform: scale(1); }
+            50%      { transform: scale(1.35); }
+        }
+
+        /* ───────── DROPDOWN ───────── */
+        .q-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.07);
+            padding: 6px 14px 6px 20px;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(4px);
+        }
+        .q-selector label {
+            color: #cbd5e1;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .q-selector select {
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 40px;
+            padding: 8px 38px 8px 18px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            outline: none;
+            font-family: inherit;
+            transition: all 0.25s ease;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c084fc' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+        }
+        .q-selector select:hover {
+            background-color: rgba(255, 255, 255, 0.18);
+        }
+        .q-selector select option {
+            background: #2d1b4e;
+            color: #fff;
+            padding: 8px;
+        }
+
+        /* ───────── STATS BAR ───────── */
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 60px;
+            padding: 12px 26px 12px 30px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(4px);
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .stats-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #cbd5e1;
+            flex-wrap: wrap;
+        }
+        .stats-left .score-num {
+            background: linear-gradient(135deg, #f472b6, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+            font-size: 26px;
+        }
+        .stats-left .score-total {
+            color: #94a3b8;
+            font-weight: 600;
+        }
+        .stats-left .divider {
+            width: 1.5px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.10);
+        }
+        .stats-left .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .stats-left .stat-item .num {
+            font-weight: 800;
+            font-size: 18px;
+        }
+        .stats-left .stat-item .num.green { color: #4ade80; }
+        .stats-left .stat-item .num.red   { color: #fb7185; }
+
+        .stats-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #94a3b8;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .stats-right .q-progress {
+            color: #fff;
+            font-weight: 800;
+            font-size: 18px;
+            background: rgba(244, 114, 182, 0.15);
+            padding: 2px 16px;
+            border-radius: 40px;
+            border: 1px solid rgba(244, 114, 182, 0.20);
+        }
+
+        /* ───────── PROGRESS CIRCLES ───────── */
+        .progress-wrapper {
+            position: relative;
+            margin-bottom: 28px;
+            padding: 4px 0;
+        }
+        .progress-scroll {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 4px 14px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(244, 114, 182, 0.3) transparent;
+        }
+        .progress-scroll::-webkit-scrollbar { height: 5px; }
+        .progress-scroll::-webkit-scrollbar-track { background: transparent; }
+        .progress-scroll::-webkit-scrollbar-thumb {
+            background: rgba(244, 114, 182, 0.35);
+            border-radius: 10px;
+        }
+
+        .circle-item {
+            flex: 0 0 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.06);
+            border: 2.5px solid rgba(255, 255, 255, 0.10);
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            user-select: none;
+            font-family: inherit;
+        }
+        .circle-item.active {
+            background: linear-gradient(135deg, #f472b6, #c084fc);
+            border-color: #f472b6;
+            color: #1a0b2e;
+            transform: scale(1.22);
+            box-shadow: 0 0 32px rgba(244, 114, 182, 0.55);
+            font-weight: 900;
+        }
+        .circle-item.done-correct {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            border-color: #22c55e;
+            color: #fff;
+            box-shadow: 0 0 22px rgba(34, 197, 94, 0.35);
+        }
+        .circle-item.done-wrong {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border-color: #ef4444;
+            color: #fff;
+            box-shadow: 0 0 22px rgba(239, 68, 68, 0.35);
+        }
+
+        /* ───────── QUESTION CARD ───────── */
+        .question-card {
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 32px;
+            padding: 34px 36px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+            min-height: 340px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .q-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .question-number-circle {
+            background: linear-gradient(135deg, #f472b6, #c084fc);
+            color: #1a0b2e;
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            font-weight: 900;
+            box-shadow: 0 6px 0 #6b2a5e, 0 10px 24px rgba(0, 0, 0, 0.35);
+            flex-shrink: 0;
+            border: 3px solid #fbcfe8;
+        }
+        .q-emoji {
+            font-size: 38px;
+            line-height: 1;
+        }
+        .q-status {
+            font-size: 16px;
+            font-weight: 700;
+            padding: 6px 20px;
+            border-radius: 60px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .q-status.show { opacity: 1; }
+        .q-status.correct {
+            background: rgba(34, 197, 94, 0.22);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.30);
+        }
+        .q-status.wrong {
+            background: rgba(239, 68, 68, 0.22);
+            color: #fb7185;
+            border: 1px solid rgba(239, 68, 68, 0.30);
+        }
+
+        .q-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #f1f5f9;
+            line-height: 1.55;
+            margin-bottom: 26px;
+            flex: 1;
+            letter-spacing: -0.2px;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+        }
+        .q-text .direct-part {
+            color: #f9a8d4;
+            font-weight: 800;
+        }
+
+        /* ───────── OPTIONS ───────── */
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+        .option-btn {
+            padding: 16px 22px;
+            border-radius: 22px;
+            border: 2.5px solid rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+            font-size: 19px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-align: left;
+            font-family: inherit;
+            letter-spacing: 0.2px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            line-height: 1.4;
+        }
+        .option-btn .opt-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(244, 114, 182, 0.20);
+            color: #f9a8d4;
+            border-radius: 50%;
+            min-width: 34px;
+            height: 34px;
+            font-size: 15px;
+            font-weight: 900;
+            flex-shrink: 0;
+            border: 1.5px solid rgba(244, 114, 182, 0.30);
+        }
+        .option-btn:hover:not(.disabled) {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(244, 114, 182, 0.40);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 32px rgba(0, 0, 0, 0.25);
+        }
+        .option-btn:active:not(.disabled) {
+            transform: scale(0.97);
+        }
+        .option-btn.selected-correct {
+            background: rgba(34, 197, 94, 0.22);
+            border-color: #22c55e;
+            color: #4ade80;
+            box-shadow: 0 0 38px rgba(34, 197, 94, 0.25);
+        }
+        .option-btn.selected-correct .opt-label {
+            background: rgba(34, 197, 94, 0.30);
+            color: #bbf7d0;
+            border-color: #22c55e;
+        }
+        .option-btn.selected-wrong {
+            background: rgba(239, 68, 68, 0.22);
+            border-color: #ef4444;
+            color: #fb7185;
+            box-shadow: 0 0 38px rgba(239, 68, 68, 0.25);
+        }
+        .option-btn.selected-wrong .opt-label {
+            background: rgba(239, 68, 68, 0.30);
+            color: #fecaca;
+            border-color: #ef4444;
+        }
+        .option-btn.show-correct {
+            background: rgba(34, 197, 94, 0.10);
+            border-color: #22c55e;
+            border-style: dashed;
+            color: #4ade80;
+        }
+        .option-btn.disabled {
+            cursor: default;
+            opacity: 0.65;
+        }
+        .option-btn.disabled:hover {
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* ───────── FEEDBACK MESSAGE ───────── */
+        .feedback-banner {
+            margin-top: 4px;
+            padding: 14px 24px;
+            border-radius: 60px;
+            font-size: 20px;
+            font-weight: 800;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+        .feedback-banner.correct {
+            background: rgba(34, 197, 94, 0.18);
+            color: #4ade80;
+            border-color: rgba(34, 197, 94, 0.30);
+        }
+        .feedback-banner.wrong {
+            background: rgba(239, 68, 68, 0.18);
+            color: #fb7185;
+            border-color: rgba(239, 68, 68, 0.30);
+        }
+        .auto-timer {
+            font-size: 14px;
+            color: #94a3b8;
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 600;
+            opacity: 0.75;
+            letter-spacing: 0.3px;
+        }
+
+        /* ───────── NAVIGATION ───────── */
+        .nav-area {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 34px;
+            border: none;
+            border-radius: 60px;
+            background: linear-gradient(135deg, #f472b6, #c084fc);
+            color: #1a0b2e;
+            font-weight: 900;
+            font-size: 17px;
+            box-shadow: 0 6px 0 #6b2a5e, 0 10px 28px rgba(244, 114, 182, 0.30);
+            transition: all 0.15s ease;
+            cursor: pointer;
+            text-align: center;
+            touch-action: manipulation;
+            border: 2px solid #fbcfe8;
+            letter-spacing: 0.3px;
+        }
+        .btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 1px 0 #6b2a5e;
+        }
+        .btn-restart {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #fff;
+            box-shadow: 0 6px 0 #7a2222, 0 10px 28px rgba(239, 68, 68, 0.30);
+            border-color: #fca5a5;
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #fff;
+            box-shadow: 0 6px 0 #14532d, 0 10px 28px rgba(34, 197, 94, 0.30);
+            border-color: #86efac;
+        }
+        .btn-start {
+            background: linear-gradient(135deg, #38bdf8, #6366f1);
+            color: #fff;
+            box-shadow: 0 6px 0 #1e3a8a, 0 10px 28px rgba(56, 189, 248, 0.30);
+            border-color: #bae6fd;
+            padding: 12px 26px;
+            font-size: 16px;
+        }
+
+        /* ───────── DROPDOWN AREA WRAPPER ───────── */
+        .control-row {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-top: 6px;
+        }
+        .dropdown-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.07);
+            padding: 8px 18px;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(4px);
+        }
+        .dropdown-area label {
+            font-weight: 700;
+            font-size: 15px;
+            color: #cbd5e1;
+        }
+        .dropdown-area select {
+            padding: 8px 34px 8px 16px;
+            border-radius: 40px;
+            border: 1.5px solid rgba(244, 114, 182, 0.35);
+            font-size: 16px;
+            font-weight: 800;
+            background: rgba(255, 255, 255, 0.10);
+            color: #fff;
+            cursor: pointer;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            font-family: inherit;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23f9a8d4' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 13px center;
+        }
+        .dropdown-area select option {
+            background: #2d1b4e;
+            color: #fff;
+        }
+
+        /* ───────── RESULT SCREEN ───────── */
+        .result-box {
+            text-align: center;
+            padding: 30px 20px 10px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        .result-box.show {
+            display: flex;
+            animation: fadeUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes fadeUp {
+            0%   { opacity: 0; transform: translateY(40px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .result-box .big-emoji {
+            font-size: 88px;
+            margin-bottom: 10px;
+            animation: bounceEmoji 2s ease-in-out infinite;
+        }
+        @keyframes bounceEmoji {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50%      { transform: translateY(-14px) scale(1.06); }
+        }
+        .result-box .score-big {
+            font-size: 68px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #f472b6, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            padding: 8px 48px;
+            border-radius: 60px;
+            border: 2px solid rgba(244, 114, 182, 0.30);
+            margin: 0.4rem 0;
+            background-color: rgba(244, 114, 182, 0.06);
+            text-shadow: 0 0 50px rgba(244, 114, 182, 0.20);
+        }
+        .result-box .perf-detail {
+            font-size: 24px;
+            font-weight: 800;
+            color: #f1f5f9;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 12px 34px;
+            border-radius: 60px;
+            display: inline-block;
+            margin: 0.5rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+        .result-box .message {
+            font-size: 26px;
+            font-weight: 800;
+            margin: 0.8rem 0;
+            color: #f1f5f9;
+        }
+        .result-box .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.2rem;
+        }
+
+        /* ───────── RESPONSIVE ───────── */
+        @media (max-width: 780px) {
+            .quiz-container { padding: 22px 18px 30px; border-radius: 32px; }
+            .header-left h1 { font-size: 22px; }
+            .header-left .logo { font-size: 30px; }
+            .credit-badge { font-size: 13px; padding: 6px 14px 6px 12px; }
+            .q-selector label { font-size: 13px; }
+            .q-selector select { font-size: 14px; padding: 6px 32px 6px 14px; }
+            .stats-left { font-size: 14px; gap: 12px; }
+            .stats-left .score-num { font-size: 22px; }
+            .stats-right .q-progress { font-size: 15px; padding: 2px 12px; }
+            .circle-item { flex: 0 0 36px; height: 36px; font-size: 12px; border-width: 2px; }
+            .question-card { padding: 24px 20px 22px; min-height: 280px; border-radius: 24px; }
+            .q-text { font-size: 20px; }
+            .option-btn { font-size: 17px; padding: 14px 18px; border-radius: 18px; }
+            .question-number-circle { width: 52px; height: 52px; font-size: 22px; }
+            .q-emoji { font-size: 30px; }
+            .result-box .score-big { font-size: 48px; padding: 6px 32px; }
+            .result-box .perf-detail { font-size: 18px; padding: 10px 24px; }
+            .result-box .message { font-size: 20px; }
+            .result-box .big-emoji { font-size: 64px; }
+            .btn { font-size: 15px; padding: 12px 26px; }
+        }
+
+        @media (max-width: 520px) {
+            .quiz-container { padding: 16px 12px 24px; border-radius: 24px; }
+            .header-left h1 { font-size: 18px; }
+            .header-left .logo { font-size: 24px; }
+            .header-left { gap: 8px; }
+            .credit-badge { font-size: 11px; padding: 4px 10px 4px 8px; gap: 6px; }
+            .credit-badge .heart { font-size: 14px; }
+            .q-selector label { font-size: 11px; }
+            .q-selector select { font-size: 12px; padding: 4px 28px 4px 10px; }
+            .stats-left { font-size: 12px; gap: 8px; }
+            .stats-left .score-num { font-size: 18px; }
+            .stats-left .divider { height: 20px; }
+            .stats-right { font-size: 11px; }
+            .stats-right .q-progress { font-size: 13px; padding: 1px 10px; }
+            .stats-bar { padding: 8px 12px; border-radius: 32px; gap: 4px; }
+            .circle-item { flex: 0 0 30px; height: 30px; font-size: 10px; border-width: 1.5px; }
+            .progress-scroll { gap: 6px; padding: 6px 2px 10px; }
+            .question-card { padding: 18px 14px 18px; min-height: 240px; border-radius: 20px; }
+            .question-number-circle { width: 44px; height: 44px; font-size: 18px; border-width: 2px; }
+            .q-emoji { font-size: 26px; }
+            .q-text { font-size: 17px; margin-bottom: 18px; }
+            .option-btn { font-size: 15px; padding: 12px 14px; border-radius: 16px; gap: 10px; }
+            .option-btn .opt-label { min-width: 28px; height: 28px; font-size: 12px; }
+            .feedback-banner { font-size: 15px; padding: 10px 16px; }
+            .auto-timer { font-size: 12px; }
+            .btn { font-size: 13px; padding: 10px 20px; }
+            .btn-start { font-size: 13px; padding: 10px 18px; }
+            .dropdown-area { padding: 6px 12px; gap: 6px; }
+            .dropdown-area label { font-size: 12px; }
+            .dropdown-area select { font-size: 13px; padding: 6px 28px 6px 12px; }
+            .result-box .score-big { font-size: 36px; padding: 6px 22px; }
+            .result-box .perf-detail { font-size: 15px; padding: 8px 18px; }
+            .result-box .message { font-size: 17px; }
+            .result-box .big-emoji { font-size: 52px; }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <!-- ─── FLOATING SPEECH BUBBLES ─── -->
+    <div class="bubble">💬</div>
+    <div class="bubble">🗨️</div>
+    <div class="bubble">💭</div>
+    <div class="bubble">🗯️</div>
+    <div class="bubble">💬</div>
+    <div class="bubble">🗨️</div>
+    <div class="bubble">💭</div>
+    <div class="bubble">🗯️</div>
+
+    <div class="quiz-container" id="quizApp">
+        <!-- ─── HEADER ─── -->
+        <div class="header">
+            <div class="header-left">
+                <span class="logo">💬</span>
+                <h1>Direct & <span>Indirect</span> Speech</h1>
+            </div>
+            <div class="header-right">
+                <div class="credit-badge">
+                    <span>✍️</span> NP Regmi
+                    <span class="heart">❤️</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── STATS BAR ─── -->
+        <div class="stats-bar" id="statsBar">
+            <div class="stats-left">
+                <span>🏆 Score</span>
+                <span class="score-num" id="scoreDisplay">0</span>
+                <span class="score-total">/ <span id="totalQuestionsDisplay">10</span></span>
+                <span class="divider"></span>
+                <span class="stat-item">✅ <span class="num green" id="correctCountDisplay">0</span></span>
+                <span class="stat-item">❌ <span class="num red" id="wrongCountDisplay">0</span></span>
+            </div>
+            <div class="stats-right">
+                <span>📌</span>
+                <span class="q-progress" id="qProgressText">1 / 10</span>
+            </div>
+        </div>
+
+        <!-- ─── PROGRESS CIRCLES ─── -->
+        <div class="progress-wrapper">
+            <div class="progress-scroll" id="progressScroll"></div>
+        </div>
+
+        <!-- ─── QUESTION AREA ─── -->
+        <div id="questionArea">
+            <div class="question-card" id="questionCard">
+                <div class="q-header">
+                    <div class="q-header-left">
+                        <div class="question-number-circle" id="questionNumber">1</div>
+                        <div class="q-emoji" id="questionEmoji">💬</div>
+                    </div>
+                    <span class="q-status" id="qStatus"></span>
+                </div>
+                <div class="q-text" id="questionText">Loading question...</div>
+                <div class="options-grid" id="optionsContainer"></div>
+                <div class="feedback-banner" id="feedbackDisplay">💡 Pick the correct answer!</div>
+                <div class="auto-timer" id="autoTimer">⏳ Waiting for your answer...</div>
+            </div>
+        </div>
+
+        <!-- ─── CONTROL ROW (Dropdown + Start + Reset) ─── -->
+        <div class="control-row">
+            <div class="dropdown-area">
+                <label for="questionCountSelect">📝 Questions:</label>
+                <select id="questionCountSelect">
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="28">All (28)</option>
+                </select>
+                <button class="btn btn-start" id="startQuizBtn">🚀 Start</button>
+            </div>
+            <button class="btn btn-restart" id="restartBtn">🔄 Restart</button>
+        </div>
+
+        <!-- ─── RESULT SCREEN ─── -->
+        <div id="resultScreen" class="result-box hidden">
+            <div class="big-emoji" id="resultEmoji">🎉</div>
+            <div class="score-big" id="finalScore">0 / 10</div>
+            <div class="perf-detail" id="perfDetail">You made 0 correct out of 10</div>
+            <div class="message" id="finalMessage">Great job!</div>
+            <div class="btn-group">
+                <button class="btn btn-success" id="retryBtn">🔄 Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  QUESTION BANK (28 Questions)
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        const allQuestions = [
+            // ─── Statements ───
+            {
+                q: 'Ram said to Hari, "I will help you."',
+                options: [
+                    'Ram told Hari that I would help him.',
+                    'Ram told Hari that he would help him.',
+                    'Ram told Hari that he will help him.',
+                    'Ram said Hari that he would help him.'
+                ],
+                correctIndex: 1,
+                emoji: '🗣️'
+            },
+            {
+                q: 'She said, "I am reading now."',
+                options: [
+                    'She said that she is reading now.',
+                    'She said that she was reading now.',
+                    'She said that she was reading then.',
+                    'She told that she was reading then.'
+                ],
+                correctIndex: 2,
+                emoji: '📖'
+            },
+            {
+                q: 'Martin said to Anna, "I will meet you tomorrow."',
+                options: [
+                    'Martin told Anna that he would meet her the following day.',
+                    'Martin told Anna that I will meet her tomorrow.',
+                    'Martin said to Anna that he will meet her the next day.',
+                    'Martin told Anna that he would meet you tomorrow.'
+                ],
+                correctIndex: 0,
+                emoji: '🤝'
+            },
+            {
+                q: 'Ram said to Rita, "I have been working at this company."',
+                options: [
+                    'Ram told Rita that he has been working at that company.',
+                    'Ram told Rita that he had been working at that company.',
+                    'Ram said Rita that he had been working at this company.',
+                    'Ram told Rita that I had been working at that company.'
+                ],
+                correctIndex: 1,
+                emoji: '💼'
+            },
+            {
+                q: 'The boy said, "I went to school every day."',
+                options: [
+                    'The boy said that he goes to school every day.',
+                    'The boy said that he went to school every day.',
+                    'The boy said that he had gone to school every day.',
+                    'The boy told that he had gone to school every day.'
+                ],
+                correctIndex: 2,
+                emoji: '🏫'
+            },
+            {
+                q: 'They said, "We are busy today."',
+                options: [
+                    'They said that they were busy that day.',
+                    'They said that we are busy today.',
+                    'They said that they are busy that day.',
+                    'They told that they were busy today.'
+                ],
+                correctIndex: 0,
+                emoji: '👥'
+            },
+            {
+                q: 'Ram said to Hari, "I will help you tomorrow."',
+                options: [
+                    'Ram told Hari that he will help him tomorrow.',
+                    'Ram told Hari that he would help him the next day.',
+                    'Ram asked Hari if he would help him the following day.',
+                    'Ram told Hari that I would help him the next day.'
+                ],
+                correctIndex: 1,
+                emoji: '📅'
+            },
+            {
+                q: 'She said, "I have been reading this book since morning."',
+                options: [
+                    'She said that she has been reading that book since morning.',
+                    'She said that I had been reading this book since morning.',
+                    'She said that she had been reading that book since morning.',
+                    'She told that she was reading that book since morning.'
+                ],
+                correctIndex: 2,
+                emoji: '📚'
+            },
+            {
+                q: 'They said, "We bought a new house last year."',
+                options: [
+                    'They said that they bought a new house the previous year.',
+                    'They said that they had bought a new house the previous year.',
+                    'They told that we had bought a new house last year.',
+                    'They said that they have bought a new house the year before.'
+                ],
+                correctIndex: 1,
+                emoji: '🏠'
+            },
+            {
+                q: 'She said, "Those flowers are very nice; I like them."',
+                options: [
+                    'She said that those flowers were very nice and she liked them.',
+                    'She said that these flowers are very nice and I like them.',
+                    'She told that those flowers are very nice and she liked them.',
+                    'She said that these flowers were very nice and she likes them.'
+                ],
+                correctIndex: 0,
+                emoji: '🌺'
+            },
+            // ─── Yes/No Questions ───
+            {
+                q: 'Sita said to Hari, "Have you phoned my brother?"',
+                options: [
+                    'Sita asked Hari that if he had phoned her brother.',
+                    'Sita asked Hari if he had phoned her brother.',
+                    'Sita asked Hari whether has he phoned her brother.',
+                    'Sita told Hari if he had phoned my brother.'
+                ],
+                correctIndex: 1,
+                emoji: '📞'
+            },
+            {
+                q: 'Susan asked Sita, "Can you keep this secret?"',
+                options: [
+                    'Susan asked Sita if she could keep that secret.',
+                    'Susan asked Sita that can she keep this secret.',
+                    'Susan asked Sita if she can keep that secret.',
+                    'Susan told Sita whether she could keep that secret.'
+                ],
+                correctIndex: 0,
+                emoji: '🤫'
+            },
+            {
+                q: 'Father asked her, "Is this today\'s newspaper?"',
+                options: [
+                    'Father asked her if that was today\'s newspaper.',
+                    'Father asked her if this was that day\'s newspaper.',
+                    'Father asked her if that was that day\'s newspaper.',
+                    'Father told her whether that is that day\'s newspaper.'
+                ],
+                correctIndex: 2,
+                emoji: '📰'
+            },
+            {
+                q: 'He said to me, "Do you like coffee?"',
+                options: [
+                    'He asked me that do I like coffee.',
+                    'He asked me if I liked coffee.',
+                    'He asked me if I like coffee.',
+                    'He told me whether I liked coffee.'
+                ],
+                correctIndex: 1,
+                emoji: '☕'
+            },
+            {
+                q: 'She said to me, "Did you see my cat?"',
+                options: [
+                    'She asked me if I saw her cat.',
+                    'She asked me if I had seen her cat.',
+                    'She asked me whether did I see her cat.',
+                    'She told me if I had seen my cat.'
+                ],
+                correctIndex: 1,
+                emoji: '🐱'
+            },
+            {
+                q: '"Did you finalize the date?" she asked.',
+                options: [
+                    'She asked whether they had finalized the date.',
+                    'She asked that if they finalized the date.',
+                    'She asked did they finalize the date.',
+                    'She told if they had finalized the date.'
+                ],
+                correctIndex: 0,
+                emoji: '📅'
+            },
+            {
+                q: 'She asked me, "Where is the nearest post office?"',
+                options: [
+                    'She asked me where was the nearest post office.',
+                    'She asked me where the nearest post office was.',
+                    'She asked me that where the nearest post office is.',
+                    'She told me where the nearest post office was.'
+                ],
+                correctIndex: 1,
+                emoji: '🏤'
+            },
+            {
+                q: 'Bhim inquired, "How will you make the payment?"',
+                options: [
+                    'Bhim inquired how would I make the payment.',
+                    'Bhim inquired how I will make the payment.',
+                    'Bhim inquired how I would make the payment.',
+                    'Bhim asked how will you make the payment.'
+                ],
+                correctIndex: 2,
+                emoji: '💳'
+            },
+            // ─── Imperatives ───
+            {
+                q: 'The inspector said, "Do not touch that paper."',
+                options: [
+                    'The inspector requested not to touch that paper.',
+                    'The inspector ordered us not to touch that paper.',
+                    'The inspector said to not touch that paper.',
+                    'The inspector ordered us to not touched that paper.'
+                ],
+                correctIndex: 1,
+                emoji: '🚫'
+            },
+            {
+                q: 'The old man said to the girl, "Please help me."',
+                options: [
+                    'The old man requested the girl to help him.',
+                    'The old man told the girl to please help him.',
+                    'The old man asked the girl if she helps him.',
+                    'The old man requested the girl that help him.'
+                ],
+                correctIndex: 0,
+                emoji: '🙏'
+            },
+            {
+                q: 'Mother said to Raju, "Don\'t watch TV too much."',
+                options: [
+                    'Mother told Raju to not watch TV too much.',
+                    'Mother forbade Raju to watch TV too much.',
+                    'Mother ordered Raju that don\'t watch TV too much.',
+                    'Mother advised Raju not watching TV too much.'
+                ],
+                correctIndex: 1,
+                emoji: '📺'
+            },
+            {
+                q: 'He said, "Let\'s go for a walk."',
+                options: [
+                    'He proposed that they should go for a walk.',
+                    'He ordered to go for a walk.',
+                    'He said that let us go for a walk.',
+                    'He asked if we go for a walk.'
+                ],
+                correctIndex: 0,
+                emoji: '🚶'
+            },
+            // ─── Exclamations & Optatives ───
+            {
+                q: 'She said, "What a big tree it is!"',
+                options: [
+                    'She said that what a big tree it was.',
+                    'She exclaimed with surprise that it was a very big tree.',
+                    'She exclaimed that it is a very big tree.',
+                    'She asked if it was a big tree.'
+                ],
+                correctIndex: 1,
+                emoji: '🌳'
+            },
+            {
+                q: 'He said to her, "May you succeed in life!"',
+                options: [
+                    'He told her that she may succeed in life.',
+                    'He wished her that she might succeed in life.',
+                    'He asked her if she might succeed in life.',
+                    'He blessed her to succeed in life.'
+                ],
+                correctIndex: 1,
+                emoji: '🌟'
+            },
+            // ─── Universal Truths & Present Reporting ───
+            {
+                q: 'The teacher said, "The earth moves round the sun."',
+                options: [
+                    'The teacher said that the earth moved round the sun.',
+                    'The teacher said that the earth moves round the sun.',
+                    'The teacher told that the earth is moving round the sun.',
+                    'The teacher asked if the earth moves round the sun.'
+                ],
+                correctIndex: 1,
+                emoji: '🌍'
+            },
+            {
+                q: 'She says, "I am ready."',
+                options: [
+                    'She says that she was ready.',
+                    'She says that she is ready.',
+                    'She told that she is ready.',
+                    'She says that I am ready.'
+                ],
+                correctIndex: 1,
+                emoji: '✅'
+            },
+            // ─── Advanced SEE Patterns ───
+            {
+                q: 'She asked the man, "Can you tell me where the station is, sir?"',
+                options: [
+                    'She politely asked the man where the station was.',
+                    'She asked the man that can he tell her where the station is.',
+                    'She told the man to tell her where the station was.',
+                    'She asked the man if he can tell her where the station was.'
+                ],
+                correctIndex: 0,
+                emoji: '🚉'
+            },
+            {
+                q: 'He said, "Don\'t switch off the radio."',
+                options: [
+                    'He told me to not switch off the radio.',
+                    'He told me not to switch off the radio.',
+                    'He requested me don\'t switch off the radio.',
+                    'He said that not to switch off the radio.'
+                ],
+                correctIndex: 1,
+                emoji: '📻'
+            }
+        ];
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  DOM REFS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        const $ = id => document.getElementById(id);
+        const questionCard     = $('questionCard');
+        const questionNumber   = $('questionNumber');
+        const questionEmoji    = $('questionEmoji');
+        const questionText     = $('questionText');
+        const optionsContainer = $('optionsContainer');
+        const feedbackDisplay  = $('feedbackDisplay');
+        const qStatus          = $('qStatus');
+        const scoreDisplay     = $('scoreDisplay');
+        const totalQuestionsDisplay = $('totalQuestionsDisplay');
+        const correctCountDisplay   = $('correctCountDisplay');
+        const wrongCountDisplay     = $('wrongCountDisplay');
+        const qProgressText    = $('qProgressText');
+        const progressScroll   = $('progressScroll');
+        const questionArea     = $('questionArea');
+        const resultScreen     = $('resultScreen');
+        const finalScore       = $('finalScore');
+        const perfDetail       = $('perfDetail');
+        const finalMessage     = $('finalMessage');
+        const resultEmoji      = $('resultEmoji');
+        const retryBtn         = $('retryBtn');
+        const restartBtn       = $('restartBtn');
+        const startQuizBtn     = $('startQuizBtn');
+        const questionCountSelect = $('questionCountSelect');
+        const autoTimer        = $('autoTimer');
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  STATE
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let userAnswers = [];
+        let answerStatus = [];
+        let answered = false;
+        let timer = null;
+        let isFinished = false;
+        let totalQuestions = 0;
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  HELPERS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function pickQuestions(count) {
+            const shuffled = shuffleArray([...allQuestions]);
+            return shuffled.slice(0, count);
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  PROGRESS CIRCLES
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        function buildProgressCircles() {
+            progressScroll.innerHTML = '';
+            for (let i = 0; i < totalQuestions; i++) {
+                const div = document.createElement('div');
+                div.className = 'circle-item';
+                div.dataset.index = i;
+                div.textContent = i + 1;
+                progressScroll.appendChild(div);
+            }
+        }
+
+        function updateProgressCircles() {
+            const items = progressScroll.querySelectorAll('.circle-item');
+            items.forEach((el, i) => {
+                el.className = 'circle-item';
+                el.textContent = i + 1;
+                const status = answerStatus[i];
+                if (i === currentIndex) {
+                    el.classList.add('active');
+                } else if (status === 'correct') {
+                    el.classList.add('done-correct');
+                    el.textContent = '✓';
+                } else if (status === 'wrong') {
+                    el.classList.add('done-wrong');
+                    el.textContent = '✗';
+                }
+            });
+            const active = progressScroll.querySelector('.circle-item.active');
+            if (active) {
+                active.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+            }
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  RENDER QUESTION
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        function renderQuestion() {
+            if (isFinished || currentIndex >= totalQuestions) {
+                showResult();
+                return;
+            }
+            resultScreen.classList.add('hidden');
+            resultScreen.classList.remove('show');
+            questionArea.classList.remove('hidden');
+            if (timer) clearTimeout(timer);
+
+            const q = currentQuestions[currentIndex];
+            questionNumber.textContent = currentIndex + 1;
+            questionEmoji.textContent = q.emoji || '💬';
+            questionText.textContent = q.q;
+            scoreDisplay.textContent = score;
+            totalQuestionsDisplay.textContent = totalQuestions;
+            correctCountDisplay.textContent = correctCount;
+            wrongCountDisplay.textContent = wrongCount;
+            qProgressText.textContent = `${currentIndex + 1} / ${totalQuestions}`;
+
+            // status badge
+            const status = answerStatus[currentIndex];
+            qStatus.className = 'q-status';
+            qStatus.textContent = '';
+            if (status === 'correct') {
+                qStatus.classList.add('show', 'correct');
+                qStatus.textContent = '✅ Correct!';
+            } else if (status === 'wrong') {
+                qStatus.classList.add('show', 'wrong');
+                qStatus.textContent = '❌ Incorrect';
+            }
+
+            optionsContainer.innerHTML = '';
+            const selected = userAnswers[currentIndex];
+            const labels = ['A', 'B', 'C', 'D'];
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="opt-label">${labels[idx]}</span> <span>${opt}</span>`;
+
+                if (selected !== null && selected !== undefined) {
+                    btn.classList.add('disabled');
+                    const isCorrect = idx === q.correctIndex;
+                    const isSelected = idx === selected;
+                    if (isSelected && isCorrect) btn.classList.add('selected-correct');
+                    else if (isSelected && !isCorrect) btn.classList.add('selected-wrong');
+                    else if (!isSelected && isCorrect) btn.classList.add('show-correct');
+                }
+
+                btn.addEventListener('click', () => handleOptionClick(idx));
+                optionsContainer.appendChild(btn);
+            });
+
+            // feedback banner state
+            feedbackDisplay.className = 'feedback-banner';
+            if (status === 'correct') {
+                feedbackDisplay.classList.add('correct');
+                feedbackDisplay.textContent = '✅ Correct! Well done! 🎉';
+                autoTimer.textContent = `⏳ Moving to next question...`;
+            } else if (status === 'wrong') {
+                feedbackDisplay.classList.add('wrong');
+                feedbackDisplay.textContent = `❌ Oops! The correct answer was ${labels[q.correctIndex]}.`;
+                autoTimer.textContent = `⏳ Moving to next question...`;
+            } else {
+                feedbackDisplay.textContent = '💡 Pick the correct answer!';
+                autoTimer.textContent = `⏳ Question ${currentIndex + 1} of ${totalQuestions} · Waiting for your answer...`;
+            }
+
+            updateProgressCircles();
+            updateStats();
+        }
+
+        function handleOptionClick(selectedIdx) {
+            if (answered || isFinished) return;
+            if (userAnswers[currentIndex] !== null && userAnswers[currentIndex] !== undefined) return;
+
+            const q = currentQuestions[currentIndex];
+            const isCorrect = selectedIdx === q.correctIndex;
+
+            userAnswers[currentIndex] = selectedIdx;
+            answerStatus[currentIndex] = isCorrect ? 'correct' : 'wrong';
+
+            if (isCorrect) {
+                score++;
+                correctCount++;
+            } else {
+                wrongCount++;
+            }
+            answered = true;
+
+            renderQuestion();
+            updateStats();
+
+            // auto-advance after 1.5s
+            if (currentIndex === totalQuestions - 1) {
+                autoTimer.textContent = '🏁 Quiz complete! Showing results...';
+                timer = setTimeout(() => {
+                    showResult();
+                }, 1500);
+            } else {
+                timer = setTimeout(() => {
+                    currentIndex++;
+                    answered = false;
+                    renderQuestion();
+                }, 1500);
+            }
+        }
+
+        function updateStats() {
+            scoreDisplay.textContent = score;
+            totalQuestionsDisplay.textContent = totalQuestions;
+            correctCountDisplay.textContent = correctCount;
+            wrongCountDisplay.textContent = wrongCount;
+            qProgressText.textContent = `${currentIndex + 1} / ${totalQuestions}`;
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  RESULT
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        function showResult() {
+            isFinished = true;
+            if (timer) clearTimeout(timer);
+            questionArea.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+            resultScreen.classList.add('show');
+
+            const pct = totalQuestions ? Math.round((score / totalQuestions) * 100) : 0;
+            finalScore.textContent = `${score} / ${totalQuestions}`;
+            perfDetail.textContent = `You made ${score} correct out of ${totalQuestions}`;
+
+            let emoji, msg;
+            if (pct === 100) {
+                emoji = '🏆'; msg = 'Perfect! You are a Reported Speech Master!';
+            } else if (pct >= 80) {
+                emoji = '🌟'; msg = 'Excellent work! Keep it up!';
+            } else if (pct >= 60) {
+                emoji = '👍'; msg = 'Good job! You know your speech rules!';
+            } else if (pct >= 40) {
+                emoji = '📖'; msg = 'Keep practicing, you\'re getting there!';
+            } else {
+                emoji = '💪'; msg = 'Review the rules and try again — you\'ve got this!';
+            }
+            resultEmoji.textContent = emoji;
+            finalMessage.textContent = msg;
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  START / RESET
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        function startQuiz() {
+            if (timer) clearTimeout(timer);
+            const count = parseInt(questionCountSelect.value, 10) || 10;
+            currentQuestions = pickQuestions(count);
+            totalQuestions = currentQuestions.length;
+            currentIndex = 0;
+            score = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            answered = false;
+            isFinished = false;
+            userAnswers = new Array(totalQuestions).fill(null);
+            answerStatus = new Array(totalQuestions).fill(null);
+
+            resultScreen.classList.add('hidden');
+            resultScreen.classList.remove('show');
+            questionArea.classList.remove('hidden');
+            buildProgressCircles();
+            renderQuestion();
+            updateStats();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  EVENT BINDINGS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        startQuizBtn.addEventListener('click', startQuiz);
+        restartBtn.addEventListener('click', startQuiz);
+        retryBtn.addEventListener('click', startQuiz);
+        questionCountSelect.addEventListener('change', startQuiz);
+
+        // ─── INIT ───
+        startQuiz();
+    </script>
+</body>
+</html>
